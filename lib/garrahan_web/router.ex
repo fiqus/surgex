@@ -20,7 +20,9 @@ defmodule GarrahanWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", GarrahanWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", GarrahanWeb do
+    pipe_through :api
+
+    resources "/diagnostics", DiagnosticController, except: [:new, :edit]
+  end
 end
