@@ -13,6 +13,5 @@ defmodule Garrahan.Repo.Migrations.CreatePatients do
 
       timestamps()
     end
-
   end
 end

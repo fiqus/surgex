@@ -41,7 +41,10 @@ defmodule Garrahan.SurgeriesTest do
 
     test "update_diagnostic/2 with valid data updates the diagnostic" do
       diagnostic = diagnostic_fixture()
-      assert {:ok, %Diagnostic{} = diagnostic} = Surgeries.update_diagnostic(diagnostic, @update_attrs)
+
+      assert {:ok, %Diagnostic{} = diagnostic} =
+               Surgeries.update_diagnostic(diagnostic, @update_attrs)
+
       assert diagnostic.description == "some updated description"
       assert diagnostic.name == "some updated name"
     end
@@ -67,8 +70,16 @@ defmodule Garrahan.SurgeriesTest do
   describe "surgeons" do
     alias Garrahan.Surgeries.Surgeon
 
-    @valid_attrs %{first_name: "some first_name", last_name: "some last_name", license: "some license"}
-    @update_attrs %{first_name: "some updated first_name", last_name: "some updated last_name", license: "some updated license"}
+    @valid_attrs %{
+      first_name: "some first_name",
+      last_name: "some last_name",
+      license: "some license"
+    }
+    @update_attrs %{
+      first_name: "some updated first_name",
+      last_name: "some updated last_name",
+      license: "some updated license"
+    }
     @invalid_attrs %{first_name: nil, last_name: nil, license: nil}
 
     def surgeon_fixture(attrs \\ %{}) do
@@ -130,9 +141,30 @@ defmodule Garrahan.SurgeriesTest do
   describe "patients" do
     alias Garrahan.Surgeries.Patient
 
-    @valid_attrs %{address: "some address", birthdate: ~D[2010-04-17], city: "some city", first_name: "some first_name", last_name: "some last_name", province: "some province"}
-    @update_attrs %{address: "some updated address", birthdate: ~D[2011-05-18], city: "some updated city", first_name: "some updated first_name", last_name: "some updated last_name", province: "some updated province"}
-    @invalid_attrs %{address: nil, birthdate: nil, city: nil, first_name: nil, last_name: nil, province: nil}
+    @valid_attrs %{
+      address: "some address",
+      birthdate: ~D[2010-04-17],
+      city: "some city",
+      first_name: "some first_name",
+      last_name: "some last_name",
+      province: "some province"
+    }
+    @update_attrs %{
+      address: "some updated address",
+      birthdate: ~D[2011-05-18],
+      city: "some updated city",
+      first_name: "some updated first_name",
+      last_name: "some updated last_name",
+      province: "some updated province"
+    }
+    @invalid_attrs %{
+      address: nil,
+      birthdate: nil,
+      city: nil,
+      first_name: nil,
+      last_name: nil,
+      province: nil
+    }
 
     def patient_fixture(attrs \\ %{}) do
       {:ok, patient} =
@@ -193,6 +225,67 @@ defmodule Garrahan.SurgeriesTest do
     test "change_patient/1 returns a patient changeset" do
       patient = patient_fixture()
       assert %Ecto.Changeset{} = Surgeries.change_patient(patient)
+    end
+  end
+
+  describe "surgeries" do
+    alias Garrahan.Surgeries.Surgery
+
+    @valid_attrs %{date: ~D[2010-04-17], medical_history: "some medical_history"}
+    @update_attrs %{date: ~D[2011-05-18], medical_history: "some updated medical_history"}
+    @invalid_attrs %{date: nil, medical_history: nil}
+
+    def surgery_fixture(attrs \\ %{}) do
+      {:ok, surgery} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Surgeries.create_surgery()
+
+      surgery
+    end
+
+    test "list_surgeries/0 returns all surgeries" do
+      surgery = surgery_fixture()
+      assert Surgeries.list_surgeries() == [surgery]
+    end
+
+    test "get_surgery!/1 returns the surgery with given id" do
+      surgery = surgery_fixture()
+      assert Surgeries.get_surgery!(surgery.id) == surgery
+    end
+
+    test "create_surgery/1 with valid data creates a surgery" do
+      assert {:ok, %Surgery{} = surgery} = Surgeries.create_surgery(@valid_attrs)
+      assert surgery.date == ~D[2010-04-17]
+      assert surgery.medical_history == "some medical_history"
+    end
+
+    test "create_surgery/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Surgeries.create_surgery(@invalid_attrs)
+    end
+
+    test "update_surgery/2 with valid data updates the surgery" do
+      surgery = surgery_fixture()
+      assert {:ok, %Surgery{} = surgery} = Surgeries.update_surgery(surgery, @update_attrs)
+      assert surgery.date == ~D[2011-05-18]
+      assert surgery.medical_history == "some updated medical_history"
+    end
+
+    test "update_surgery/2 with invalid data returns error changeset" do
+      surgery = surgery_fixture()
+      assert {:error, %Ecto.Changeset{}} = Surgeries.update_surgery(surgery, @invalid_attrs)
+      assert surgery == Surgeries.get_surgery!(surgery.id)
+    end
+
+    test "delete_surgery/1 deletes the surgery" do
+      surgery = surgery_fixture()
+      assert {:ok, %Surgery{}} = Surgeries.delete_surgery(surgery)
+      assert_raise Ecto.NoResultsError, fn -> Surgeries.get_surgery!(surgery.id) end
+    end
+
+    test "change_surgery/1 returns a surgery changeset" do
+      surgery = surgery_fixture()
+      assert %Ecto.Changeset{} = Surgeries.change_surgery(surgery)
     end
   end
 end

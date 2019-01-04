@@ -11,8 +11,6 @@ defmodule GarrahanWeb.DiagnosticView do
   end
 
   def render("diagnostic.json", %{diagnostic: diagnostic}) do
-    %{id: diagnostic.id,
-      name: diagnostic.name,
-      description: diagnostic.description}
+    %{id: diagnostic.id, name: diagnostic.name, description: diagnostic.description}
   end
 end

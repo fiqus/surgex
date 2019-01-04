@@ -27,5 +27,6 @@ defmodule GarrahanWeb.Router do
     resources "/users", UserController, except: [:new, :edit]
     resources "/surgeons", SurgeonController, except: [:new, :edit]
     resources "/patients", PatientController, except: [:new, :edit]
+    resources "/surgeries", SurgeryController, except: [:new, :edit]
   end
 end

@@ -11,12 +11,14 @@ defmodule GarrahanWeb.PatientView do
   end
 
   def render("patient.json", %{patient: patient}) do
-    %{id: patient.id,
+    %{
+      id: patient.id,
       first_name: patient.first_name,
       last_name: patient.last_name,
       birthdate: patient.birthdate,
       city: patient.city,
       province: patient.province,
-      address: patient.address}
+      address: patient.address
+    }
   end
 end

@@ -28,7 +28,8 @@ defmodule GarrahanWeb.DiagnosticController do
   def update(conn, %{"id" => id, "diagnostic" => diagnostic_params}) do
     diagnostic = Surgeries.get_diagnostic!(id)
 
-    with {:ok, %Diagnostic{} = diagnostic} <- Surgeries.update_diagnostic(diagnostic, diagnostic_params) do
+    with {:ok, %Diagnostic{} = diagnostic} <-
+           Surgeries.update_diagnostic(diagnostic, diagnostic_params) do
       render(conn, "show.json", diagnostic: diagnostic)
     end
   end

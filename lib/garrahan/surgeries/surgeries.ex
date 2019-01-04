@@ -293,4 +293,100 @@ defmodule Garrahan.Surgeries do
   def change_patient(%Patient{} = patient) do
     Patient.changeset(patient, %{})
   end
+
+  alias Garrahan.Surgeries.Surgery
+
+  @doc """
+  Returns the list of surgeries.
+
+  ## Examples
+
+      iex> list_surgeries()
+      [%Surgery{}, ...]
+
+  """
+  def list_surgeries do
+    Repo.all(Surgery)
+  end
+
+  @doc """
+  Gets a single surgery.
+
+  Raises `Ecto.NoResultsError` if the Surgery does not exist.
+
+  ## Examples
+
+      iex> get_surgery!(123)
+      %Surgery{}
+
+      iex> get_surgery!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_surgery!(id), do: Repo.get!(Surgery, id)
+
+  @doc """
+  Creates a surgery.
+
+  ## Examples
+
+      iex> create_surgery(%{field: value})
+      {:ok, %Surgery{}}
+
+      iex> create_surgery(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_surgery(attrs \\ %{}) do
+    %Surgery{}
+    |> Surgery.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a surgery.
+
+  ## Examples
+
+      iex> update_surgery(surgery, %{field: new_value})
+      {:ok, %Surgery{}}
+
+      iex> update_surgery(surgery, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_surgery(%Surgery{} = surgery, attrs) do
+    surgery
+    |> Surgery.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Surgery.
+
+  ## Examples
+
+      iex> delete_surgery(surgery)
+      {:ok, %Surgery{}}
+
+      iex> delete_surgery(surgery)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_surgery(%Surgery{} = surgery) do
+    Repo.delete(surgery)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking surgery changes.
+
+  ## Examples
+
+      iex> change_surgery(surgery)
+      %Ecto.Changeset{source: %Surgery{}}
+
+  """
+  def change_surgery(%Surgery{} = surgery) do
+    Surgery.changeset(surgery, %{})
+  end
 end

@@ -20,7 +20,14 @@ defmodule GarrahanWeb.PatientControllerTest do
     last_name: "some updated last_name",
     province: "some updated province"
   }
-  @invalid_attrs %{address: nil, birthdate: nil, city: nil, first_name: nil, last_name: nil, province: nil}
+  @invalid_attrs %{
+    address: nil,
+    birthdate: nil,
+    city: nil,
+    first_name: nil,
+    last_name: nil,
+    province: nil
+  }
 
   def fixture(:patient) do
     {:ok, patient} = Surgeries.create_patient(@create_attrs)

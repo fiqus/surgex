@@ -26,10 +26,11 @@ defmodule Garrahan.AccountsTest do
 
     test "list_users/0 returns all users" do
       user = user_fixture()
+
       Accounts.list_users()
-        |> Enum.map(fn u ->
-          are_same_user(u, user)
-        end)
+      |> Enum.map(fn u ->
+        are_same_user(u, user)
+      end)
     end
 
     test "get_user!/1 returns the user with given id" do

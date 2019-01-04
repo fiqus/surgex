@@ -1,7 +1,7 @@
 defmodule Garrahan.Surgeries.Patient do
   use Ecto.Schema
   import Ecto.Changeset
-
+  alias Garrahan.Surgeries.Surgery
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -12,6 +12,7 @@ defmodule Garrahan.Surgeries.Patient do
     field :first_name, :string
     field :last_name, :string
     field :province, :string
+    has_many(:surgery, Surgery)
 
     timestamps()
   end

@@ -9,6 +9,5 @@ defmodule Garrahan.Repo.Migrations.CreateDiagnostics do
 
       timestamps()
     end
-
   end
 end

@@ -53,8 +53,13 @@ defmodule GarrahanWeb.DiagnosticControllerTest do
   describe "update diagnostic" do
     setup [:create_diagnostic]
 
-    test "renders diagnostic when data is valid", %{conn: conn, diagnostic: %Diagnostic{id: id} = diagnostic} do
-      conn = put(conn, Routes.diagnostic_path(conn, :update, diagnostic), diagnostic: @update_attrs)
+    test "renders diagnostic when data is valid", %{
+      conn: conn,
+      diagnostic: %Diagnostic{id: id} = diagnostic
+    } do
+      conn =
+        put(conn, Routes.diagnostic_path(conn, :update, diagnostic), diagnostic: @update_attrs)
+
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get(conn, Routes.diagnostic_path(conn, :show, id))
@@ -67,7 +72,9 @@ defmodule GarrahanWeb.DiagnosticControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, diagnostic: diagnostic} do
-      conn = put(conn, Routes.diagnostic_path(conn, :update, diagnostic), diagnostic: @invalid_attrs)
+      conn =
+        put(conn, Routes.diagnostic_path(conn, :update, diagnostic), diagnostic: @invalid_attrs)
+
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
