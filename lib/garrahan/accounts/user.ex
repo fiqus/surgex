@@ -18,16 +18,16 @@ defmodule Garrahan.Accounts.User do
     |> cast(attrs, [:email, :password])
     |> validate_required([:email, :password])
     |> unique_constraint(:email)
-    |> password_validations(user, attrs)
+    |> password_validations()
   end
 
-  defp password_validations(changeset, user, attrs) do
+  defp password_validations(changeset) do
     changeset
     |> validate_length(:password, min: 6, max: 30)
-    |> put_password_hash(user, attrs)
+    |> put_password_hash()
   end
 
-  defp put_password_hash(changeset, user, attrs) do
+  defp put_password_hash(changeset) do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
         changeset
