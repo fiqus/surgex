@@ -24,5 +24,8 @@ defmodule GarrahanWeb.Router do
     pipe_through :api
 
     resources "/diagnostics", DiagnosticController, except: [:new, :edit]
+    resources "/users", UserController, except: [:new, :edit]
+    resources "/surgeons", SurgeonController, except: [:new, :edit]
+    resources "/patients", PatientController, except: [:new, :edit]
   end
 end

@@ -101,4 +101,196 @@ defmodule Garrahan.Surgeries do
   def change_diagnostic(%Diagnostic{} = diagnostic) do
     Diagnostic.changeset(diagnostic, %{})
   end
+
+  alias Garrahan.Surgeries.Surgeon
+
+  @doc """
+  Returns the list of surgeons.
+
+  ## Examples
+
+      iex> list_surgeons()
+      [%Surgeon{}, ...]
+
+  """
+  def list_surgeons do
+    Repo.all(Surgeon)
+  end
+
+  @doc """
+  Gets a single surgeon.
+
+  Raises `Ecto.NoResultsError` if the Surgeon does not exist.
+
+  ## Examples
+
+      iex> get_surgeon!(123)
+      %Surgeon{}
+
+      iex> get_surgeon!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_surgeon!(id), do: Repo.get!(Surgeon, id)
+
+  @doc """
+  Creates a surgeon.
+
+  ## Examples
+
+      iex> create_surgeon(%{field: value})
+      {:ok, %Surgeon{}}
+
+      iex> create_surgeon(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_surgeon(attrs \\ %{}) do
+    %Surgeon{}
+    |> Surgeon.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a surgeon.
+
+  ## Examples
+
+      iex> update_surgeon(surgeon, %{field: new_value})
+      {:ok, %Surgeon{}}
+
+      iex> update_surgeon(surgeon, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_surgeon(%Surgeon{} = surgeon, attrs) do
+    surgeon
+    |> Surgeon.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Surgeon.
+
+  ## Examples
+
+      iex> delete_surgeon(surgeon)
+      {:ok, %Surgeon{}}
+
+      iex> delete_surgeon(surgeon)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_surgeon(%Surgeon{} = surgeon) do
+    Repo.delete(surgeon)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking surgeon changes.
+
+  ## Examples
+
+      iex> change_surgeon(surgeon)
+      %Ecto.Changeset{source: %Surgeon{}}
+
+  """
+  def change_surgeon(%Surgeon{} = surgeon) do
+    Surgeon.changeset(surgeon, %{})
+  end
+
+  alias Garrahan.Surgeries.Patient
+
+  @doc """
+  Returns the list of patients.
+
+  ## Examples
+
+      iex> list_patients()
+      [%Patient{}, ...]
+
+  """
+  def list_patients do
+    Repo.all(Patient)
+  end
+
+  @doc """
+  Gets a single patient.
+
+  Raises `Ecto.NoResultsError` if the Patient does not exist.
+
+  ## Examples
+
+      iex> get_patient!(123)
+      %Patient{}
+
+      iex> get_patient!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_patient!(id), do: Repo.get!(Patient, id)
+
+  @doc """
+  Creates a patient.
+
+  ## Examples
+
+      iex> create_patient(%{field: value})
+      {:ok, %Patient{}}
+
+      iex> create_patient(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_patient(attrs \\ %{}) do
+    %Patient{}
+    |> Patient.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a patient.
+
+  ## Examples
+
+      iex> update_patient(patient, %{field: new_value})
+      {:ok, %Patient{}}
+
+      iex> update_patient(patient, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_patient(%Patient{} = patient, attrs) do
+    patient
+    |> Patient.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Patient.
+
+  ## Examples
+
+      iex> delete_patient(patient)
+      {:ok, %Patient{}}
+
+      iex> delete_patient(patient)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_patient(%Patient{} = patient) do
+    Repo.delete(patient)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking patient changes.
+
+  ## Examples
+
+      iex> change_patient(patient)
+      %Ecto.Changeset{source: %Patient{}}
+
+  """
+  def change_patient(%Patient{} = patient) do
+    Patient.changeset(patient, %{})
+  end
 end
