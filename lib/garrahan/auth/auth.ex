@@ -35,25 +35,17 @@ defmodule Garrahan.Auth do
     end
   end
 
-  def login(conn, user) do
-    with {:ok, conn} <- sign_in_user(conn, user) do
-      {:ok, conn}
+  def token(user) do
+    with {:ok, token, _claims} <- encode_and_sign(user, %{}) do
+      {:ok, token}
     else
       error ->
-        Logger.error("Error on login: #{inspect(error)}")
+        Logger.error("Error on token: #{inspect(error)}")
         {:error, error}
     end
   end
 
-  defp sign_in_user(conn, %User{is_admin: true} = user) do
-    {:ok, Garrahan.Auth.Guardian.Plug.sign_in(conn, user, %{admin: true})}
-  end
-
-  defp sign_in_user(conn, user) do
-    {:ok, Garrahan.Auth.Guardian.Plug.sign_in(conn, user, %{admin: false})}
-  end
-
-  def logout(conn) do
-    {:ok, Garrahan.Auth.Guardian.Plug.sign_out(conn)}
+  defp encode_and_sign(user, claims) do
+    Garrahan.Auth.Guardian.encode_and_sign(user, claims, ttl: {24, :hours})
   end
 end

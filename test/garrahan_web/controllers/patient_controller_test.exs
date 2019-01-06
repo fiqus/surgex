@@ -36,11 +36,7 @@ defmodule GarrahanWeb.PatientControllerTest do
   end
 
   setup %{conn: conn, user: user} do
-    conn =
-      loggin_user(conn, user)
-      |> put_req_header("accept", "application/json")
-
-    {:ok, conn: conn}
+    {:ok, conn: auth_user(conn, user)}
   end
 
   describe "index" do
@@ -51,11 +47,10 @@ defmodule GarrahanWeb.PatientControllerTest do
   end
 
   describe "create patient" do
-    test "renders patient when data is valid", %{conn: conn, user: user} do
+    test "renders patient when data is valid", %{conn: conn} do
       conn = post(conn, Routes.patient_path(conn, :create), patient: @create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      loggin_user(conn, user)
       conn = get(conn, Routes.patient_path(conn, :show, id))
 
       assert %{

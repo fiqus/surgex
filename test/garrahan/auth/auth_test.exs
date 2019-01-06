@@ -1,4 +1,4 @@
-defmodule BtrzWebAdmin.AuthTest do
+defmodule Garrahan.AuthTest do
   use GarrahanWeb.ConnCase
 
   alias Garrahan.{Accounts, Auth}
@@ -43,17 +43,12 @@ defmodule BtrzWebAdmin.AuthTest do
     end
   end
 
-  describe "login" do
+  describe "token" do
     setup [:user_fixture]
 
-    test "using guardian", %{conn: conn, user: user} do
-      assert {:ok, conn} = Auth.login(conn, user)
-    end
-  end
-
-  describe "logout" do
-    test "using guardian", %{conn: conn} do
-      assert {:ok, conn} = Auth.logout(conn)
+    test "should return an access token", %{user: user} do
+      assert {:ok, token} = Auth.token(user)
+      assert String.length(token) > 100
     end
   end
 end

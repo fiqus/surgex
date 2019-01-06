@@ -3,9 +3,12 @@ defmodule GarrahanWeb.AuthCase do
 
   using do
     quote do
-      def loggin_user(conn, user) do
-        {:ok, conn} = Garrahan.Auth.login(conn, user)
+      def auth_user(conn, user) do
+        {:ok, token} = Garrahan.Auth.token(user)
+
         conn
+        |> put_req_header("accept", "application/json")
+        |> put_req_header("authorization", "Bearer #{token}")
       end
     end
   end

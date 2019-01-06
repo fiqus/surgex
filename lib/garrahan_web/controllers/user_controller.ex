@@ -5,8 +5,8 @@ defmodule GarrahanWeb.UserController do
   alias Garrahan.Accounts.User
 
   action_fallback GarrahanWeb.FallbackController
-  # @TODO: Enable this and line 15 at router.ex
-  # plug Garrahan.Auth.Plug.AdminUser, []
+  # Requires to be an admin!
+  plug Garrahan.Auth.Plug.AdminUser, []
 
   def index(conn, _params) do
     users = Accounts.list_users()

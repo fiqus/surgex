@@ -21,11 +21,7 @@ defmodule GarrahanWeb.UserControllerTest do
   end
 
   setup %{conn: conn, admin: admin} do
-    conn =
-      loggin_user(conn, admin)
-      |> put_req_header("accept", "application/json")
-
-    {:ok, conn: conn}
+    {:ok, conn: auth_user(conn, admin)}
   end
 
   describe "index" do

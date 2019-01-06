@@ -23,11 +23,7 @@ defmodule GarrahanWeb.SurgeonControllerTest do
   end
 
   setup %{conn: conn, user: user} do
-    conn =
-      loggin_user(conn, user)
-      |> put_req_header("accept", "application/json")
-
-    {:ok, conn: conn}
+    {:ok, conn: auth_user(conn, user)}
   end
 
   describe "index" do

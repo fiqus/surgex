@@ -12,9 +12,16 @@
 
 alias Garrahan.Accounts
 
-# User
+# Users
 Accounts.create_user(%{
-  email: "info@fiqus.com",
-  name: "Fiqus",
-  password: "fiquspass"
+  email: "info+admin@fiqus.com",
+  name: "Fiqus Admin",
+  password: "adminpass",
+  is_admin: true
+})
+
+Accounts.create_user(%{
+  email: "info+user@fiqus.com",
+  name: "Fiqus User",
+  password: "userpass"
 })

@@ -7,16 +7,15 @@ defmodule GarrahanWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug(Garrahan.Auth.LoadResourcePipeline)
-  end
-
-  pipeline :auth do
-    # @TODO: Enable this and line 9 at user_controller.ex
-    # plug(Garrahan.Auth.AuthAccessPipeline)
+    plug Garrahan.Auth.LoadResourcePipeline
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  pipeline :auth do
+    plug Garrahan.Auth.AuthAccessPipeline
   end
 
   scope "/", GarrahanWeb do
@@ -28,8 +27,7 @@ defmodule GarrahanWeb.Router do
   scope "/api", GarrahanWeb do
     pipe_through :api
 
-    post "/login", AuthController, :login
-    post "/logout", AuthController, :logout
+    post "/token", AuthController, :token
 
     scope "/" do
       pipe_through :auth
