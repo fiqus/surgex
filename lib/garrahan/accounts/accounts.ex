@@ -38,6 +38,21 @@ defmodule Garrahan.Accounts do
   def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
+  Gets a single user by email.
+
+  ## Examples
+
+      iex> get_user_by_email("some@email.com")
+      %User{}
+
+  """
+  def get_user_by_email(email) do
+    query = from(u in User, where: u.email == ^email)
+
+    Repo.one(query)
+  end
+
+  @doc """
   Creates a user.
 
   ## Examples

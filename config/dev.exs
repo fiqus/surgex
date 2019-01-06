@@ -73,3 +73,8 @@ config :garrahan, Garrahan.Repo,
   database: "garrahan",
   hostname: "localhost",
   pool_size: 10
+
+# Configure Guardian
+config :garrahan, Garrahan.Auth.Guardian,
+  issuer: "garrahan",
+  secret_key: "iox6/puy13hvGIa76aY1XQR8nDx3DUzjYnKz14geFGk5w0ZktbQwVsfw9E++ERaL"

@@ -16,3 +16,8 @@ config :garrahan, Garrahan.Repo,
   database: "garrahan_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# Configure Guardian
+config :garrahan, Garrahan.Auth.Guardian,
+  issuer: "garrahan",
+  secret_key: "UDR8nL8PI/JN+fJioxlErRSa82h8nyL4SzhA/N8Wc5ox+KrGgUZdZZI0gSMN+TPQ"

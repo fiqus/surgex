@@ -43,6 +43,7 @@ defmodule Garrahan.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
+      {:guardian, "~> 1.0"},
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 1.0"}
     ]
@@ -56,7 +57,8 @@ defmodule Garrahan.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+      "ecto.seeds": ["run priv/repo/seeds.exs"],
+      "ecto.setup": ["ecto.create", "ecto.migrate", "ecto.seeds"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]

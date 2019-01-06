@@ -7,6 +7,12 @@ defmodule GarrahanWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug(Garrahan.Auth.LoadResourcePipeline)
+  end
+
+  pipeline :auth do
+    # @TODO: Enable this and line 9 at user_controller.ex
+    # plug(Garrahan.Auth.AuthAccessPipeline)
   end
 
   pipeline :api do
@@ -19,14 +25,20 @@ defmodule GarrahanWeb.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
   scope "/api", GarrahanWeb do
     pipe_through :api
 
-    resources "/diagnostics", DiagnosticController, except: [:new, :edit]
-    resources "/users", UserController, except: [:new, :edit]
-    resources "/surgeons", SurgeonController, except: [:new, :edit]
-    resources "/patients", PatientController, except: [:new, :edit]
-    resources "/surgeries", SurgeryController, except: [:new, :edit]
+    post "/login", AuthController, :login
+    post "/logout", AuthController, :logout
+
+    scope "/" do
+      pipe_through :auth
+
+      resources "/users", UserController, except: [:new, :edit]
+      resources "/diagnostics", DiagnosticController, except: [:new, :edit]
+      resources "/surgeons", SurgeonController, except: [:new, :edit]
+      resources "/patients", PatientController, except: [:new, :edit]
+      resources "/surgeries", SurgeryController, except: [:new, :edit]
+    end
   end
 end

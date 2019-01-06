@@ -1,5 +1,6 @@
 defmodule GarrahanWeb.UserControllerTest do
   use GarrahanWeb.ConnCase
+  use GarrahanWeb.AuthCase
 
   alias Garrahan.Accounts
   alias Garrahan.Accounts.User
@@ -19,14 +20,18 @@ defmodule GarrahanWeb.UserControllerTest do
     user
   end
 
-  setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+  setup %{conn: conn, admin: admin} do
+    conn =
+      loggin_user(conn, admin)
+      |> put_req_header("accept", "application/json")
+
+    {:ok, conn: conn}
   end
 
   describe "index" do
     test "lists all users", %{conn: conn} do
       conn = get(conn, Routes.user_path(conn, :index))
-      assert json_response(conn, 200)["data"] == []
+      assert [%{}, %{}] = json_response(conn, 200)["data"]
     end
   end
 

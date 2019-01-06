@@ -1,5 +1,6 @@
 defmodule GarrahanWeb.PatientControllerTest do
   use GarrahanWeb.ConnCase
+  use GarrahanWeb.AuthCase
 
   alias Garrahan.Surgeries
   alias Garrahan.Surgeries.Patient
@@ -34,8 +35,12 @@ defmodule GarrahanWeb.PatientControllerTest do
     patient
   end
 
-  setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+  setup %{conn: conn, user: user} do
+    conn =
+      loggin_user(conn, user)
+      |> put_req_header("accept", "application/json")
+
+    {:ok, conn: conn}
   end
 
   describe "index" do
@@ -46,10 +51,11 @@ defmodule GarrahanWeb.PatientControllerTest do
   end
 
   describe "create patient" do
-    test "renders patient when data is valid", %{conn: conn} do
+    test "renders patient when data is valid", %{conn: conn, user: user} do
       conn = post(conn, Routes.patient_path(conn, :create), patient: @create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
+      loggin_user(conn, user)
       conn = get(conn, Routes.patient_path(conn, :show, id))
 
       assert %{

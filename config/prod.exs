@@ -17,6 +17,11 @@ config :garrahan, GarrahanWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+# Configure Guardian
+config :garrahan, Garrahan.Auth.Guardian,
+  issuer: "garrahan",
+  secret_key: "qVNn6NFMgxVuPaeUR1oletN0wR8v0laip1/dOBQDTx11YAZV2mmIhoG9IMJnHUet"
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

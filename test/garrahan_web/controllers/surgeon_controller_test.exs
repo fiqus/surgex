@@ -1,5 +1,6 @@
 defmodule GarrahanWeb.SurgeonControllerTest do
   use GarrahanWeb.ConnCase
+  use GarrahanWeb.AuthCase
 
   alias Garrahan.Surgeries
   alias Garrahan.Surgeries.Surgeon
@@ -21,8 +22,12 @@ defmodule GarrahanWeb.SurgeonControllerTest do
     surgeon
   end
 
-  setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+  setup %{conn: conn, user: user} do
+    conn =
+      loggin_user(conn, user)
+      |> put_req_header("accept", "application/json")
+
+    {:ok, conn: conn}
   end
 
   describe "index" do
