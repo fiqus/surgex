@@ -8,28 +8,52 @@ defmodule GarrahanWeb.AuthControllerTest do
     password: "testpass"
   }
 
-  def fixture(:user) do
-    {:ok, user} = Accounts.create_user(@user_attrs)
+  def fixture(attrs) do
+    {:ok, user} = Accounts.create_user(attrs)
     user
   end
 
   describe "token" do
-    setup [:create_user]
-
     test "should return an access token", %{conn: conn} do
+      fixture(@user_attrs)
       conn = post(conn, Routes.auth_path(conn, :token), %{"data" => @user_attrs})
 
       assert %{
-               "status" => "ok",
+               "status" => "success",
                "token" => token
              } = json_response(conn, 200)
 
       assert String.length(token) > 100
     end
-  end
 
-  defp create_user(_) do
-    user = fixture(:user)
-    {:ok, user: user}
+    test "should return an error because user is disabled", %{conn: conn} do
+      fixture(Map.put(@user_attrs, :disabled, true))
+      conn = post(conn, Routes.auth_path(conn, :token), %{"data" => @user_attrs})
+
+      assert %{
+               "status" => "error",
+               "reason" => "USER_DISABLED"
+             } = json_response(conn, 200)
+    end
+
+    test "should return an error because email was not found", %{conn: conn} do
+      fixture(Map.put(@user_attrs, :email, "another@email.com"))
+      conn = post(conn, Routes.auth_path(conn, :token), %{"data" => @user_attrs})
+
+      assert %{
+               "status" => "error",
+               "reason" => "EMAIL_NOT_EXISTS"
+             } = json_response(conn, 200)
+    end
+
+    test "should return an error because password is wrong", %{conn: conn} do
+      fixture(Map.put(@user_attrs, :password, "anotherpass"))
+      conn = post(conn, Routes.auth_path(conn, :token), %{"data" => @user_attrs})
+
+      assert %{
+               "status" => "error",
+               "reason" => "WRONG_PASSWORD"
+             } = json_response(conn, 200)
+    end
   end
 end
