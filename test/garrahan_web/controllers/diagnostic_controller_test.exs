@@ -5,6 +5,8 @@ defmodule GarrahanWeb.DiagnosticControllerTest do
   alias Garrahan.Surgeries
   alias Garrahan.Surgeries.Diagnostic
 
+  import GarrahanWeb.AuthCase
+
   @create_attrs %{
     description: "some description",
     name: "some name"
@@ -25,6 +27,10 @@ defmodule GarrahanWeb.DiagnosticControllerTest do
   end
 
   describe "index" do
+    test_auth_user_required(fn conn, _params ->
+      get(conn, Routes.diagnostic_path(conn, :index))
+    end)
+
     test "lists all diagnostics", %{conn: conn} do
       conn = get(conn, Routes.diagnostic_path(conn, :index))
       assert json_response(conn, 200)["data"] == []
@@ -32,6 +38,10 @@ defmodule GarrahanWeb.DiagnosticControllerTest do
   end
 
   describe "create diagnostic" do
+    test_auth_user_required(fn conn, _params ->
+      post(conn, Routes.diagnostic_path(conn, :create), diagnostic: @create_attrs)
+    end)
+
     test "renders diagnostic when data is valid", %{conn: conn} do
       conn = post(conn, Routes.diagnostic_path(conn, :create), diagnostic: @create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
@@ -53,6 +63,12 @@ defmodule GarrahanWeb.DiagnosticControllerTest do
 
   describe "update diagnostic" do
     setup [:create_diagnostic]
+
+    test_auth_user_required(fn conn, params ->
+      put(conn, Routes.diagnostic_path(conn, :update, params.diagnostic),
+        diagnostic: @update_attrs
+      )
+    end)
 
     test "renders diagnostic when data is valid", %{
       conn: conn,
@@ -82,6 +98,10 @@ defmodule GarrahanWeb.DiagnosticControllerTest do
 
   describe "delete diagnostic" do
     setup [:create_diagnostic]
+
+    test_auth_user_required(fn conn, params ->
+      delete(conn, Routes.diagnostic_path(conn, :delete, params.diagnostic))
+    end)
 
     test "deletes chosen diagnostic", %{conn: conn, diagnostic: diagnostic} do
       conn = delete(conn, Routes.diagnostic_path(conn, :delete, diagnostic))

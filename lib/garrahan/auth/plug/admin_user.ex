@@ -13,11 +13,19 @@ defmodule Garrahan.Auth.Plug.AdminUser do
 
       false ->
         conn
-        |> send_resp(403, "ADMIN_REQUIRED")
+        |> put_resp_content_type("application/json")
+        |> send_resp(403, encode_error())
         |> halt()
     end
   end
 
   defp is_user_admin?(%{is_admin: true}), do: true
   defp is_user_admin?(_), do: false
+
+  defp encode_error() do
+    Poison.encode!(%{
+      "status" => "error",
+      "reason" => "ADMIN_REQUIRED"
+    })
+  end
 end

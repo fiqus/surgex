@@ -5,6 +5,8 @@ defmodule GarrahanWeb.UserControllerTest do
   alias Garrahan.Accounts
   alias Garrahan.Accounts.User
 
+  import GarrahanWeb.AuthCase
+
   @create_attrs %{
     email: "some email",
     password: "some password"
@@ -25,6 +27,10 @@ defmodule GarrahanWeb.UserControllerTest do
   end
 
   describe "index" do
+    test_auth_admin_required(fn conn, _params ->
+      get(conn, Routes.user_path(conn, :index))
+    end)
+
     test "lists all users", %{conn: conn} do
       conn = get(conn, Routes.user_path(conn, :index))
       assert [%{}, %{}] = json_response(conn, 200)["data"]
@@ -32,6 +38,10 @@ defmodule GarrahanWeb.UserControllerTest do
   end
 
   describe "create user" do
+    test_auth_admin_required(fn conn, _params ->
+      post(conn, Routes.user_path(conn, :create), user: @create_attrs)
+    end)
+
     test "renders user when data is valid", %{conn: conn} do
       conn = post(conn, Routes.user_path(conn, :create), user: @create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
@@ -53,6 +63,10 @@ defmodule GarrahanWeb.UserControllerTest do
   describe "update user" do
     setup [:create_user]
 
+    test_auth_admin_required(fn conn, %{user: user} ->
+      put(conn, Routes.user_path(conn, :update, user), user: @update_attrs)
+    end)
+
     test "renders user when data is valid", %{conn: conn, user: %User{id: id} = user} do
       conn = put(conn, Routes.user_path(conn, :update, user), user: @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
@@ -73,6 +87,10 @@ defmodule GarrahanWeb.UserControllerTest do
 
   describe "delete user" do
     setup [:create_user]
+
+    test_auth_admin_required(fn conn, %{user: user} ->
+      delete(conn, Routes.user_path(conn, :delete, user))
+    end)
 
     test "deletes chosen user", %{conn: conn, user: user} do
       conn = delete(conn, Routes.user_path(conn, :delete, user))

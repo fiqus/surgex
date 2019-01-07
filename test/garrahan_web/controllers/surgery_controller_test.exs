@@ -5,6 +5,8 @@ defmodule GarrahanWeb.SurgeryControllerTest do
   alias Garrahan.Surgeries
   alias Garrahan.Surgeries.Surgery
 
+  import GarrahanWeb.AuthCase
+
   @create_attrs %{
     date: ~D[2010-04-17],
     medical_history: "some medical_history"
@@ -25,6 +27,10 @@ defmodule GarrahanWeb.SurgeryControllerTest do
   end
 
   describe "index" do
+    test_auth_user_required(fn conn, _params ->
+      get(conn, Routes.surgery_path(conn, :index))
+    end)
+
     test "lists all surgeries", %{conn: conn} do
       conn = get(conn, Routes.surgery_path(conn, :index))
       assert json_response(conn, 200)["data"] == []
@@ -32,6 +38,10 @@ defmodule GarrahanWeb.SurgeryControllerTest do
   end
 
   describe "create surgery" do
+    test_auth_user_required(fn conn, _params ->
+      post(conn, Routes.surgery_path(conn, :create), surgery: @create_attrs)
+    end)
+
     test "renders surgery when data is valid", %{conn: conn} do
       conn = post(conn, Routes.surgery_path(conn, :create), surgery: @create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
@@ -54,6 +64,10 @@ defmodule GarrahanWeb.SurgeryControllerTest do
   describe "update surgery" do
     setup [:create_surgery]
 
+    test_auth_user_required(fn conn, params ->
+      put(conn, Routes.surgery_path(conn, :update, params.surgery), surgery: @update_attrs)
+    end)
+
     test "renders surgery when data is valid", %{conn: conn, surgery: %Surgery{id: id} = surgery} do
       conn = put(conn, Routes.surgery_path(conn, :update, surgery), surgery: @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
@@ -75,6 +89,10 @@ defmodule GarrahanWeb.SurgeryControllerTest do
 
   describe "delete surgery" do
     setup [:create_surgery]
+
+    test_auth_user_required(fn conn, params ->
+      delete(conn, Routes.surgery_path(conn, :delete, params.surgery))
+    end)
 
     test "deletes chosen surgery", %{conn: conn, surgery: surgery} do
       conn = delete(conn, Routes.surgery_path(conn, :delete, surgery))
