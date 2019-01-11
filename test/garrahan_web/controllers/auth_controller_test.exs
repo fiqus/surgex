@@ -16,7 +16,7 @@ defmodule GarrahanWeb.AuthControllerTest do
   describe "token" do
     test "should return an access token", %{conn: conn} do
       fixture(@user_attrs)
-      conn = post(conn, Routes.auth_path(conn, :token), %{"data" => @user_attrs})
+      conn = post(conn, Routes.auth_path(conn, :token), @user_attrs)
 
       assert %{
                "status" => "success",
@@ -28,7 +28,7 @@ defmodule GarrahanWeb.AuthControllerTest do
 
     test "should return an error because user is disabled", %{conn: conn} do
       fixture(Map.put(@user_attrs, :disabled, true))
-      conn = post(conn, Routes.auth_path(conn, :token), %{"data" => @user_attrs})
+      conn = post(conn, Routes.auth_path(conn, :token), @user_attrs)
 
       assert %{
                "status" => "error",
@@ -38,7 +38,7 @@ defmodule GarrahanWeb.AuthControllerTest do
 
     test "should return an error because email was not found", %{conn: conn} do
       fixture(Map.put(@user_attrs, :email, "another@email.com"))
-      conn = post(conn, Routes.auth_path(conn, :token), %{"data" => @user_attrs})
+      conn = post(conn, Routes.auth_path(conn, :token), @user_attrs)
 
       assert %{
                "status" => "error",
@@ -48,7 +48,7 @@ defmodule GarrahanWeb.AuthControllerTest do
 
     test "should return an error because password is wrong", %{conn: conn} do
       fixture(Map.put(@user_attrs, :password, "anotherpass"))
-      conn = post(conn, Routes.auth_path(conn, :token), %{"data" => @user_attrs})
+      conn = post(conn, Routes.auth_path(conn, :token), @user_attrs)
 
       assert %{
                "status" => "error",
