@@ -1,0 +1,15 @@
+<template>
+  <div>
+    <h3>{{message}}</h3>
+  </div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        message: "Bienvenido al Hospital Garrahan :)"
+      }
+    }
+  }
+</script>
