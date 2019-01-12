@@ -13,6 +13,7 @@ defmodule Garrahan.MixProject do
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
+        coverage: :test,
         coveralls: :test,
         "coveralls.detail": :test,
         "coveralls.post": :test,
@@ -68,7 +69,8 @@ defmodule Garrahan.MixProject do
       "ecto.seeds": ["run priv/repo/seeds.exs"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "ecto.seeds"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate", "coveralls.html"]
+      test: ["ecto.create --quiet", "ecto.migrate", "test"],
+      coverage: ["coveralls.html"]
     ]
   end
 end

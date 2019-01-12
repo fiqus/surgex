@@ -1,3 +1,20 @@
 /* This file is for your main application css. */
 
 @import "./phoenix.css";
+
+.logo-garrahan-header {
+  min-width: 300px;
+  margin: 1rem;
+  display: block;
+}
+.logo-garrahan-header img {
+  width: auto;
+  display: block;
+}
+
+@media (min-width: 40.0rem) { /* Small devices (landscape phones, 576px and up) */
+  .logo-garrahan-header {
+    flex-basis: 527px;
+    margin: 2rem 1rem;
+  }
+}

@@ -1,3 +1,5 @@
+import App from "../App"
+
 const { socketScheme, scheme, hostname } =
   process.env.NODE_ENV === 'production'
   ? { socketScheme: 'wss'
@@ -12,13 +14,16 @@ const defaultHeaders = {
   'Content-Type': 'application/json'
 }
 
-// usefull when implement auth
 export function buildHeaders() {
-  // const authToken = localStorage.getItem('id_token')
+  const user = App.getUser();
 
-  return new Headers(Object.assign({}, defaultHeaders, {
-    // Authorization: authToken
-  }))
+  if (user && user.token) {
+    return Object.assign({}, defaultHeaders, {
+      "Authorization": `Bearer ${user.token}`
+    });
+  }
+
+  return defaultHeaders;
 }
 
 export const apiURL = `${scheme}://${hostname}/api`;
