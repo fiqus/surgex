@@ -14,16 +14,19 @@ defmodule GarrahanWeb.AuthControllerTest do
   end
 
   describe "token" do
-    test "should return an access token", %{conn: conn} do
-      fixture(@user_attrs)
+    test "should return an access token and some user data", %{conn: conn} do
+      user = fixture(@user_attrs)
       conn = post(conn, Routes.auth_path(conn, :token), @user_attrs)
 
       assert %{
                "status" => "success",
-               "token" => token
+               "token" => token,
+               "user" => auth_user
              } = json_response(conn, 200)
 
       assert String.length(token) > 100
+      assert auth_user["id"] == user.id
+      assert auth_user["email"] == user.email
     end
 
     test "should return an error because user is disabled", %{conn: conn} do
