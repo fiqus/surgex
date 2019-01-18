@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <h3>{{message}}</h3>
+  <div class="center form-login">
+    <h1>Registro de Cirugía</h1>
+    <h3>Servicio de Cirugía Plástica</h3>
+    <button v-on:click="redirectLogin">Iniciar Sesión</button>
   </div>
 </template>
 
@@ -8,7 +10,15 @@
   export default {
     data() {
       return {
-        message: "Bienvenido al Hospital Garrahan :)"
+        message: ""
+      }
+    },
+    computed: {
+
+    },
+    methods: {
+      redirectLogin: function() {
+        window.location = "/#/login"
       }
     }
   }
