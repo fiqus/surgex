@@ -1,4 +1,4 @@
-import App from "../App"
+import store from "../app"
 
 const { socketScheme, scheme, hostname } =
   process.env.NODE_ENV === 'production'
@@ -15,11 +15,11 @@ const defaultHeaders = {
 }
 
 export function buildHeaders() {
-  const user = App.getUser();
+  const token = store.getters.getToken;
 
-  if (user && user.token) {
+  if (token) {
     return Object.assign({}, defaultHeaders, {
-      "Authorization": `Bearer ${user.token}`
+      "Authorization": `Bearer ${token}`
     });
   }
 
@@ -30,7 +30,7 @@ export const apiURL = `${scheme}://${hostname}/api`;
 
 export function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
-    return response.data.data;
+    return response.data;
   } else {
     var error = new Error(response.statusText)
     error.response = response

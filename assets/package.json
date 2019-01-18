@@ -12,7 +12,8 @@
     "vue": "2.5.2",
     "vue-router": "2.8.1",
     "vuelidate": "0.4.3",
-    "vuex": "2.5.0"
+    "vuex": "2.5.0",
+    "vuex-persistedstate": "2.5.4"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

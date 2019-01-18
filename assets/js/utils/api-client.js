@@ -10,6 +10,14 @@ function httpGet(url) {
     });
 }
 
+function httpPost(url, data) {
+  return client.post(url, data, {headers: buildHeaders()})
+    .then((response) => {
+      return checkStatus(response);
+    });
+}
+
 module.exports = {
-  httpGet
+  httpGet,
+  httpPost
 }

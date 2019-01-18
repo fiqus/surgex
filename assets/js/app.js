@@ -7,6 +7,7 @@ import "phoenix_html"
 import Vue from "vue"
 import VueRouter from "vue-router"
 import Vuex from "vuex"
+import createPersistedState from "vuex-persistedstate";
 
 import {initialState, getters, mutations, actions} from "./state/store";
 
@@ -36,29 +37,15 @@ const router = new VueRouter({
   }
 });
 
-// Redirect to login page if not logged in and trying to access a restricted page
-router.beforeEach((to, from, next) => {
-  const publicPages = ["/", "/login"],
-    authRequired = (path) => {
-      return !publicPages.includes(path);
-    };
-
-  // @TODO: Just for testing purposes..!
-  App.setUser({token: "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJnYXJyYWhhbiIsImV4cCI6MTU0NzQwMDkzNSwiaWF0IjoxNTQ3MzE0NTM1LCJpc3MiOiJnYXJyYWhhbiIsImp0aSI6ImZiZDU4Y2RkLTIxYWEtNDQ1NC1hMWU0LTRhZDRlMjJiNDdlOCIsIm5iZiI6MTU0NzMxNDUzNCwic3ViIjoiOTU0NmY0NzEtNDkwYy00ZDIwLThlODQtYWUxYjUzY2NhYzE5IiwidHlwIjoiYWNjZXNzIn0.DgTNP76ja-Ka6BTVLTTTdDhNtAGfb2wfvyATRa-z_J0KG2DWdM64wySoE9ydhJMhg1s4OKbdYgF5cgmWsvJUCg"});
-
-  if (authRequired(to.path) && !App.getUser()) {
-    return next("/login");
-  }
-
-  next();
-})
-
 const store = new Vuex.Store({
+  plugins: [createPersistedState()],
   state: initialState,
   getters,
   mutations,
   actions
 });
+
+export default store;
 
 new Vue({
   el: '#app',
@@ -67,3 +54,17 @@ new Vue({
   template: '<App/>',
   components: { App }
 });
+
+// Redirect to login page if not logged in and trying to access a restricted page
+router.beforeEach((to, from, next) => {
+  const publicPages = ["/", "/login"],
+    authRequired = (path) => {
+      return !publicPages.includes(path);
+    };
+
+  if (authRequired(to.path) && !store.getters.getToken) {
+    return next("/login");
+  }
+
+  next();
+})

@@ -8,16 +8,6 @@
 
 <script>
 export default {
-  name: "App",
-  getUser: () => {
-    try {
-      return JSON.parse(localStorage.getItem("user"));
-    } catch (err) {
-      return null;
-    }
-  },
-  setUser: (user) => {
-    return localStorage.setItem("user", JSON.stringify(user));
-  }
+  name: "App"
 }
 </script>
