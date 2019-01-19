@@ -16,6 +16,7 @@ import App from "./App"
 import HomeScreen from "./screens/home.vue";
 import LoginScreen from "./screens/login.vue";
 import PatientScreen from "./screens/patient.vue";
+import UsersListScreen from "./screens/users-list.vue";
 
 Vue.config.debug = true;
 Vue.config.devtools = true;
@@ -29,12 +30,27 @@ const router = new VueRouter({
     {name: "home", path: "/", component: HomeScreen},
     {name: "login", path: "/login", component: LoginScreen},
     {name: "patient", path: "/patient/:patientId", component: PatientScreen},
+    {name: "users-list", path: "/users", component: UsersListScreen},
     // Default redirect to home
     { path: "*", redirect: "/" }
   ],
   scrollBehavior() {
     return {x: 0, y: 0};
   }
+});
+
+// Redirect to login page if not logged in and trying to access a restricted page
+router.beforeEach((to, from, next) => {
+  const publicPages = ["/", "/login"],
+    authRequired = (path) => {
+      return !publicPages.includes(path);
+    };
+
+  if (authRequired(to.path) && !store.getters.getToken) {
+    return next("/login");
+  }
+
+  next();
 });
 
 const store = new Vuex.Store({
@@ -54,17 +70,3 @@ new Vue({
   template: '<App/>',
   components: { App }
 });
-
-// Redirect to login page if not logged in and trying to access a restricted page
-router.beforeEach((to, from, next) => {
-  const publicPages = ["/", "/login"],
-    authRequired = (path) => {
-      return !publicPages.includes(path);
-    };
-
-  if (authRequired(to.path) && !store.getters.getToken) {
-    return next("/login");
-  }
-
-  next();
-})

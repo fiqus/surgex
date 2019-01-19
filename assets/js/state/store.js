@@ -18,16 +18,22 @@ const actions = {
       .then((patient) => {
         commit("setPatient", patient);
       });
+  },
+  fetchUsers() {
+    return apiClient.httpGet("/users")
+      .then((res) => {
+        return res.data;
+      });
   }
 };
 
 const mutations = {
-  setPatient(state, patient) {
-    state.patient = patient;
-  },
   setAuthUser(state, authUser) {
     state.authUser = authUser.user;
     state.token = authUser.token;
+  },
+  setPatient(state, patient) {
+    state.patient = patient;
   }
 };
 
