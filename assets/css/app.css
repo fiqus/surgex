@@ -25,6 +25,32 @@
   color: white;
 }
 
+.center {
+  text-align: center;
+}
+
+.left {
+  width: 45%;
+  float: left;
+  text-align: left;
+  margin-top: 0.5rem;
+  margin-left: 5.5rem;
+}
+
+.right {
+  width: 50%;
+  float: right;
+  text-align: right;
+}
+
+.logo-home {
+  height: 20px;;
+}
+.logo-home img{
+  margin-top: 1.7rem;
+  width: 2%;
+}
+
 a {
   cursor: pointer;
 }
