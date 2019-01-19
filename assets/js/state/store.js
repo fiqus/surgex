@@ -24,6 +24,12 @@ const actions = {
       .then((res) => {
         return res.data;
       });
+  },
+  fetchUser(_, userId) {
+    return apiClient.httpGet(`/users/${userId}`)
+      .then((res) => {
+        return res.data;
+      });
   }
 };
 

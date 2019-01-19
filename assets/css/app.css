@@ -62,3 +62,9 @@ button:hover {
     margin: 2rem 1rem;
   }
 }
+
+.elem-details {
+  border-top: 1px solid #eaeaea;
+  padding-top: 1rem;
+  margin: 1rem auto 3rem;
+}

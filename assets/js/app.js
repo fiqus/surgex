@@ -17,6 +17,7 @@ import HomeScreen from "./screens/home.vue";
 import LoginScreen from "./screens/login.vue";
 import PatientScreen from "./screens/patient.vue";
 import UsersListScreen from "./screens/users-list.vue";
+import UsersShowScreen from "./screens/users-show.vue";
 
 Vue.config.debug = true;
 Vue.config.devtools = true;
@@ -31,6 +32,7 @@ const router = new VueRouter({
     {name: "login", path: "/login", component: LoginScreen},
     {name: "patient", path: "/patient/:patientId", component: PatientScreen},
     {name: "users-list", path: "/users", component: UsersListScreen},
+    {name: "users-show", path: "/users/:userId", component: UsersShowScreen},
     // Default redirect to home
     { path: "*", redirect: "/" }
   ],
