@@ -1,7 +1,7 @@
-defmodule GarrahanWeb.PageController do
+defmodule GarrahanWeb.IndexController do
   use GarrahanWeb, :controller
 
   def index(conn, _params) do
-    render(conn, "index.html")
+    render(conn)
   end
 end

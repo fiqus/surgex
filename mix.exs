@@ -69,7 +69,7 @@ defmodule Garrahan.MixProject do
       "ecto.seeds": ["run priv/repo/seeds.exs"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "ecto.seeds"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate", "test"],
+      test: ["ecto.drop --quiet", "ecto.create --quiet", "ecto.migrate", "test"],
       coverage: ["coveralls.html"]
     ]
   end

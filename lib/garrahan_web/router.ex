@@ -21,7 +21,7 @@ defmodule GarrahanWeb.Router do
   scope "/", GarrahanWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", IndexController, :index
   end
 
   scope "/api", GarrahanWeb do
