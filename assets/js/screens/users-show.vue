@@ -11,7 +11,7 @@
       |
       <a :href="`/#/users/edit/${user.id}`">Editar</a>
       |
-      <a :href="`/#/users/delete/${user.id}`">Eliminar</a>
+      <a @click="onDelete(user)">Eliminar</a>
     </div>
   </div>
 </template>
@@ -28,7 +28,19 @@ export default {
       .then((user) => {
         this.user = user;
         this.loading = false;
-      })
+      });
+  },
+  methods: {
+    onDelete(user) {
+      if (!confirm(`¿Eliminar al usuario ${user.email}?`)) {
+        return false;
+      }
+      
+      this.$store.dispatch("deleteUser", user.id)
+        .then((rs) => {
+          window.location = "/#/users";
+        });
+    }
   }
 }
 </script>

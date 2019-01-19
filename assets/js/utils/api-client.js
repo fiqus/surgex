@@ -17,7 +17,15 @@ function httpPost(url, data) {
     });
 }
 
+function httpDelete(url) {
+  return client.delete(url, {headers: buildHeaders()})
+    .then((response) => {
+      return checkStatus(response);
+    });
+}
+
 module.exports = {
   httpGet,
-  httpPost
+  httpPost,
+  httpDelete
 }

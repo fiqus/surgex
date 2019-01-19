@@ -30,6 +30,12 @@ const actions = {
       .then((res) => {
         return res.data;
       });
+  },
+  deleteUser(_, userId) {
+    return apiClient.httpDelete(`/users/${userId}`)
+      .then((res) => {
+        return res.data;
+      });
   }
 };
 

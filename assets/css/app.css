@@ -20,6 +20,10 @@
   color: white;
 }
 
+a {
+  cursor: pointer;
+}
+
 input{
   margin-bottom: 3rem;
   color: white;
