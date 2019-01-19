@@ -12,11 +12,16 @@
   color: white
 }
 
-.login-message{
+.user-bar {
+  background-color: #681777;
+  height: 7rem;
+  width: 100%;
+  padding: 0rem 2.5rem;
+  border-radius: 0.5rem;
   color: white;
 }
 
-::placeholder{
+.login-message {
   color: white;
 }
 
@@ -29,7 +34,7 @@ input{
   color: white;
 }
 
-input:hover{
+input:hover {
   border-color: #64526e;
 }
 
@@ -47,19 +52,6 @@ button:hover {
   border-color: #483752;
 }
 
-.center{
-  text-align: center;
-}
-
-.logo-garrahan-header {
-  min-width: 300px;
-  margin: 1rem;
-  display: block;
-}
-.logo-garrahan-header img {
-  width: auto;
-  display: block;
-}
 @media (min-width: 40.0rem) { /* Small devices (landscape phones, 576px and up) */
   .logo-garrahan-header {
     flex-basis: 527px;

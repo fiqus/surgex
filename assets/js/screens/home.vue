@@ -20,7 +20,6 @@
           return this.$store.state.authUser;
         }
       }
-
     },
     methods: {
       redirectLogin: function() {

@@ -1,13 +1,21 @@
 <template>
+<div>
+  <userBar/>
   <div id="app" class="container">
     <div id="main">
       <router-view></router-view>
     </div>
   </div>
+</div>
 </template>
 
 <script>
+import userBar from "./screens/userBar.vue"
+
 export default {
-  name: "App"
+  name: "App",
+  components: {
+    userBar
+  }
 }
 </script>
