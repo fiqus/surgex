@@ -1,6 +1,7 @@
 <template>
   <div id="users-list" v-if="!loading">
-    <div><a href="/#/users/edit">Crear nuevo usuario</a></div>
+    <h3 class="subtitle">Listado de Usuarios</h3>
+    <div><a href="/#/users/new">Crear nuevo usuario</a></div>
     <table>
       <thead>
         <th>Email</th>

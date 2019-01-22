@@ -1,6 +1,6 @@
 <template>
   <div v-if="!loading">
-    <h3>Detalle de usuario</h3>
+    <h3 class="subtitle">Detalle de Usuario</h3>
     <section class="elem-details">
       <div><b>Email:</b> {{user.email}}</div>
       <div><b>Admin:</b> {{ user.is_admin ? "S" : "N" }}</div>

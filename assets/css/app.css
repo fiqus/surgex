@@ -85,8 +85,10 @@ button:hover {
   }
 }
 
+.subtitle {
+  border-bottom: 1px solid #eaeaea;
+  margin: 1rem auto;
+}
 .elem-details {
-  border-top: 1px solid #eaeaea;
-  padding-top: 1rem;
-  margin: 1rem auto 3rem;
+  margin: 2rem auto;
 }
