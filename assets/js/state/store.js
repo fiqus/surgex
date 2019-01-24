@@ -3,7 +3,8 @@ const apiClient = require("../utils/api-client");
 const initialState = {
   authUser: null,
   token: null,
-  patient: null
+  patient: null,
+  surgeries: []
 };
 
 const actions = {
@@ -36,6 +37,12 @@ const actions = {
       .then((res) => {
         return res.data;
       });
+  },
+  fetchSurgeries({commit}) {
+    return apiClient.httpGet("/surgeries")
+      .then((res) => {
+        commit("setSurgeries", res.data);
+      });
   }
 };
 
@@ -46,6 +53,9 @@ const mutations = {
   },
   setPatient(state, patient) {
     state.patient = patient;
+  },
+  setSurgeries(state, surgeries) {
+    state.surgeries = surgeries;
   }
 };
 
