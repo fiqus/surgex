@@ -131,7 +131,22 @@ defmodule Garrahan.Surgeries do
       ** (Ecto.NoResultsError)
 
   """
-  def get_surgeon!(id), do: Repo.get!(Surgeon, id)
+  def get_surgeon!(id), do: Repo.get!(Surgeon, id) |> preload_surgeon_user()
+
+  @doc """
+  Gets a single surgeon by email.
+
+  ## Examples
+
+      iex> get_surgeon_by_email("some@email.com")
+      %Surgeon{}
+
+  """
+  def get_surgeon_by_email(email) do
+    query = from(s in Surgeon, where: s.email == ^email)
+
+    Repo.one(query) |> preload_surgeon_user()
+  end
 
   @doc """
   Creates a surgeon.
@@ -197,6 +212,17 @@ defmodule Garrahan.Surgeries do
   def change_surgeon(%Surgeon{} = surgeon) do
     Surgeon.changeset(surgeon, %{})
   end
+
+  @doc """
+  Preloads user into surgeon
+
+  ## Examples
+
+      iex> preload_surgeon_user(surgeon)
+      %User{}
+
+  """
+  def preload_surgeon_user(surgeon), do: Repo.preload(surgeon, :user)
 
   alias Garrahan.Surgeries.Patient
 

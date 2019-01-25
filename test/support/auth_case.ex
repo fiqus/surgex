@@ -16,19 +16,28 @@ defmodule GarrahanWeb.AuthCase do
   setup do
     {:ok, admin} =
       Garrahan.Accounts.create_user(%{
-        email: "admin@garrahan.com",
-        name: "admin",
         password: "password",
         is_admin: true
       })
 
     {:ok, user} =
       Garrahan.Accounts.create_user(%{
-        email: "user@garrahan.com",
-        name: "user",
-        password: "password",
-        is_admin: false
+        password: "password"
       })
+
+    Garrahan.Surgeries.create_surgeon(%{
+      email: "admin@garrahan.com",
+      first_name: "Fiqus",
+      last_name: "Admin",
+      user: admin
+    })
+
+    Garrahan.Surgeries.create_surgeon(%{
+      email: "user@garrahan.com",
+      first_name: "Fiqus",
+      last_name: "User",
+      user: user
+    })
 
     {:ok, admin: admin, user: user}
   end

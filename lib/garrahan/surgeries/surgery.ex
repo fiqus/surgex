@@ -8,7 +8,6 @@ defmodule Garrahan.Surgeries.Surgery do
   @foreign_key_type :binary_id
   schema "surgeries" do
     field :date, :date
-    field :medical_history, :string
     belongs_to(:patient, Patient)
     # field :patient_id, :binary_id
     belongs_to(:surgeon, Surgeon)
@@ -20,7 +19,7 @@ defmodule Garrahan.Surgeries.Surgery do
   @doc false
   def changeset(surgery, attrs) do
     surgery
-    |> cast(attrs, [:medical_history, :date])
-    |> validate_required([:medical_history, :date])
+    |> cast(attrs, [:date])
+    |> validate_required([:date])
   end
 end

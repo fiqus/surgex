@@ -6,12 +6,13 @@ defmodule Garrahan.Surgeries.Patient do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "patients" do
-    field :address, :string
-    field :birthdate, :date
-    field :city, :string
+    field :medical_history, :string
     field :first_name, :string
     field :last_name, :string
+    field :birthdate, :date
+    field :city, :string
     field :province, :string
+    field :address, :string
     has_many(:surgery, Surgery)
 
     timestamps()
@@ -20,7 +21,15 @@ defmodule Garrahan.Surgeries.Patient do
   @doc false
   def changeset(patient, attrs) do
     patient
-    |> cast(attrs, [:first_name, :last_name, :birthdate, :city, :province, :address])
-    |> validate_required([:first_name, :last_name, :birthdate, :city, :province, :address])
+    |> cast(attrs, [
+      :medical_history,
+      :first_name,
+      :last_name,
+      :birthdate,
+      :city,
+      :province,
+      :address
+    ])
+    |> validate_required([:first_name, :last_name])
   end
 end

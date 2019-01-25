@@ -11,17 +11,31 @@
 # and so on) as they will fail if something goes wrong.
 
 alias Garrahan.Accounts
+alias Garrahan.Surgeries
 
 # Users
-Accounts.create_user(%{
+{:ok, admin} =
+  Accounts.create_user(%{
+    password: "adminpass",
+    is_admin: true
+  })
+
+{:ok, user} =
+  Accounts.create_user(%{
+    password: "userpass"
+  })
+
+# Surgeons
+Surgeries.create_surgeon(%{
+  user_id: admin.id,
   email: "info+admin@fiqus.com",
-  name: "Fiqus Admin",
-  password: "adminpass",
-  is_admin: true
+  first_name: "Fiqus",
+  last_name: "Admin"
 })
 
-Accounts.create_user(%{
+Surgeries.create_surgeon(%{
+  user_id: user.id,
   email: "info+user@fiqus.com",
-  name: "Fiqus User",
-  password: "userpass"
+  first_name: "Fiqus",
+  last_name: "User"
 })

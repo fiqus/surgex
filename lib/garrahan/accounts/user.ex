@@ -5,7 +5,6 @@ defmodule Garrahan.Accounts.User do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "users" do
-    field :email, :string
     field :password_hash, :string
     field :password, :string, virtual: true
     field :is_admin, :boolean, default: false
@@ -25,9 +24,8 @@ defmodule Garrahan.Accounts.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :password, :is_admin, :disabled])
-    |> validate_required([:email, :password])
-    |> unique_constraint(:email)
+    |> cast(attrs, [:password, :is_admin, :disabled])
+    |> validate_required([:password])
     |> validate_password()
   end
 

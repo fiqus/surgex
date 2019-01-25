@@ -1,25 +1,23 @@
 defmodule Garrahan.Auth do
   require Logger
 
-  alias Garrahan.Accounts
   alias Garrahan.Accounts.User
+  alias Garrahan.Surgeries
 
   def authenticate_user(email, given_password) do
-    Accounts.get_user_by_email(email)
+    Surgeries.get_surgeon_by_email(email)
     |> validate_user(given_password)
   end
 
   defp validate_user(nil, _), do: {:error, "EMAIL_NOT_EXISTS"}
 
-  defp validate_user(user, given_password) do
+  defp validate_user(surgeon, given_password) do
+    user = surgeon.user
+
     with :ok <- check_user_disabled(user),
          :ok <- verify_password_hash(given_password, user) do
-      {:ok, user}
+      {:ok, surgeon}
     else
-      # {:error, "WRONG_PASSWORD"} ->
-      #   Accounts.save_user_failed_login(user, given_password)
-      #   {:error, "WRONG_PASSWORD"}
-
       error ->
         error
     end
