@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import userBar from "./screens/userBar.vue"
+import userBar from "./screens/user-bar.vue"
 
 export default {
   name: "App",

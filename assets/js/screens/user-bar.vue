@@ -4,13 +4,13 @@
       <a href="#/home"><img src="/images/logo-home.png"></a>
     </div>
     <div class="left">
-      <p>EMAIL: {{userAuth.email}}</p>
+      <p>{{user.email}}</p>
     </div>
     <div class="right">
       <button v-if="!token" v-on:click="redirect('/login')">Iniciar Sesión</button>
       <button v-if="token" v-on:click="redirect('/surgeries')">Cirugías</button>
       <button v-if="token" v-on:click="redirect('/patients')">Pacientes</button>
-      <button v-if="userAuth.admin" v-on:click="redirect('/users')">Usuarios</button>
+      <button v-if="user.admin" v-on:click="redirect('/users')">Usuarios</button>
       <button v-if="token" v-on:click="redirect('logout')">Cerrar Sesión</button>
     </div>
   </div>
@@ -22,7 +22,7 @@ export default {
     }
   },
   computed: {
-    userAuth: {
+    user: {
       get() {
         return this.$store.state.authUser;
       }
