@@ -11,7 +11,7 @@
       </thead>
       <tbody>
         <tr v-for="user in users" :key="user.id">
-          <td><a :href="`/#/users/${user.id}`">{{ user.email }}</a></td>
+          <td><a @click="showDetail(user)">{{ user.email }}</a></td>
           <td>{{ user.is_admin ? "S" : "N" }}</td>
           <td>{{ user.disabled ? "N" : "S" }}</td>
           <td>
@@ -40,6 +40,9 @@ export default {
       });
   },
   methods: {
+    showDetail(user) {
+      this.$router.push({name: "users-show", params: {userId: user.id}})
+    },
     onDelete(user) {
       if (!confirm(`¿Eliminar al usuario ${user.email}?`)) {
         return false;
