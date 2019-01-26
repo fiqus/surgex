@@ -11,6 +11,6 @@ defmodule GarrahanWeb.UserView do
   end
 
   def render("user.json", %{user: user}) do
-    %{id: user.id, email: user.email, is_admin: user.is_admin, disabled: user.disabled}
+    %{id: user.id, is_admin: user.is_admin, disabled: user.disabled}
   end
 end

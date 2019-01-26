@@ -227,6 +227,7 @@ defmodule Garrahan.Surgeries do
 
   """
   def preload_surgeon_user({:ok, surgeon}), do: {:ok, preload_surgeon_user(surgeon)}
+  def preload_surgeon_user({:error, error}), do: {:error, error}
   def preload_surgeon_user(surgeon), do: Repo.preload(surgeon, :user)
 
   alias Garrahan.Surgeries.Patient

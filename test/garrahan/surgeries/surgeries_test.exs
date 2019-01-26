@@ -71,16 +71,18 @@ defmodule Garrahan.SurgeriesTest do
     alias Garrahan.Surgeries.Surgeon
 
     @valid_attrs %{
+      email: "some@email.com",
       first_name: "some first_name",
       last_name: "some last_name",
       license: "some license"
     }
     @update_attrs %{
+      email: "updated@email.com",
       first_name: "some updated first_name",
       last_name: "some updated last_name",
       license: "some updated license"
     }
-    @invalid_attrs %{first_name: nil, last_name: nil, license: nil}
+    @invalid_attrs %{email: nil, first_name: nil, last_name: nil, license: nil}
 
     def surgeon_fixture(attrs \\ %{}) do
       {:ok, surgeon} =

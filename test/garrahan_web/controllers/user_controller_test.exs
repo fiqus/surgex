@@ -7,15 +7,9 @@ defmodule GarrahanWeb.UserControllerTest do
 
   import GarrahanWeb.AuthCase
 
-  @create_attrs %{
-    email: "some email",
-    password: "some password"
-  }
-  @update_attrs %{
-    email: "some updated email",
-    password: "some updated password"
-  }
-  @invalid_attrs %{email: nil, password: nil}
+  @create_attrs %{password: "some password", is_admin: false}
+  @update_attrs %{password: "some updated password", is_admin: true}
+  @invalid_attrs %{password: nil}
 
   def fixture(:user) do
     {:ok, user} = Accounts.create_user(@create_attrs)
@@ -38,25 +32,10 @@ defmodule GarrahanWeb.UserControllerTest do
   end
 
   describe "create user" do
-    test_auth_admin_required(fn conn, _params ->
-      post(conn, Routes.user_path(conn, :create), user: @create_attrs)
-    end)
-
-    test "renders user when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.user_path(conn, :create), user: @create_attrs)
-      assert %{"id" => id} = json_response(conn, 201)["data"]
-
-      conn = get(conn, Routes.user_path(conn, :show, id))
-
-      assert %{
-               "id" => id,
-               "email" => "some email"
-             } = json_response(conn, 200)["data"]
-    end
-
-    test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.user_path(conn, :create), user: @invalid_attrs)
-      assert json_response(conn, 422)["errors"] != %{}
+    test "can't create users directly - endpoint doesn't exist", %{conn: conn} do
+      assert_error_sent 500, fn ->
+        post(conn, Routes.user_path(conn, :create), user: @create_attrs)
+      end
     end
   end
 
@@ -74,8 +53,7 @@ defmodule GarrahanWeb.UserControllerTest do
       conn = get(conn, Routes.user_path(conn, :show, id))
 
       assert %{
-               "id" => id,
-               "email" => "some updated email"
+               "id" => id
              } = json_response(conn, 200)["data"]
     end
 
@@ -86,18 +64,9 @@ defmodule GarrahanWeb.UserControllerTest do
   end
 
   describe "delete user" do
-    setup [:create_user]
-
-    test_auth_admin_required(fn conn, %{user: user} ->
-      delete(conn, Routes.user_path(conn, :delete, user))
-    end)
-
-    test "deletes chosen user", %{conn: conn, user: user} do
-      conn = delete(conn, Routes.user_path(conn, :delete, user))
-      assert response(conn, 204)
-
-      assert_error_sent 404, fn ->
-        get(conn, Routes.user_path(conn, :show, user))
+    test "can't delete users directly - endpoint doesn't exist", %{conn: conn, user: user} do
+      assert_error_sent 500, fn ->
+        delete(conn, Routes.user_path(conn, :delete, user))
       end
     end
   end

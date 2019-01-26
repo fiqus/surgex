@@ -5,7 +5,6 @@ defmodule Garrahan.AccountsTest do
   alias Garrahan.Accounts.User
 
   describe "users" do
-
     @valid_attrs %{password: "some password", is_admin: true}
     @update_attrs %{password: "some updated password", is_admin: false}
     @invalid_attrs %{password: nil}
