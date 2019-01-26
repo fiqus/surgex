@@ -1,9 +1,9 @@
 <template>
   <div id="users-list" v-if="!loading">
     <h3 class="subtitle">Listado de Usuarios</h3>
-    <div><a href="/#/users/new">Crear nuevo usuario</a></div>
     <table>
       <thead>
+        <th>Persona</th>
         <th>Email</th>
         <th>Admin</th>
         <th>Activo</th>
@@ -11,13 +11,12 @@
       </thead>
       <tbody>
         <tr v-for="user in users" :key="user.id">
-          <td><a @click="showDetail(user)">{{ user.email }}</a></td>
-          <td>{{ user.is_admin ? "S" : "N" }}</td>
+          <td><a @click="showDetail(user)">{{ user.lastName }}, {{ user.firstName }}</a></td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.isAdmin ? "S" : "N" }}</td>
           <td>{{ user.disabled ? "N" : "S" }}</td>
           <td>
             <a :href="`/#/users/edit/${user.id}`">Editar</a>
-            |
-            <a @click="onDelete(user)">Eliminar</a>
           </td>
         </tr>
       </tbody>
@@ -42,18 +41,6 @@ export default {
   methods: {
     showDetail(user) {
       this.$router.push({name: "users-show", params: {userId: user.id}})
-    },
-    onDelete(user) {
-      if (!confirm(`¿Eliminar al usuario ${user.email}?`)) {
-        return false;
-      }
-      
-      this.$store.dispatch("deleteUser", user.id)
-        .then((rs) => {
-          this.users = this.users.filter((u) => {
-            return u.id !== user.id;
-          });
-        });
     }
   }
 }

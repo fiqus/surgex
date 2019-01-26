@@ -2,16 +2,15 @@
   <div v-if="!loading">
     <h3 class="subtitle">Detalle de Usuario</h3>
     <section class="elem-details">
+      <div><b>Persona:</b> {{ user.lastName }}, {{ user.firstName }}</div>
       <div><b>Email:</b> {{user.email}}</div>
-      <div><b>Admin:</b> {{ user.is_admin ? "S" : "N" }}</div>
+      <div><b>Admin:</b> {{ user.isAdmin ? "S" : "N" }}</div>
       <div><b>Activo:</b> {{ user.disabled ? "N" : "S" }}</div>
     </section>
     <div>
       <a :href="`/#/users`">Volver</a>
       |
       <a :href="`/#/users/edit/${user.id}`">Editar</a>
-      |
-      <a @click="onDelete(user)">Eliminar</a>
     </div>
   </div>
 </template>
@@ -31,16 +30,7 @@ export default {
       });
   },
   methods: {
-    onDelete(user) {
-      if (!confirm(`¿Eliminar al usuario ${user.email}?`)) {
-        return false;
-      }
-      
-      this.$store.dispatch("deleteUser", user.id)
-        .then((rs) => {
-          window.location = "/#/users";
-        });
-    }
+    
   }
 }
 </script>
