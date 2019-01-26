@@ -32,8 +32,17 @@ const actions = {
         return res.data;
       });
   },
-  deleteUser(_, userId) {
-    return apiClient.httpDelete(`/users/${userId}`)
+  updateUser(_, user) {
+    // @TODO We should consider this format at backend, doesn't make much sense as it is
+    const data = {
+      id: user.id,
+      user: {
+        is_admin: user.isAdmin,
+        disabled: user.disabled
+      }
+    };
+
+    return apiClient.httpPut(`/users/${user.id}`, data)
       .then((res) => {
         return res.data;
       });

@@ -17,6 +17,13 @@ function httpPost(url, data) {
     });
 }
 
+function httpPut(url, data) {
+  return client.put(url, data, {headers: buildHeaders()})
+    .then((response) => {
+      return checkStatus(response);
+    });
+}
+
 function httpDelete(url) {
   return client.delete(url, {headers: buildHeaders()})
     .then((response) => {
@@ -27,5 +34,6 @@ function httpDelete(url) {
 module.exports = {
   httpGet,
   httpPost,
+  httpPut,
   httpDelete
 }

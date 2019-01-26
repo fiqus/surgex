@@ -7,10 +7,9 @@
       <div><b>Admin:</b> {{ user.isAdmin ? "S" : "N" }}</div>
       <div><b>Activo:</b> {{ user.disabled ? "N" : "S" }}</div>
     </section>
-    <div>
-      <a :href="`/#/users`">Volver</a>
-      |
-      <a :href="`/#/users/edit/${user.id}`">Editar</a>
+    <div class="action-bar-buttons">
+      <button v-on:click="$router.go(-1)">Volver</button>
+      <button @click="showEdit(user)">Editar</button>
     </div>
   </div>
 </template>
@@ -30,7 +29,9 @@ export default {
       });
   },
   methods: {
-    
+    showEdit(user) {
+      this.$router.push({name: "users-edit", params: {userId: user.id}});
+    }
   }
 }
 </script>

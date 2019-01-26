@@ -7,7 +7,7 @@ defmodule Garrahan.AccountsTest do
   describe "users" do
     @valid_attrs %{password: "some password", is_admin: true}
     @update_attrs %{password: "some updated password", is_admin: false}
-    @invalid_attrs %{password: nil}
+    @invalid_attrs %{password: "short"}
 
     setup do
       {:ok, user} = Accounts.create_user(@valid_attrs)

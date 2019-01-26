@@ -37,7 +37,11 @@ defmodule GarrahanWeb.UserControllerTest do
       put(conn, Routes.user_path(conn, :update, user), user: @update_attrs)
     end)
 
-    test "renders user when data is valid", %{conn: conn, user: %User{id: id} = user, surgeon: surgeon} do
+    test "renders user when data is valid", %{
+      conn: conn,
+      user: %User{id: id} = user,
+      surgeon: surgeon
+    } do
       conn = put(conn, Routes.user_path(conn, :update, user), user: @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 

@@ -25,7 +25,7 @@ defmodule Garrahan.Accounts.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:password, :is_admin, :disabled])
-    |> validate_required([:password])
+    |> validate_required([])
     |> validate_password()
   end
 

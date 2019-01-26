@@ -46,7 +46,7 @@
 .logo-home {
   height: 20px;;
 }
-.logo-home img{
+.logo-home img {
   margin-top: 1.7rem;
   width: 2%;
 }
@@ -55,13 +55,17 @@ a {
   cursor: pointer;
 }
 
-input{
+input {
   margin-bottom: 3rem;
-  color: white;
+  color: black;
+  background-color: #cccccc;
 }
-
 input:hover {
   border-color: #64526e;
+}
+input:disabled {
+  color: #797979;
+  background-color: #cccccc;
 }
 
 button {

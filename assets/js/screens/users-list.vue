@@ -16,7 +16,7 @@
           <td>{{ user.isAdmin ? "S" : "N" }}</td>
           <td>{{ user.disabled ? "N" : "S" }}</td>
           <td>
-            <a :href="`/#/users/edit/${user.id}`">Editar</a>
+            <a @click="showEdit(user)">Editar</a>
           </td>
         </tr>
       </tbody>
@@ -40,7 +40,10 @@ export default {
   },
   methods: {
     showDetail(user) {
-      this.$router.push({name: "users-show", params: {userId: user.id}})
+      this.$router.push({name: "users-show", params: {userId: user.id}});
+    },
+    showEdit(user) {
+      this.$router.push({name: "users-edit", params: {userId: user.id}});
     }
   }
 }
