@@ -11,11 +11,18 @@ defmodule Garrahan.Surgeries.Surgeon do
     field :first_name, :string
     field :last_name, :string
     field :license, :string
-    belongs_to(:user, User)
     # field :user_id, :binary_id
-    has_many(:surgery, Surgery)
+    belongs_to(:user, User)
+    has_many(:surgeries, Surgery)
 
     timestamps()
+  end
+
+  @doc """
+  Ensure to set user_id field when a %User{} is given in attrs
+  """
+  def changeset(surgeon, %{user: %User{}} = attrs) do
+    changeset(surgeon, attrs |> Map.delete(:user) |> Map.put(:user_id, attrs.user.id))
   end
 
   @doc false

@@ -164,6 +164,7 @@ defmodule Garrahan.Surgeries do
     %Surgeon{}
     |> Surgeon.changeset(attrs)
     |> Repo.insert()
+    |> preload_surgeon_user()
   end
 
   @doc """
@@ -221,7 +222,11 @@ defmodule Garrahan.Surgeries do
       iex> preload_surgeon_user(surgeon)
       %User{}
 
+      iex> preload_surgeon_user({:ok, surgeon})
+      {:ok, %User{}}
+
   """
+  def preload_surgeon_user({:ok, surgeon}), do: {:ok, preload_surgeon_user(surgeon)}
   def preload_surgeon_user(surgeon), do: Repo.preload(surgeon, :user)
 
   alias Garrahan.Surgeries.Patient

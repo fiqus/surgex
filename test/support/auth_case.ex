@@ -32,14 +32,15 @@ defmodule GarrahanWeb.AuthCase do
       user: admin
     })
 
-    Garrahan.Surgeries.create_surgeon(%{
-      email: "user@garrahan.com",
-      first_name: "Fiqus",
-      last_name: "User",
-      user: user
-    })
+    {:ok, surgeon} =
+      Garrahan.Surgeries.create_surgeon(%{
+        email: "user@garrahan.com",
+        first_name: "Fiqus",
+        last_name: "User",
+        user: user
+      })
 
-    {:ok, admin: admin, user: user}
+    {:ok, admin: admin, user: user, surgeon: surgeon}
   end
 
   defmacro test_auth_admin_required(func) do
