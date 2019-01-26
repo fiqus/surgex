@@ -6,7 +6,7 @@ defmodule Garrahan.AuthTest do
 
   describe "authenticate_user" do
     test "the user is found by email and password checked", %{surgeon: surgeon, user: user} do
-      assert {:ok, auth_surgeon} = Auth.authenticate_user(surgeon.email, "password")
+      assert {:ok, auth_surgeon} = Auth.authenticate_user(surgeon.email, user.password)
       assert auth_surgeon.id == surgeon.id
       assert auth_surgeon.email == surgeon.email
       assert auth_surgeon.user.id == user.id
@@ -20,7 +20,7 @@ defmodule Garrahan.AuthTest do
     test "cannot authenticate becase the user is disabled", %{surgeon: surgeon, user: user} do
       {:ok, _user} = Accounts.update_user(user, %{disabled: true})
 
-      assert {:error, "USER_DISABLED"} = Auth.authenticate_user(surgeon.email, "password")
+      assert {:error, "USER_DISABLED"} = Auth.authenticate_user(surgeon.email, user.password)
     end
 
     test "the user is found by email but wrong password", %{surgeon: surgeon} do
