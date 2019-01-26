@@ -149,6 +149,21 @@ defmodule Garrahan.Surgeries do
   end
 
   @doc """
+  Gets a single surgeon by user_id.
+
+  ## Examples
+
+      iex> get_surgeon_by_email("some@email.com")
+      %Surgeon{}
+
+  """
+  def get_surgeon_by_user_id(user_id) do
+    query = from(s in Surgeon, where: s.user_id == ^user_id)
+
+    Repo.one(query) |> preload_surgeon_user()
+  end
+
+  @doc """
   Creates a surgeon.
 
   ## Examples

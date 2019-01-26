@@ -9,7 +9,10 @@ defmodule GarrahanWeb.UserController do
   plug Garrahan.Auth.Plug.AdminUser, []
 
   def index(conn, _params) do
-    users = Accounts.list_users()
+    users =
+      Accounts.list_users()
+      |> Accounts.attach_surgeon_data()
+
     render(conn, "index.json", users: users)
   end
 
@@ -23,7 +26,10 @@ defmodule GarrahanWeb.UserController do
   # end
 
   def show(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
+    user =
+      Accounts.get_user!(id)
+      |> Accounts.attach_surgeon_data()
+
     render(conn, "show.json", user: user)
   end
 
@@ -31,7 +37,7 @@ defmodule GarrahanWeb.UserController do
     user = Accounts.get_user!(id)
 
     with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
-      render(conn, "show.json", user: user)
+      render(conn, "show.json", user: Accounts.attach_surgeon_data(user))
     end
   end
 

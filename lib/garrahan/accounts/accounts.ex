@@ -6,6 +6,7 @@ defmodule Garrahan.Accounts do
   import Ecto.Query, warn: false
   alias Garrahan.Repo
 
+  alias Garrahan.Surgeries
   alias Garrahan.Accounts.User
 
   @doc """
@@ -100,5 +101,25 @@ defmodule Garrahan.Accounts do
   """
   def change_user(%User{} = user) do
     User.changeset(user, %{})
+  end
+
+  @doc """
+  Attaches surgeon data for given user/s.
+
+  ## Examples
+
+      iex> attach_surgeon_data([%User{}, ...])
+      [{%User{}, %Surgeon{}}, ...]
+      iex> attach_surgeon_data(%User{})
+      {%User{}, %Surgeon{}}
+
+  """
+  def attach_surgeon_data(users) when is_list(users) do
+    Enum.map(users, &attach_surgeon_data/1)
+  end
+
+  def attach_surgeon_data(%User{} = user) do
+    surgeon = Surgeries.get_surgeon_by_user_id(user.id)
+    {user, surgeon}
   end
 end

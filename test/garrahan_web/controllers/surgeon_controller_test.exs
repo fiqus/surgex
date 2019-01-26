@@ -54,8 +54,8 @@ defmodule GarrahanWeb.SurgeonControllerTest do
 
       assert %{
                "id" => id,
-               "first_name" => "some first_name",
-               "last_name" => "some last_name",
+               "firstName" => "some first_name",
+               "lastName" => "some last_name",
                "license" => "some license"
              } = json_response(conn, 200)["data"]
     end

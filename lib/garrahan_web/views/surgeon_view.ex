@@ -13,8 +13,9 @@ defmodule GarrahanWeb.SurgeonView do
   def render("surgeon.json", %{surgeon: surgeon}) do
     %{
       id: surgeon.id,
-      first_name: surgeon.first_name,
-      last_name: surgeon.last_name,
+      email: surgeon.email,
+      firstName: surgeon.first_name,
+      lastName: surgeon.last_name,
       license: surgeon.license
     }
   end
