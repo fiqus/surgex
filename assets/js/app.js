@@ -8,6 +8,7 @@ import Vue from "vue"
 import VueRouter from "vue-router"
 import Vuex from "vuex"
 import createPersistedState from "vuex-persistedstate";
+import NProgress from "nprogress";
 
 import {initialState, getters, mutations, actions} from "./state/store";
 

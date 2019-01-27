@@ -1,4 +1,5 @@
 import store from "../app"
+import NProgress from "nprogress"
 
 const { socketScheme, scheme, hostname } =
   process.env.NODE_ENV === 'production'
@@ -36,4 +37,22 @@ export function checkStatus(response) {
     error.response = response
     throw error
   }
+}
+
+export function setupLoader(http) {
+  http.interceptors.request.use((config) => {
+    NProgress.start();
+    return config;
+  }, (error) => {
+    NProgress.done();
+    return Promise.reject(error);
+  });
+  
+  http.interceptors.response.use((response) => {
+    NProgress.done();
+    return response;
+  }, (error) => {
+    NProgress.done();
+    return Promise.reject(error);
+  });
 }

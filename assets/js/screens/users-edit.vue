@@ -33,7 +33,7 @@ export default {
         isAdmin: false,
         disabled: false
       },
-      loading: false
+      loading: true
     }
 	},
   created() {

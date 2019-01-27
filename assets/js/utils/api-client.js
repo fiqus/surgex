@@ -1,7 +1,9 @@
 const axios = require("axios"),
-  {apiURL, buildHeaders, checkStatus} = require("./index");
+  {apiURL, buildHeaders, checkStatus, setupLoader} = require("./index");
 
 const client = axios.create({baseURL: apiURL, timeout: 0, headers: {}});
+
+setupLoader(client);
 
 function httpGet(url) {
   return client.get(url, {headers: buildHeaders()})

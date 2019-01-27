@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "nprogress": "^0.2.0",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
     "vue": "^2.5.22",
