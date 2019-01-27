@@ -47,6 +47,24 @@ const actions = {
         return res.data;
       });
   },
+  fetchSurgeons() {
+    return apiClient.httpGet("/surgeons")
+      .then((res) => {
+        return res.data;
+      });
+  },
+  fetchSurgeon(_, surgeonId) {
+    return apiClient.httpGet(`/surgeons/${surgeonId}`)
+      .then((res) => {
+        return res.data;
+      });
+  },
+  deleteSurgeon(_, surgeonId) {
+    return apiClient.httpDelete(`/surgeons/${surgeonId}`)
+      .then((res) => {
+        return res.data;
+      });
+  },
   fetchSurgeries({commit}) {
     return apiClient.httpGet("/surgeries")
       .then((res) => {
