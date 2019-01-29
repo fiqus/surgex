@@ -14,6 +14,10 @@ const actions = {
         commit("setAuthUser", res);
       });
   },
+  logout() {
+    localStorage.clear();
+    return window.location.reload();
+  },
   fetchPatient({commit}, {patientId}) {
     return apiClient.httpGet(`/patients/${patientId}`)
       .then((patient) => {
