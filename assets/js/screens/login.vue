@@ -44,7 +44,7 @@ export default {
       this.loading = true;
       this.$store.dispatch("login", this.login)
         .then((data) => {
-          window.location = "/#/home"
+          this.$router.push({name: "home"});
         })
     }
 	}

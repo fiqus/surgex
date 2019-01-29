@@ -23,7 +23,7 @@
     },
     methods: {
       redirectLogin: function() {
-        window.location = "/#/login"
+        this.$router.push({name: "login"});
       }
     }
   }
