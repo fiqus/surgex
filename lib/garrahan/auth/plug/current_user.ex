@@ -5,7 +5,15 @@ defmodule Garrahan.Auth.Plug.CurrentUser do
   def init(opts), do: opts
 
   def call(conn, _opts) do
-    current_user = current_resource(conn)
-    assign(conn, :current_user, current_user)
+    {user, surgeon} =
+      current_resource(conn)
+      |> format_resource()
+
+    conn
+    |> assign(:current_user, user)
+    |> assign(:current_surgeon, surgeon)
   end
+
+  defp format_resource(nil), do: {nil, nil}
+  defp format_resource({_user, _surgeon} = resource), do: resource
 end

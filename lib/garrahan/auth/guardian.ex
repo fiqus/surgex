@@ -12,7 +12,16 @@ defmodule Garrahan.Auth.Guardian do
 
   def resource_from_claims(claims) do
     id = claims["sub"]
-    user = Accounts.get_user!(id)
-    {:ok, user}
+
+    try do
+      {user, surgeon} =
+        Accounts.get_user!(id)
+        |> Accounts.attach_surgeon_data()
+
+      {:ok, {user, surgeon}}
+    rescue
+      _error ->
+        {:error, :user_not_found}
+    end
   end
 end

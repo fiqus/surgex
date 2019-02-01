@@ -19,7 +19,7 @@ defmodule Garrahan.Auth.Plug.AdminUser do
     end
   end
 
-  defp is_user_admin?(%{is_admin: true}), do: true
+  defp is_user_admin?({%{is_admin: true}, _}), do: true
   defp is_user_admin?(_), do: false
 
   defp encode_error() do
