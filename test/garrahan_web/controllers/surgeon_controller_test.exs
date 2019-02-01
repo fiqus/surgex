@@ -37,7 +37,7 @@ defmodule GarrahanWeb.SurgeonControllerTest do
 
     test "lists all surgeons", %{conn: conn} do
       conn = get(conn, Routes.surgeon_path(conn, :index))
-      assert json_response(conn, 200)["data"] == []
+      assert [%{}, %{}] = json_response(conn, 200)["data"]
     end
   end
 
@@ -81,8 +81,8 @@ defmodule GarrahanWeb.SurgeonControllerTest do
 
       assert %{
                "id" => id,
-               "first_name" => "some updated first_name",
-               "last_name" => "some updated last_name",
+               "firstName" => "some updated first_name",
+               "lastName" => "some updated last_name",
                "license" => "some updated license"
              } = json_response(conn, 200)["data"]
     end

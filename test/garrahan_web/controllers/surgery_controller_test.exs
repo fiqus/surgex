@@ -8,14 +8,12 @@ defmodule GarrahanWeb.SurgeryControllerTest do
   import GarrahanWeb.AuthCase
 
   @create_attrs %{
-    date: ~D[2010-04-17],
-    medical_history: "some medical_history"
+    date: ~D[2010-04-17]
   }
   @update_attrs %{
-    date: ~D[2011-05-18],
-    medical_history: "some updated medical_history"
+    date: ~D[2011-05-18]
   }
-  @invalid_attrs %{date: nil, medical_history: nil}
+  @invalid_attrs %{date: nil}
 
   def fixture(:surgery) do
     {:ok, surgery} = Surgeries.create_surgery(@create_attrs)
@@ -50,8 +48,7 @@ defmodule GarrahanWeb.SurgeryControllerTest do
 
       assert %{
                "id" => id,
-               "date" => "2010-04-17",
-               "medical_history" => "some medical_history"
+               "date" => "2010-04-17"
              } = json_response(conn, 200)["data"]
     end
 
@@ -76,8 +73,7 @@ defmodule GarrahanWeb.SurgeryControllerTest do
 
       assert %{
                "id" => id,
-               "date" => "2011-05-18",
-               "medical_history" => "some updated medical_history"
+               "date" => "2011-05-18"
              } = json_response(conn, 200)["data"]
     end
 

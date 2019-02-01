@@ -233,9 +233,9 @@ defmodule Garrahan.SurgeriesTest do
   describe "surgeries" do
     alias Garrahan.Surgeries.Surgery
 
-    @valid_attrs %{date: ~D[2010-04-17], medical_history: "some medical_history"}
-    @update_attrs %{date: ~D[2011-05-18], medical_history: "some updated medical_history"}
-    @invalid_attrs %{date: nil, medical_history: nil}
+    @valid_attrs %{date: ~D[2010-04-17]}
+    @update_attrs %{date: ~D[2011-05-18]}
+    @invalid_attrs %{date: nil}
 
     def surgery_fixture(attrs \\ %{}) do
       {:ok, surgery} =
@@ -259,7 +259,6 @@ defmodule Garrahan.SurgeriesTest do
     test "create_surgery/1 with valid data creates a surgery" do
       assert {:ok, %Surgery{} = surgery} = Surgeries.create_surgery(@valid_attrs)
       assert surgery.date == ~D[2010-04-17]
-      assert surgery.medical_history == "some medical_history"
     end
 
     test "create_surgery/1 with invalid data returns error changeset" do
@@ -270,7 +269,6 @@ defmodule Garrahan.SurgeriesTest do
       surgery = surgery_fixture()
       assert {:ok, %Surgery{} = surgery} = Surgeries.update_surgery(surgery, @update_attrs)
       assert surgery.date == ~D[2011-05-18]
-      assert surgery.medical_history == "some updated medical_history"
     end
 
     test "update_surgery/2 with invalid data returns error changeset" do

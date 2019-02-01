@@ -115,6 +115,7 @@ defmodule Garrahan.Surgeries do
   """
   def list_surgeons do
     Repo.all(Surgeon)
+    |>preload_surgeon_user()
   end
 
   @doc """

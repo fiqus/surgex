@@ -11,6 +11,6 @@ defmodule GarrahanWeb.SurgeryView do
   end
 
   def render("surgery.json", %{surgery: surgery}) do
-    %{id: surgery.id, medical_history: surgery.medical_history, date: surgery.date}
+    %{id: surgery.id, date: surgery.date}
   end
 end
