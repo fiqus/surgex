@@ -1,0 +1,30 @@
+stages:
+  - test
+  #- deploy
+image: bitwalker/alpine-elixir-phoenix:latest
+
+test:
+  stage: test
+  services:
+    - postgres:latest
+  variables:
+    POSTGRES_HOST: postgres
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: postgres
+    MIX_ENV: "test"
+  script:
+    - mix deps.get --only test
+    - mix ecto.create
+    - mix ecto.migrate
+    - mix test
+  only:
+    - master
+    - tags
+    - merge_requests
+deploy: # Add this 'deploy' stage description
+  stage: deploy
+  script:
+    - git remote add gigalixir $GIGALIXIR_REMOTE_URL
+    - git push -f gigalixir HEAD:refs/heads/master
+  only:
+    - master
