@@ -14,7 +14,7 @@ config :garrahan, Garrahan.Repo,
   username: "postgres",
   password: "postgres",
   database: "garrahan_test",
-  hostname: "localhost",
+  hostname: System.get_env("POSTGRES_HOST") || "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
 # Configure Guardian
