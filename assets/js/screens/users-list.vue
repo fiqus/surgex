@@ -1,6 +1,10 @@
 <template>
   <div id="users-list" v-if="!loading">
     <h3 class="subtitle">Listado de Usuarios</h3>
+    <!-- <customTable
+      :headers="this.headers"
+      :data="this.users">
+    </customTable> -->
     <table>
       <thead>
         <th>Persona</th>
@@ -24,11 +28,21 @@
   </div>
 </template>
 <script>
+import customTable from "../components/custom-table.vue";
 export default {
+  components: {
+    customTable
+  },
   data() {
     return {
       users: [],
-      loading: true
+      loading: true,
+      headers: [
+        {key: "lastName", value: "Persona"}, 
+        {key: "email", value: "Email"}, 
+        {key: "isAdmin", value: "Admin"}, 
+        {key: "disabled", value: "Activo"}
+      ]
     }
   },
   created() {

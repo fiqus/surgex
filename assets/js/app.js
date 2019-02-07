@@ -16,8 +16,8 @@ import App from "./App"
 
 import HomeScreen from "./screens/home.vue";
 import LoginScreen from "./screens/login.vue";
-import PatientsScreen from "./screens/patients.vue";
-import PatientScreen from "./screens/patient.vue";
+import PatientsScreen from "./screens/patients/patients.vue";
+import PatientScreen from "./screens/patients/patient.vue";
 import UsersListScreen from "./screens/users-list.vue";
 import UsersShowScreen from "./screens/users-show.vue";
 import UsersEditScreen from "./screens/users-edit.vue";

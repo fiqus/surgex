@@ -18,6 +18,12 @@ const actions = {
     localStorage.clear();
     return window.location.reload();
   },
+  fetchPatients() {
+    return apiClient.httpGet("/patients")
+      .then((res) => {
+        return res.data;
+      });
+  },
   fetchPatient({commit}, {patientId}) {
     return apiClient.httpGet(`/patients/${patientId}`)
       .then((patient) => {
