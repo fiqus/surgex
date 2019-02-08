@@ -9,7 +9,7 @@
     <div class="right">
       <button v-if="!token" v-on:click="redirect('login')">Iniciar Sesión</button>
       <button v-if="token" v-on:click="redirect('surgeries')">Cirugías</button>
-      <button v-if="token" v-on:click="redirect('patients')">Pacientes</button>
+      <button v-if="token" v-on:click="redirect('patients-list')">Pacientes</button>
       <button v-if="token" v-on:click="redirect('surgeons-list')">Cirujanos</button>
       <button v-if="user.isAdmin" v-on:click="redirect('users-list')">Usuarios</button>
       <button v-if="token" v-on:click="redirect('logout')">Cerrar Sesión</button>

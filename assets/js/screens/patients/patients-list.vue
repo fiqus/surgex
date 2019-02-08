@@ -1,15 +1,16 @@
 <template>
   <div>
     <h3 class="subtitle">Listado de Pacientes</h3>
-    <button class="button">
-      <i class="fa fa-plus"></i>
-      Agregar Paciente
-    </button>
     <customTable 
       v-if="this.patients"
       :headers="this.headers"
-      :data="this.patients">
+      :data="this.patients"
+      @clicked="patientSelect">
     </customTable>
+    <button class="button" v-on:click="createPatient">
+      <i class="fa fa-plus"></i>
+      Agregar Paciente
+    </button>
     <h4 v-if="!this.patients">Aún no tiene Pacientes cargados</h4>
   </div>
 </template>
@@ -19,6 +20,14 @@ import customTable from "../../components/custom-table";
 export default {
   components: {
     customTable
+  },
+  created() {
+    this.$store.dispatch("fetchPatients")
+      .then((patients) => {
+        if(patients.length) {
+          this.patients = patients;
+        }
+      });
   },
   data() {
     return {
@@ -31,15 +40,15 @@ export default {
       patients: null
     }
   },
-  created() {
-    this.$store.dispatch("fetchPatients")
-      .then((patients) => {
-        if(patients.length) {
-          this.patients = patients;
-        }
-      });
-  },
   computed: {
-  }
+  },
+  methods: {
+    patientSelect(id) {
+      return this.$router.push({path: `patient/${id}`});
+    },
+    createPatient() {
+      return this.$router.push({name: "new-patient"});
+    }
+  },
 }
 </script>

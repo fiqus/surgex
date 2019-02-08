@@ -16,8 +16,9 @@ import App from "./App"
 
 import HomeScreen from "./screens/home.vue";
 import LoginScreen from "./screens/login.vue";
-import PatientsScreen from "./screens/patients/patients.vue";
-import PatientScreen from "./screens/patients/patient.vue";
+import PatientsScreen from "./screens/patients/patients-list.vue";
+import PatientScreen from "./screens/patients/patient-show.vue";
+import PatientCreateScreen from "./screens/patients/new-patient.vue";
 import UsersListScreen from "./screens/users-list.vue";
 import UsersShowScreen from "./screens/users-show.vue";
 import UsersEditScreen from "./screens/users-edit.vue";
@@ -37,8 +38,9 @@ const router = new VueRouter({
   routes: [
     {name: "home", path: "/", component: HomeScreen},
     {name: "login", path: "/login", component: LoginScreen},
-    {name: "patients", path: "/patients", component: PatientsScreen},
-    {name: "patient", path: "/patient/:patientId", component: PatientScreen},
+    {name: "patients-list", path: "/patients", component: PatientsScreen},
+    {name: "patient-show", path: "/patient/:patientId", component: PatientScreen},
+    {name: "new-patient", path: "/patients/new", component: PatientCreateScreen},
     {name: "users-list", path: "/users", component: UsersListScreen},
     {name: "users-show", path: "/users/:userId", component: UsersShowScreen},
     {name: "users-edit", path: "/users/edit/:userId", component: UsersEditScreen},

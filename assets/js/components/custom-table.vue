@@ -7,8 +7,9 @@
       </th>
       <tr 
         v-for="d in data">
-        <td
-          v-for="header in headers">
+        <td style="cursor: pointer"
+          v-for="header in headers"
+          v-on:click="clicked(d.id)">
             {{ d[header.key] }}
         </td>
       </tr>
@@ -36,6 +37,9 @@ export default {
   computed: {
   },
   methods: {
+    clicked(id) {
+      this.$emit("clicked", id);
+    }
   }
 }
 </script>

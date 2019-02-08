@@ -30,6 +30,12 @@ const actions = {
         commit("setPatient", patient);
       });
   },
+  createPatient({commit}, dataPatient) {
+    return apiClient.httpPost("/patients", dataPatient)
+      .then((res) => {
+        return res;
+      });
+  },
   fetchUsers() {
     return apiClient.httpGet("/users")
       .then((res) => {
@@ -89,7 +95,7 @@ const mutations = {
     state.token = authUser.token;
   },
   setPatient(state, patient) {
-    state.patient = patient;
+    state.patient = patient.data;
   },
   setSurgeries(state, surgeries) {
     state.surgeries = surgeries;
