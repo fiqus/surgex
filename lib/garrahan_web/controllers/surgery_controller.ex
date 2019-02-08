@@ -6,8 +6,14 @@ defmodule GarrahanWeb.SurgeryController do
 
   action_fallback GarrahanWeb.FallbackController
 
-  def index(conn, _params) do
+  def index(conn, %{"filter" => "all"}) do
     surgeries = Surgeries.list_surgeries()
+    render(conn, "index.json", surgeries: surgeries)
+  end
+
+  def index(conn, _params) do
+    current_surgeon = conn.assigns.current_surgeon
+    surgeries = Surgeries.list_surgeries(current_surgeon.id)
     render(conn, "index.json", surgeries: surgeries)
   end
 

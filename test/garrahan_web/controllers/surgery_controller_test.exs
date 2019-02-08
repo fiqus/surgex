@@ -15,8 +15,8 @@ defmodule GarrahanWeb.SurgeryControllerTest do
   }
   @invalid_attrs %{date: nil}
 
-  def fixture(:surgery) do
-    {:ok, surgery} = Surgeries.create_surgery(@create_attrs)
+  def fixture(attrs) do
+    {:ok, surgery} = Surgeries.create_surgery(attrs)
     surgery
   end
 
@@ -25,13 +25,32 @@ defmodule GarrahanWeb.SurgeryControllerTest do
   end
 
   describe "index" do
+    setup [:create_surgery_with_surgeon]
+
     test_auth_user_required(fn conn, _params ->
       get(conn, Routes.surgery_path(conn, :index))
     end)
 
-    test "lists all surgeries", %{conn: conn} do
+    test "list all surgeries", %{conn: conn, surgery: %Surgery{id: id}} do
+      conn = get(conn, Routes.surgery_path(conn, :index, filter: "all"))
+
+      assert [
+               %{
+                 "id" => ^id,
+                 "date" => "2010-04-17"
+               }
+             ] = json_response(conn, 200)["data"]
+    end
+
+    test "lists current surgeon surgeries", %{conn: conn, surgery: %Surgery{id: id}} do
       conn = get(conn, Routes.surgery_path(conn, :index))
-      assert json_response(conn, 200)["data"] == []
+
+      assert [
+               %{
+                 "id" => ^id,
+                 "date" => "2010-04-17"
+               }
+             ] = json_response(conn, 200)["data"]
     end
   end
 
@@ -101,7 +120,15 @@ defmodule GarrahanWeb.SurgeryControllerTest do
   end
 
   defp create_surgery(_) do
-    surgery = fixture(:surgery)
+    surgery = fixture(@create_attrs)
+    {:ok, surgery: surgery}
+  end
+
+  defp create_surgery_with_surgeon(params) do
+    surgery =
+      Map.put(@create_attrs, :surgeon_id, params.surgeon.id)
+      |> fixture
+
     {:ok, surgery: surgery}
   end
 end

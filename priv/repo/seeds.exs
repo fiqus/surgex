@@ -45,7 +45,7 @@ Surgeries.create_patient(%{
   medical_history: "1234",
   first_name: "someFirt1",
   last_name: "someLast1",
-  birthdate: :nil,
+  birthdate: nil,
   city: "someCity",
   province: "someProvince",
   address: "someAddres"
@@ -55,7 +55,7 @@ Surgeries.create_patient(%{
   medical_history: "4321",
   first_name: "someFirt2",
   last_name: "someLast12",
-  birthdate: :nil,
+  birthdate: nil,
   city: "someCity",
   province: "someProvince",
   address: "someAddres"

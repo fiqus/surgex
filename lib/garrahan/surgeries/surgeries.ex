@@ -357,6 +357,11 @@ defmodule Garrahan.Surgeries do
     Repo.all(Surgery)
   end
 
+  def list_surgeries(surgeon_id) do
+    query = from(s in Surgery, where: s.surgeon_id == ^surgeon_id)
+    Repo.all(query)
+  end
+
   @doc """
   Gets a single surgery.
 

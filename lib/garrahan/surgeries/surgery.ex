@@ -19,7 +19,7 @@ defmodule Garrahan.Surgeries.Surgery do
   @doc false
   def changeset(surgery, attrs) do
     surgery
-    |> cast(attrs, [:date])
+    |> cast(attrs, [:date, :surgeon_id])
     |> validate_required([:date])
   end
 end
