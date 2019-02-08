@@ -11,6 +11,6 @@ defmodule Garrahan.Auth.AuthErrorHandler do
 
     conn
     |> put_resp_content_type("application/json")
-    |> send_resp(401, Poison.encode!(error))
+    |> send_resp(401, Jason.encode!(error))
   end
 end

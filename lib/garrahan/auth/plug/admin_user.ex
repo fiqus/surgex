@@ -23,7 +23,7 @@ defmodule Garrahan.Auth.Plug.AdminUser do
   defp is_user_admin?(_), do: false
 
   defp encode_error() do
-    Poison.encode!(%{
+    Jason.encode!(%{
       "status" => "error",
       "reason" => "ADMIN_REQUIRED"
     })
