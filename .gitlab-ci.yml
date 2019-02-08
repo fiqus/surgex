@@ -16,7 +16,7 @@ test:
     - mix deps.get --only test
     - mix ecto.create
     - mix ecto.migrate
-    - mix test
+    - mix coverage
   only:
     - master
     - tags
