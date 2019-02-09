@@ -9,6 +9,7 @@ defmodule Garrahan.Accounts.User do
     field :password, :string, virtual: true
     field :is_admin, :boolean, default: false
     field :disabled, :boolean, default: false
+    has_one :surgeon, Garrahan.Surgeries.Surgeon
 
     timestamps()
   end

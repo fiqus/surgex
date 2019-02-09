@@ -23,7 +23,7 @@ defmodule GarrahanWeb.AuthControllerTest do
              } = json_response(conn, 200)
 
       assert String.length(token) > 100
-      assert auth_user["userId"] == surgeon.user.id
+      assert auth_user["userId"] == user.id
       assert auth_user["surgeonId"] == surgeon.id
       assert auth_user["email"] == surgeon.email
       assert auth_user["firstName"] == surgeon.first_name

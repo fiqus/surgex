@@ -15,6 +15,13 @@ You will have to install:
   * `Node.js` 5 or later
   * `PostgreSQL`
 
+## ENV Vars
+  * `PORT` - the port for the web application
+  * `SMTP_USERNAME` - for the mailer
+  * `SMTP_PASSWORD` - for the mailer
+  * `GUARDIAN_SECRET_KEY` - for token generation
+  * `USER_VERIFICATION_SALT` - for user token in the activation email
+
 ## Start the server
 
   * Install dependencies with `mix deps.get`

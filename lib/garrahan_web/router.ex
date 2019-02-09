@@ -33,6 +33,8 @@ defmodule GarrahanWeb.Router do
       pipe_through :auth
 
       resources "/users", UserController, except: [:new, :edit]
+      get("/users/password", UserController, :set_password)
+      put("/users/:id/password", UserController, :update_password)
       resources "/diagnostics", DiagnosticController, except: [:new, :edit]
       resources "/surgeons", SurgeonController, except: [:new, :edit]
       resources "/patients", PatientController, except: [:new, :edit]

@@ -78,3 +78,6 @@ config :garrahan, Garrahan.Repo,
 config :garrahan, Garrahan.Auth.Guardian,
   issuer: "garrahan",
   secret_key: "iox6/puy13hvGIa76aY1XQR8nDx3DUzjYnKz14geFGk5w0ZktbQwVsfw9E++ERaL"
+
+config :garrahan,
+  user_verification_salt: "V08JhpdqE61mbsC8M/Z9uZguGl+Uku72BrbYvjZSOlzaNNjcQROqetH4RTQn1YCo"

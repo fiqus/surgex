@@ -54,7 +54,9 @@ defmodule Garrahan.MixProject do
       {:guardian, "~> 1.2"},
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 1.0"},
-      {:excoveralls, "~> 0.10", only: :test}
+      {:excoveralls, "~> 0.10", only: :test},
+      {:bamboo, "~> 1.1"},
+      {:bamboo_smtp, "~> 1.6.0"}
     ]
   end
 

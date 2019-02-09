@@ -2,6 +2,7 @@ defmodule Garrahan.SurgeriesTest do
   use Garrahan.DataCase
 
   alias Garrahan.Surgeries
+  alias Garrahan.Accounts
 
   describe "diagnostics" do
     alias Garrahan.Surgeries.Diagnostic
@@ -82,15 +83,17 @@ defmodule Garrahan.SurgeriesTest do
       last_name: "some updated last_name",
       license: "some updated license"
     }
+    @create_user_attrs %{password: "mypassword", is_admin: false}
     @invalid_attrs %{email: nil, first_name: nil, last_name: nil, license: nil}
 
     def surgeon_fixture(attrs \\ %{}) do
+      {:ok, user} = Accounts.create_user(@create_user_attrs)
       {:ok, surgeon} =
         attrs
         |> Enum.into(@valid_attrs)
-        |> Surgeries.create_surgeon()
+        |> Surgeries.create_surgeon(user)
 
-      surgeon
+        %{surgeon | user: Map.put(surgeon.user, :password, nil)}
     end
 
     test "list_surgeons/0 returns all surgeons" do
@@ -100,14 +103,25 @@ defmodule Garrahan.SurgeriesTest do
 
     test "get_surgeon!/1 returns the surgeon with given id" do
       surgeon = surgeon_fixture()
-      assert Surgeries.get_surgeon!(surgeon.id) == surgeon
+      surgeon_found = Surgeries.get_surgeon!(surgeon.id)
+      assert surgeon_found.id == surgeon.id
     end
 
-    test "create_surgeon/1 with valid data creates a surgeon" do
+    test "create_surgeon/1 with valid data creates a surgeon without a user" do
       assert {:ok, %Surgeon{} = surgeon} = Surgeries.create_surgeon(@valid_attrs)
       assert surgeon.first_name == "some first_name"
       assert surgeon.last_name == "some last_name"
       assert surgeon.license == "some license"
+      assert surgeon.user_id == nil
+    end
+
+    test "create_surgeon/2 with valid data creates a surgeon and a user (user has_one surgeon)" do
+      {:ok, user} = Accounts.create_user(@create_user_attrs)
+      assert {:ok, %Surgeon{} = surgeon} = Surgeries.create_surgeon(@valid_attrs, user)
+      assert surgeon.first_name == "some first_name"
+      assert surgeon.last_name == "some last_name"
+      assert surgeon.license == "some license"
+      assert user.id === surgeon.user.id
     end
 
     test "create_surgeon/1 with invalid data returns error changeset" do

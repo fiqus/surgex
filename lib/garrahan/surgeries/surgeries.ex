@@ -180,7 +180,27 @@ defmodule Garrahan.Surgeries do
     %Surgeon{}
     |> Surgeon.changeset(attrs)
     |> Repo.insert()
-    |> preload_surgeon_user()
+    #|> preload_surgeon_user()
+  end
+
+  @doc """
+  Creates a surgeon with a user associated.
+
+  ## Examples
+
+      iex> create_surgeon(%{field: value}, user)
+      {:ok, %Surgeon{}}
+
+      iex> create_surgeon(%{field: bad_value}, nil)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_surgeon(attrs, user) do
+    %Surgeon{}
+    |> Surgeon.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:user, user)
+    |> Repo.insert()
+    #|> preload_surgeon_user()
   end
 
   @doc """

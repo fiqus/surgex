@@ -1,7 +1,9 @@
 defmodule GarrahanWeb.SurgeonControllerTest do
   use GarrahanWeb.ConnCase
   use GarrahanWeb.AuthCase
+  use Bamboo.Test
 
+  alias Garrahan.Accounts
   alias Garrahan.Surgeries
   alias Garrahan.Surgeries.Surgeon
 
@@ -19,10 +21,13 @@ defmodule GarrahanWeb.SurgeonControllerTest do
     last_name: "some updated last_name",
     license: "some updated license"
   }
+  @create_user_attrs %{password: "mypassword", is_admin: false}
   @invalid_attrs %{email: nil, first_name: nil, last_name: nil, license: nil}
 
   def fixture(:surgeon) do
-    {:ok, surgeon} = Surgeries.create_surgeon(@create_attrs)
+    {:ok, user} = Accounts.create_user(@create_user_attrs)
+    # has_one user
+    {:ok, surgeon} = Surgeries.create_surgeon(@create_attrs, user)
     surgeon
   end
 
@@ -47,10 +52,12 @@ defmodule GarrahanWeb.SurgeonControllerTest do
     end)
 
     test "renders surgeon when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.surgeon_path(conn, :create), surgeon: @create_attrs)
+      conn = post(conn, Routes.surgeon_path(conn, :create), user: @create_user_attrs, surgeon: @create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get(conn, Routes.surgeon_path(conn, :show, id))
+
+      assert_email_delivered_with(subject: "Hola #{@create_attrs.first_name} #{@create_attrs.last_name}, por favor activa tu cuenta")
 
       assert %{
                "id" => id,
@@ -61,8 +68,9 @@ defmodule GarrahanWeb.SurgeonControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.surgeon_path(conn, :create), surgeon: @invalid_attrs)
+      conn = post(conn, Routes.surgeon_path(conn, :create), user: %{}, surgeon: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
+      assert_no_emails_delivered()
     end
   end
 

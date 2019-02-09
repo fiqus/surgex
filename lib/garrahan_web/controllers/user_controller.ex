@@ -2,7 +2,7 @@ defmodule GarrahanWeb.UserController do
   use GarrahanWeb, :controller
 
   alias Garrahan.Accounts
-  alias Garrahan.Accounts.User
+  alias Garrahan.Accounts.{ActivationToken, User}
 
   action_fallback GarrahanWeb.FallbackController
   # Requires to be an admin!
@@ -48,4 +48,28 @@ defmodule GarrahanWeb.UserController do
   #     send_resp(conn, :no_content, "")
   #   end
   # end
+
+  def set_password(conn, %{"token" => token}) do
+    with {:ok, user_id} <- ActivationToken.verify(token),
+         %User{password_hash: nil} = user <- Accounts.get_user!(user_id) do
+      changeset = Accounts.change_user(user)
+      render(conn, "set_password.html", changeset: changeset, user: user)
+    else
+      %User{password_hash: password_hash} when is_binary(password_hash) ->
+        conn
+        |> put_flash(:error, "You already have a password set.")
+        |> redirect(to: "/")
+
+      _ ->
+        render(conn, "invalid_token.html")
+    end
+  end
+
+  def set_password(conn, _) do
+    # If there is no token in our params, tell the user they've provided
+    # an invalid token or expired token
+    conn
+    |> put_flash(:error, "The verification link is invalid.")
+    |> redirect(to: "/")
+  end
 end

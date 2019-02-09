@@ -28,17 +28,15 @@ defmodule GarrahanWeb.AuthCase do
     Garrahan.Surgeries.create_surgeon(%{
       email: "admin@garrahan.com",
       first_name: "Fiqus",
-      last_name: "Admin",
-      user: admin
-    })
+      last_name: "Admin"
+    }, admin)
 
     {:ok, surgeon} =
       Garrahan.Surgeries.create_surgeon(%{
         email: "user@garrahan.com",
         first_name: "Fiqus",
-        last_name: "User",
-        user: user
-      })
+        last_name: "User"
+      }, user)
 
     {:ok, admin: admin, user: user, surgeon: surgeon}
   end
