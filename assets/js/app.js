@@ -8,7 +8,6 @@ import Vue from "vue"
 import VueRouter from "vue-router"
 import Vuex from "vuex"
 import createPersistedState from "vuex-persistedstate";
-import NProgress from "nprogress";
 
 import {initialState, getters, mutations, actions} from "./state/store";
 
@@ -19,11 +18,12 @@ import LoginScreen from "./screens/login.vue";
 import PatientsScreen from "./screens/patients/patients-list.vue";
 import PatientScreen from "./screens/patients/patient-show.vue";
 import PatientCreateScreen from "./screens/patients/new-patient.vue";
-import UsersListScreen from "./screens/users-list.vue";
-import UsersShowScreen from "./screens/users-show.vue";
-import UsersEditScreen from "./screens/users-edit.vue";
+import UsersListScreen from "./screens/users/users-list.vue";
+import UsersShowScreen from "./screens/users/users-show.vue";
+import UsersEditScreen from "./screens/users/users-edit.vue";
 import SurgeonsListScreen from "./screens/surgeons/surgeons-list.vue";
 import SurgeonsShowScreen from "./screens/surgeons/surgeons-show.vue";
+import SurgeonsFormScreen from "./screens/surgeons/surgeons-form.vue";
 import SurgeriesScreen from "./screens/sugeries.vue";
 import NewSurgeryScreen from "./screens/new-surgery.vue";
 
@@ -45,7 +45,9 @@ const router = new VueRouter({
     {name: "users-show", path: "/users/:userId", component: UsersShowScreen},
     {name: "users-edit", path: "/users/edit/:userId", component: UsersEditScreen},
     {name: "surgeons-list", path: "/surgeons", component: SurgeonsListScreen},
-    {name: "surgeons-show", path: "/surgeons/:surgeonId", component: SurgeonsShowScreen},
+    {name: "surgeons-new", path: "/surgeons/new", component: SurgeonsFormScreen},
+    {name: "surgeons-edit", path: "/surgeons/edit/:surgeonId", component: SurgeonsFormScreen},
+    {name: "surgeons-show", path: "/surgeons/show/:surgeonId", component: SurgeonsShowScreen},
     {name: "surgeries", path: "/surgeries", component: SurgeriesScreen},
     {name: "newSurgery", path: "/surgeries/new", component: NewSurgeryScreen},
     // Default redirect to home

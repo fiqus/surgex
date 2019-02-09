@@ -81,6 +81,39 @@ const actions = {
         return res.data;
       });
   },
+  updateSurgeon(_, surgeon) {
+    // @TODO We should consider this format at backend, doesn't make much sense as it is
+    const data = {
+      id: surgeon.id,
+      surgeon: {
+        first_name: surgeon.firstName,
+        last_name: surgeon.lastName,
+        email: surgeon.email
+      }
+    };
+
+    return apiClient.httpPut(`/surgeons/${surgeon.id}`, data)
+      .then((res) => {
+        return res.data;
+      });
+  },
+  createSurgeon(_, surgeon) {
+    const data = {
+      user: {
+        is_admin: false
+      },
+      surgeon: {
+        first_name: surgeon.firstName,
+        last_name: surgeon.lastName,
+        email: surgeon.email
+      }
+    };
+
+    return apiClient.httpPost("/surgeons", data)
+      .then((res) => {
+        return res.data;
+      });
+  },
   fetchSurgeries({commit}) {
     return apiClient.httpGet("/surgeries")
       .then((res) => {

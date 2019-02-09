@@ -28,7 +28,7 @@
   </div>
 </template>
 <script>
-import customTable from "../components/custom-table.vue";
+import customTable from "../../components/custom-table.vue";
 export default {
   components: {
     customTable

@@ -234,7 +234,14 @@ defmodule Garrahan.Surgeries do
 
   """
   def delete_surgeon(%Surgeon{} = surgeon) do
-    Repo.delete(surgeon)
+    # @TODO Remove this manual user delete!
+    with {:ok, %Surgeon{}} <- Repo.delete(surgeon) do
+      Garrahan.Accounts.delete_user(surgeon.user)
+      {:ok, %Surgeon{}}
+    else
+      err ->
+        err
+    end
   end
 
   @doc """
