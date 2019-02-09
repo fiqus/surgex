@@ -26,5 +26,4 @@ config :garrahan,
   user_verification_salt: "PoK23VE8yrKYjMq6V/mPSyhCcIiOH0Lb5OtQMH5KUM9YjLXrugibt9B4Xuq/+yP6"
 
 # Configures bamboo mailer
-config :garrahan, Garrahan.Mailer,
-  adapter: Bamboo.TestAdapter
+config :garrahan, Garrahan.Mailer, adapter: Bamboo.TestAdapter

@@ -88,12 +88,13 @@ defmodule Garrahan.SurgeriesTest do
 
     def surgeon_fixture(attrs \\ %{}) do
       {:ok, user} = Accounts.create_user(@create_user_attrs)
+
       {:ok, surgeon} =
         attrs
         |> Enum.into(@valid_attrs)
         |> Surgeries.create_surgeon(user)
 
-        %{surgeon | user: Map.put(surgeon.user, :password, nil)}
+      %{surgeon | user: Map.put(surgeon.user, :password, nil)}
     end
 
     test "list_surgeons/0 returns all surgeons" do

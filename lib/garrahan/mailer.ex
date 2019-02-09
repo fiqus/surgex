@@ -7,6 +7,7 @@ defmodule Garrahan.Email do
 
   def set_password_email(user, activation_url) when is_binary(activation_url) do
     name = "#{user.first_name} #{user.last_name}"
+
     new_email()
     |> to({name, user.email})
     |> from({"Garrahan app", "info+garrahan@fiqus.com"})

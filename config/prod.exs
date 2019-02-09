@@ -24,4 +24,3 @@ config :garrahan, Garrahan.Auth.Guardian,
 
 config :garrahan,
   user_verification_salt: {:system, "USER_VERIFICATION_SALT"}
-

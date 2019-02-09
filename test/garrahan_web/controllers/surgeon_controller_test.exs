@@ -52,12 +52,20 @@ defmodule GarrahanWeb.SurgeonControllerTest do
     end)
 
     test "renders surgeon when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.surgeon_path(conn, :create), user: @create_user_attrs, surgeon: @create_attrs)
+      conn =
+        post(conn, Routes.surgeon_path(conn, :create),
+          user: @create_user_attrs,
+          surgeon: @create_attrs
+        )
+
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get(conn, Routes.surgeon_path(conn, :show, id))
 
-      assert_email_delivered_with(subject: "Hola #{@create_attrs.first_name} #{@create_attrs.last_name}, por favor activa tu cuenta")
+      assert_email_delivered_with(
+        subject:
+          "Hola #{@create_attrs.first_name} #{@create_attrs.last_name}, por favor activa tu cuenta"
+      )
 
       assert %{
                "id" => id,

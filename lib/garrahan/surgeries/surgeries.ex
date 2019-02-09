@@ -180,7 +180,8 @@ defmodule Garrahan.Surgeries do
     %Surgeon{}
     |> Surgeon.changeset(attrs)
     |> Repo.insert()
-    #|> preload_surgeon_user()
+
+    # |> preload_surgeon_user()
   end
 
   @doc """
@@ -200,7 +201,8 @@ defmodule Garrahan.Surgeries do
     |> Surgeon.changeset(attrs)
     |> Ecto.Changeset.put_assoc(:user, user)
     |> Repo.insert()
-    #|> preload_surgeon_user()
+
+    # |> preload_surgeon_user()
   end
 
   @doc """

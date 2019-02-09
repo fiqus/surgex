@@ -15,8 +15,6 @@ defmodule Garrahan.Accounts.ActivationToken do
     # tokens that are older than a day should be invalid
     max_age = 86_400
 
-    Phoenix.Token.verify(GarrahanWeb.Endpoint, @user_verification_salt, token,
-      max_age: max_age
-    )
+    Phoenix.Token.verify(GarrahanWeb.Endpoint, @user_verification_salt, token, max_age: max_age)
   end
 end

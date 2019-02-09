@@ -38,12 +38,15 @@ config :garrahan, Garrahan.Mailer,
   port: 465,
   username: {:system, "SMTP_USERNAME"},
   password: {:system, "SMTP_PASSWORD"},
-  tls: :if_available, # can be `:always` or `:never`
-  allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"], # or {":system", ALLOWED_TLS_VERSIONS"} w/ comma seprated values (e.g. "tlsv1.1,tlsv1.2")
+  # can be `:always` or `:never`
+  tls: :if_available,
+  # or {":system", ALLOWED_TLS_VERSIONS"} w/ comma seprated values (e.g. "tlsv1.1,tlsv1.2")
+  allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"],
   ssl: true,
   retries: 1,
   no_mx_lookups: false,
-  auth: :if_available # can be `always`. If your smtp relay requires authentication set it to `always`.
+  # can be `always`. If your smtp relay requires authentication set it to `always`.
+  auth: :if_available
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
