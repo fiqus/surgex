@@ -18,7 +18,7 @@ defmodule GarrahanWeb.Router do
     plug Garrahan.Auth.AuthAccessPipeline
   end
 
-  if Mix.env == :dev do
+  if Mix.env() == :dev do
     forward "/sent_emails", Bamboo.SentEmailViewerPlug
   end
 
@@ -26,6 +26,8 @@ defmodule GarrahanWeb.Router do
     pipe_through :browser
 
     get "/", IndexController, :index
+    get("/users/password", UserController, :set_password)
+    put("/users/:id/password", UserController, :update_password)
   end
 
   scope "/api", GarrahanWeb do
@@ -37,8 +39,6 @@ defmodule GarrahanWeb.Router do
       pipe_through :auth
 
       resources "/users", UserController, except: [:new, :edit]
-      get("/users/password", UserController, :set_password)
-      put("/users/:id/password", UserController, :update_password)
       resources "/diagnostics", DiagnosticController, except: [:new, :edit]
       resources "/surgeons", SurgeonController, except: [:new, :edit]
       resources "/patients", PatientController, except: [:new, :edit]

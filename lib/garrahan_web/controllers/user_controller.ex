@@ -6,7 +6,7 @@ defmodule GarrahanWeb.UserController do
 
   action_fallback GarrahanWeb.FallbackController
   # Requires to be an admin!
-  plug Garrahan.Auth.Plug.AdminUser, []
+  plug(Garrahan.Auth.Plug.AdminUser, [] when action not in [:set_password, :update_password])
 
   def index(conn, _params) do
     users =
