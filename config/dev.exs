@@ -81,3 +81,8 @@ config :garrahan, Garrahan.Auth.Guardian,
 
 config :garrahan,
   user_verification_salt: "V08JhpdqE61mbsC8M/Z9uZguGl+Uku72BrbYvjZSOlzaNNjcQROqetH4RTQn1YCo"
+
+# Configures bamboo mailer
+config :garrahan, Garrahan.Mailer,
+  adapter: Bamboo.LocalAdapter,
+  open_email_in_browser_url: "http://localhost:4000/sent_emails" # optional

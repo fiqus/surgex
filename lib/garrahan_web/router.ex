@@ -18,6 +18,10 @@ defmodule GarrahanWeb.Router do
     plug Garrahan.Auth.AuthAccessPipeline
   end
 
+  if Mix.env == :dev do
+    forward "/sent_emails", Bamboo.SentEmailViewerPlug
+  end
+
   scope "/", GarrahanWeb do
     pipe_through :browser
 
