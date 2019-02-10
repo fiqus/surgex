@@ -90,6 +90,7 @@ button:hover {
 }
 
 .subtitle {
+  padding-top: 1rem;
   border-bottom: 1px solid #eaeaea;
   margin: 1rem auto;
 }

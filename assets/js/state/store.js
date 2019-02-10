@@ -8,6 +8,13 @@ const initialState = {
 };
 
 const actions = {
+  proccessApiResponse(res) {
+    if (res.status === 401) {
+      return actions.logout();
+    }
+
+    return res.data;
+  },
   login({commit}, data) {
     return apiClient.httpPost("/token", data)
       .then((res) => {
@@ -20,33 +27,27 @@ const actions = {
   },
   fetchPatients() {
     return apiClient.httpGet("/patients")
-      .then((res) => {
-        return res.data;
-      });
+      .then(actions.proccessApiResponse);
   },
   fetchPatient({commit}, {patientId}) {
     return apiClient.httpGet(`/patients/${patientId}`)
+      .then(actions.proccessApiResponse)
       .then((patient) => {
+        // @TODO This shouldn't be needed anymore!
         commit("setPatient", patient);
       });
   },
   createPatient({commit}, dataPatient) {
     return apiClient.httpPost("/patients", dataPatient)
-      .then((res) => {
-        return res;
-      });
+      .then(actions.proccessApiResponse);
   },
   fetchUsers() {
     return apiClient.httpGet("/users")
-      .then((res) => {
-        return res.data;
-      });
+      .then(actions.proccessApiResponse);
   },
   fetchUser(_, userId) {
     return apiClient.httpGet(`/users/${userId}`)
-      .then((res) => {
-        return res.data;
-      });
+      .then(actions.proccessApiResponse);
   },
   updateUser(_, user) {
     // @TODO We should consider this format at backend, doesn't make much sense as it is
@@ -59,27 +60,19 @@ const actions = {
     };
 
     return apiClient.httpPut(`/users/${user.id}`, data)
-      .then((res) => {
-        return res.data;
-      });
+      .then(actions.proccessApiResponse);
   },
   fetchSurgeons() {
     return apiClient.httpGet("/surgeons")
-      .then((res) => {
-        return res.data;
-      });
+      .then(actions.proccessApiResponse);
   },
   fetchSurgeon(_, surgeonId) {
     return apiClient.httpGet(`/surgeons/${surgeonId}`)
-      .then((res) => {
-        return res.data;
-      });
+      .then(actions.proccessApiResponse);
   },
   deleteSurgeon(_, surgeonId) {
     return apiClient.httpDelete(`/surgeons/${surgeonId}`)
-      .then((res) => {
-        return res.data;
-      });
+      .then(actions.proccessApiResponse);
   },
   updateSurgeon(_, surgeon) {
     // @TODO We should consider this format at backend, doesn't make much sense as it is
@@ -93,9 +86,7 @@ const actions = {
     };
 
     return apiClient.httpPut(`/surgeons/${surgeon.id}`, data)
-      .then((res) => {
-        return res.data;
-      });
+      .then(actions.proccessApiResponse);
   },
   createSurgeon(_, surgeon) {
     const data = {
@@ -110,14 +101,14 @@ const actions = {
     };
 
     return apiClient.httpPost("/surgeons", data)
-      .then((res) => {
-        return res.data;
-      });
+      .then(actions.proccessApiResponse);
   },
   fetchSurgeries({commit}) {
     return apiClient.httpGet("/surgeries")
-      .then((res) => {
-        commit("setSurgeries", res.data);
+      .then(actions.proccessApiResponse)
+      .then((surgeries) => {
+        // @TODO This shouldn't be needed anymore!
+        commit("setSurgeries", surgeries);
       });
   }
 };
@@ -127,9 +118,11 @@ const mutations = {
     state.authUser = authUser.user;
     state.token = authUser.token;
   },
+  // @TODO This shouldn't be needed anymore!
   setPatient(state, patient) {
-    state.patient = patient.data;
+    state.patient = patient;
   },
+  // @TODO This shouldn't be needed anymore!
   setSurgeries(state, surgeries) {
     state.surgeries = surgeries;
   }

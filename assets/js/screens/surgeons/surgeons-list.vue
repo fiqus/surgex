@@ -1,7 +1,10 @@
 <template>
   <div id="surgeons-list" v-if="!loading">
     <h3 class="subtitle">Listado de Cirujanos</h3>
-    <div><a @click="showNew()">Crear nuevo cirujano</a></div>
+    <button class="button float-right" v-on:click="showNew">
+      <i class="fa fa-plus"></i>
+      Agregar Cirujano
+    </button>
     <table>
       <thead>
         <th>Cirujano</th>

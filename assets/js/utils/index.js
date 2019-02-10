@@ -1,7 +1,7 @@
 import store from "../app"
 import NProgress from "nprogress"
 
-const { socketScheme, scheme, hostname } =
+const { scheme, hostname } =
   process.env.NODE_ENV === 'production'
   ? { socketScheme: 'wss'
     , scheme: 'https'
@@ -15,6 +15,8 @@ const defaultHeaders = {
   'Content-Type': 'application/json'
 }
 
+const apiURL = `${scheme}://${hostname}/api`;
+
 export function buildHeaders() {
   const token = store.getters.getToken;
 
@@ -27,19 +29,35 @@ export function buildHeaders() {
   return defaultHeaders;
 }
 
-export const apiURL = `${scheme}://${hostname}/api`;
-
 export function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response.data;
-  } else {
-    var error = new Error(response.statusText)
-    error.response = response
-    throw error
+  } else if (response.status === 401) {
+    return response;
   }
+
+  return Promise.reject(Object.assign({code: response.status}, response.data));
 }
 
-export function setupLoader(http) {
+export function createApiClient(opts = {}) {
+  const axios = require("axios")
+    .create(Object.assign(opts, {baseURL: apiURL, timeout: 0, headers: {}}));
+
+  setupResponseErrorFormatter(axios);
+  setupNProgressLoader(axios);
+
+  return axios;
+}
+
+function setupResponseErrorFormatter(http) {
+  http.interceptors.response.use((response) => {
+    return response;
+  }, (error) => {
+    return Promise.reject(error.response);
+  });
+}
+
+function setupNProgressLoader(http) {
   http.interceptors.request.use((config) => {
     NProgress.start();
     return config;
