@@ -2,8 +2,9 @@
   <div v-if="!loading">
     <h3 class="subtitle">Detalle de Cirujano</h3>
     <section class="elem-details">
-      <div><b>Persona:</b> {{ surgeon.lastName }}, {{ surgeon.firstName }}</div>
+      <div><b>Cirujano:</b> {{ surgeon.lastName }}, {{ surgeon.firstName }}</div>
       <div><b>Email:</b> {{surgeon.email}}</div>
+      <div><b>Licencia:</b> {{surgeon.license}}</div>
     </section>
     <div class="action-bar-buttons">
       <button v-on:click="$router.go(-1)">Volver</button>
@@ -34,10 +35,8 @@ export default {
     onDelete(surgeon) {
       if (confirm(`¿Eliminar al cirujano ${surgeon.lastName}, ${surgeon.firstName}?`)) {
         this.$store.dispatch("deleteSurgeon", surgeon.id)
-          .then((rs) => {
-            this.surgeons = this.surgeons.filter((s) => {
-              return s.id !== surgeon.id;
-            });
+          .then(() => {
+            this.$router.go(-1);
           });
       }
     }

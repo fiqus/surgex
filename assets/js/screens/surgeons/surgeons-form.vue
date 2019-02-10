@@ -17,6 +17,10 @@
           <label>Email:</label>
           <input type="text" v-model="surgeon.email">
         </div>
+        <div>
+          <label>Licencia:</label>
+          <input type="text" v-model="surgeon.license">
+        </div>
         <div class="action-bar-buttons">
           <button type="button" v-on:click="$router.go(-1)">Cancelar</button>
           <button type="submit">Guardar</button>
@@ -29,12 +33,7 @@
 export default {
   data() {
     return {
-      surgeon: {
-        id: null,
-        firstName: null,
-        lastName: null,
-        email: null
-      },
+      surgeon: {},
       loading: true,
       isNew: !Boolean(this.$route.params.surgeonId),
       action: "/api/surgeons"
@@ -59,7 +58,7 @@ export default {
       this.loading = true;
       this.$store.dispatch(this.isNew ? "createSurgeon" : "updateSurgeon", this.surgeon)
         .then((data) => {
-          this.$router.push({name: "surgeons-list"});
+          this.$router.go(-1);
         });
     }
 	}

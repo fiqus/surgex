@@ -81,7 +81,8 @@ const actions = {
       surgeon: {
         first_name: surgeon.firstName,
         last_name: surgeon.lastName,
-        email: surgeon.email
+        email: surgeon.email,
+        license: surgeon.license
       }
     };
 
@@ -96,7 +97,8 @@ const actions = {
       surgeon: {
         first_name: surgeon.firstName,
         last_name: surgeon.lastName,
-        email: surgeon.email
+        email: surgeon.email,
+        license: surgeon.license
       }
     };
 
