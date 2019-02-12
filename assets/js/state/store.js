@@ -37,8 +37,24 @@ const actions = {
         commit("setPatient", patient);
       });
   },
-  createPatient({commit}, dataPatient) {
+  createPatient(_, dataPatient) {
     return apiClient.httpPost("/patients", dataPatient)
+      .then(actions.proccessApiResponse);
+  },
+  updatePatient(_, dataPatient) {
+    const data = {
+      id: dataPatient.id,
+      patient: {
+        first_name: dataPatient.first_name,
+        last_name: dataPatient.last_name,
+        medical_history: dataPatient.medical_history,
+        address: dataPatient.address,
+        city: dataPatient.city,
+        province: dataPatient.province,
+        birthdate: dataPatient.birthdate
+      }
+    };
+    return apiClient.httpPut(`/patients/${dataPatient.id}`, data)
       .then(actions.proccessApiResponse);
   },
   fetchUsers() {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <customForm
-     :formName="'Paciente'"
+     :formName="'Nuevo Paciente'"
      :fields="this.fields"
      @create="newPatient">
     </customForm>
@@ -17,29 +17,29 @@ export default {
 	components: {
 		customForm
 	},
-  computed: {
-  },
   data() {
     return {
       fields: [
         {key: "first_name", placeholder: "Nombre"},
-        {key: "lastName", placeholder: "Apellido"},
+        {key: "last_name", placeholder: "Apellido"},
         {key: "medical_history", placeholder: "Historia Clínica"}, 
         {key: "address", placeholder: "Dirección"},
         {key: "city", placeholder: "Ciudad"},
         {key: "province", placeholder: "Provincia"},
-        {key: "birthdate", placeholder: "Fecha de Nacimiento", type: "date"},
+        {key: "birthdate", type: "date"}
       ]
     }
+  },
+  computed: {
   },
   methods: {
     backToList() {
       this.$router.push({name: "patients-list"});
     },
     newPatient: function(payload) {
-      this.$store.dispatch("createPatient", {patient: JSON.stringify(payload)})
+      this.$store.dispatch("createPatient", JSON.stringify({patient: payload}))
         .then((res) => {
-          return res;
+          this.backToList();
         })
     }
   },

@@ -1,12 +1,12 @@
 <template>
   <div v-if="!loading">
     <h3 class="subtitle">Detalle del Paciente</h3>
-    <div> <b>Nombre:</b> {{patient.first_name}} </div>
-    <div> <b>Apellido:</b> {{patient.last_name}} </div>
-    <div> <b>Dirección:</b> {{patient.address}} </div>
-    <div> <b>Ciudad:</b> {{patient.city}} </div>
-    <div> <b>Provincia:</b> {{patient.province}} </div>
-    <div> <b>Fecha de Cumpleaños:</b> {{patient.birthdate}} </div>
+    <customForm
+      :formName="'Editar Paciente'"
+      :fields="this.fields"
+      :manualData="patient"
+      @create="edit">
+    </customForm>
     <button v-on:click="backToList" class="button">
       <i class="fa fa-caret-left"></i>
       Volver al listado
@@ -14,7 +14,11 @@
   </div>
 </template>
 <script>
+import customForm from "../../components/custom-form"
 export default {
+  components: {
+		customForm
+	},
   created() {
     this.$store.dispatch("fetchPatient", {patientId: this.$route.params.patientId})
       .then(() => {
@@ -31,11 +35,26 @@ export default {
   data() {
     return {
       loading: true,
-    }
+      fields: [
+          {key: "first_name", placeholder: "Nombre"},
+          {key: "last_name", placeholder: "Apellido"},
+          {key: "medical_history", placeholder: "Historia Clínica"}, 
+          {key: "address", placeholder: "Dirección"},
+          {key: "city", placeholder: "Ciudad"},
+          {key: "province", placeholder: "Provincia"},
+          {key: "birthdate", type: "date"}
+        ]
+      }
   },
   methods: {
     backToList() {
       this.$router.push({name: "patients-list"});
+    },
+    edit: function(payload) {
+      return this.$store.dispatch("updatePatient", payload)
+        .then((res) => {
+          this.backToList();
+        });
     }
   },
 }

@@ -34,8 +34,10 @@ export default {
       headers: [
         {key: "first_name", value: "Nombre"}, 
         {key: "last_name", value: "Apellido"}, 
+        {key: "address", value: "Dirección"},
         {key: "city", value: "Ciudad"},
-        {key: "address", value: "Dirección"}
+        {key: "province", value: "Provincia"},
+        {key: "birthdate", value: "Fecha de Nacimiento"}
       ],
       patients: null
     }
