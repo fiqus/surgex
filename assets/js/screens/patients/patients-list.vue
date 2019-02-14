@@ -5,7 +5,8 @@
       v-if="this.patients"
       :headers="this.headers"
       :data="this.patients"
-      @clicked="patientSelect">
+      @clicked="patientSelect"
+      @deleteRow="deletePatient">
     </customTable>
     <button class="button" v-on:click="createPatient">
       <i class="fa fa-plus"></i>
@@ -50,6 +51,12 @@ export default {
     },
     createPatient() {
       return this.$router.push({name: "new-patient"});
+    },
+    deletePatient: function(id) {
+      this.$store.dispatch("deletePatient", id)
+        .then(() => {
+          this.$router.go(0);
+        })
     }
   },
 }

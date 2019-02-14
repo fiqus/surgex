@@ -57,6 +57,10 @@ const actions = {
     return apiClient.httpPut(`/patients/${dataPatient.id}`, data)
       .then(actions.proccessApiResponse);
   },
+  deletePatient(_, patientId) {
+    return apiClient.httpDelete(`/patients/${patientId}`)
+      .then(actions.proccessApiResponse);
+  },
   fetchUsers() {
     return apiClient.httpGet("/users")
       .then(actions.proccessApiResponse);
