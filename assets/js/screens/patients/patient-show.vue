@@ -53,7 +53,11 @@ export default {
     edit: function(payload) {
       return this.$store.dispatch("updatePatient", payload)
         .then((res) => {
+          this.$awn.success("Paciente Editado");
           this.backToList();
+        })
+        .catch((_) => {
+          this.$awn.alert("Error al editar el Paciente");
         });
     }
   },

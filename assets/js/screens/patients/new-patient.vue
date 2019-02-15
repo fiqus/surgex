@@ -39,8 +39,12 @@ export default {
     newPatient: function(payload) {
       this.$store.dispatch("createPatient", JSON.stringify({patient: payload}))
         .then((res) => {
+          this.$awn.success("Paciente Creado");
           this.backToList();
         })
+        .catch((_) => {
+          this.$awn.alert("Error al crear el Paciente");
+        });
     }
   },
 }

@@ -6,7 +6,7 @@
       :headers="this.headers"
       :data="this.patients"
       @clicked="patientSelect"
-      @deleteRow="deletePatient">
+      @deleteRow="confirmDelete">
     </customTable>
     <button class="button" v-on:click="createPatient">
       <i class="fa fa-plus"></i>
@@ -40,7 +40,8 @@ export default {
         {key: "province", value: "Provincia"},
         {key: "birthdate", value: "Fecha de Nacimiento"}
       ],
-      patients: null
+      patients: null,
+      patientSelected: null
     }
   },
   computed: {
@@ -52,12 +53,19 @@ export default {
     createPatient() {
       return this.$router.push({name: "new-patient"});
     },
-    deletePatient: function(id) {
-      this.$store.dispatch("deletePatient", id)
+    deletePatient() {
+      this.$store.dispatch("deletePatient", this.patientSelected)
         .then(() => {
           this.$router.go(0);
         })
+        .catch((_) => {
+          this.$awn.alert("Error al borrar el Paciente")
+        });
+    },
+    confirmDelete: function(id) {
+      this.patientSelected = id;
+      this.$awn.confirm("¿Esta seguro que desea eliminar un Paciente?", this.deletePatient);
     }
-  },
+  }
 }
 </script>

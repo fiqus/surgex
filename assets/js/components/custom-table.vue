@@ -2,18 +2,16 @@
   <div>
     <table>
       <th
-        v-for="header in headers"
-        :key="header">
-          {{ header.value }}
+      v-for="header in headers">
+        {{ header.value }}
       </th>
-      <tr 
-        v-for="d in data"
-        :key="d">
-        <td style="cursor: pointer"
-          v-for="header in headers"
-          :key="header"
-          v-on:click="clicked(d.id)">
-            {{ d[header.key] }}
+      <tr
+      style="cursor: pointer" 
+      v-for="d in data">
+        <td 
+        v-for="header in headers"
+        v-on:click="clicked(d.id)">
+          {{ d[header.key] }}
         </td>
         <td v-on:click="deleteRow(d.id)">
           <i class="fa fa-trash-o"></i>
