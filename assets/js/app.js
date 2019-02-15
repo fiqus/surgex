@@ -1,13 +1,15 @@
 // We need to import the CSS so that webpack will load it.
 // The MiniCssExtractPlugin is used to separate it out into
 // its own CSS file.
+require("vue-awesome-notifications/dist/styles/style.css");
 import css from "../css/app.css"
 
 import "phoenix_html"
 import Vue from "vue"
 import VueRouter from "vue-router"
 import Vuex from "vuex"
-import createPersistedState from "vuex-persistedstate";
+import createPersistedState from "vuex-persistedstate"
+import VueAWN from "vue-awesome-notifications";
 
 import {initialState, getters, mutations, actions} from "./state/store";
 
@@ -27,12 +29,19 @@ import SurgeonsFormScreen from "./screens/surgeons/surgeons-form.vue";
 import SurgeriesScreen from "./screens/sugeries.vue";
 import NewSurgeryScreen from "./screens/new-surgery.vue";
 
+const options= {
+  labels: {confirm: "Confirmación Requerida"},
+  modal: {okLabel: "Si", cancelLabel: "No"},
+  duration: 2000,
+}
+
 Vue.config.debug = true;
 Vue.config.devtools = true;
 Vue.config.silent = false;
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
+Vue.use(VueAWN, options)
 
 const router = new VueRouter({
   routes: [
