@@ -33,11 +33,11 @@ export default {
       this.$router.push({name: "surgeons-edit", params: {surgeonId: surgeon.id}});
     },
     onDelete(surgeon) {
-      const success = () => {
+      const onSuccess = () => {
         this.$router.go(-1);
       };
 
-      this.$store.dispatch("deleteSurgeon", {component: this, surgeon, success});
+      this.$store.dispatch("deleteSurgeon", {component: this, surgeon, onSuccess});
     }
   }
 }

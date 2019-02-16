@@ -55,11 +55,11 @@ export default {
 	methods: {
     submit: function (event) {
       event.preventDefault();
-      this.loading = true;
-      this.$store.dispatch(this.isNew ? "createSurgeon" : "updateSurgeon", this.surgeon)
-        .then((data) => {
-          this.$router.go(-1);
-        });
+      const onSuccess = () => {
+        this.$router.go(-1);
+      };
+
+      this.$store.dispatch(this.isNew ? "createSurgeon" : "updateSurgeon", {component: this, surgeon: this.surgeon, onSuccess});
     }
 	}
 }

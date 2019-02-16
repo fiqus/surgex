@@ -1,4 +1,5 @@
 const apiClient = require("../utils/api-client");
+const actionsHelper = require("../utils/actions-helper");
 
 const initialState = {
   authUser: null,
@@ -6,20 +7,6 @@ const initialState = {
   patient: null,
   surgeries: []
 };
-
-function deleteItem({component, success, error, question, url, loadingMsg, okMsg, errMsg}) {
-  component.$awn.confirm(question, () => {
-    component.$awn.asyncBlock(
-      apiClient.httpDelete(url),
-      (rs) => {
-        component.$awn.success(okMsg);
-        return success(rs);
-      },
-      errMsg,
-      loadingMsg
-    ).catch(error || (() => {}));
-  });
-}
 
 const actions = {
   proccessApiResponse(res) {
@@ -104,16 +91,16 @@ const actions = {
     return apiClient.httpGet(`/surgeons/${surgeonId}`)
       .then(actions.proccessApiResponse);
   },
-  deleteSurgeon(_, {component, surgeon, success, error}) {
-    deleteItem({component, success, error,
-      question: `¿Eliminar al cirujano ${surgeon.lastName}, ${surgeon.firstName}?`,
+  deleteSurgeon(_, {component, surgeon, onSuccess, onError}) {
+    actionsHelper.deleteItem({component, onSuccess, onError,
       url: `/surgeons/${surgeon.id}`,
+      question: `¿Eliminar al cirujano ${surgeon.lastName}, ${surgeon.firstName}?`,
       loadingMsg: "Eliminando cirujano",
       okMsg: "El cirujano ha sido eliminado.",
       errMsg: "El cirujano no pudo ser eliminado."
     });
   },
-  updateSurgeon(_, surgeon) {
+  updateSurgeon(_, {component, surgeon, onSuccess, onError}) {
     // @TODO We should consider this format at backend, doesn't make much sense as it is
     const data = {
       id: surgeon.id,
@@ -125,10 +112,14 @@ const actions = {
       }
     };
 
-    return apiClient.httpPut(`/surgeons/${surgeon.id}`, data)
-      .then(actions.proccessApiResponse);
+    actionsHelper.updateItem({component, onSuccess, onError, data, onResponse: actions.proccessApiResponse,
+      url: `/surgeons/${surgeon.id}`,
+      loadingMsg: "Guardando cirujano",
+      okMsg: "El cirujano ha sido guardado.",
+      errMsg: "El cirujano no pudo ser guardado."
+    });
   },
-  createSurgeon(_, surgeon) {
+  createSurgeon(_, {component, surgeon, onSuccess, onError}) {
     const data = {
       user: {
         is_admin: false
@@ -141,8 +132,12 @@ const actions = {
       }
     };
 
-    return apiClient.httpPost("/surgeons", data)
-      .then(actions.proccessApiResponse);
+    actionsHelper.createItem({component, onSuccess, onError, data, onResponse: actions.proccessApiResponse,
+      url: "/surgeons",
+      loadingMsg: "Creando cirujano",
+      okMsg: "El cirujano ha sido creado.",
+      errMsg: "El cirujano no pudo ser creado."
+    });
   },
   fetchSurgeries({commit}) {
     return apiClient.httpGet("/surgeries")
