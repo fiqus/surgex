@@ -30,9 +30,17 @@ import SurgeriesScreen from "./screens/sugeries.vue";
 import NewSurgeryScreen from "./screens/new-surgery.vue";
 
 const options= {
-  labels: {confirm: "Confirmación Requerida"},
-  modal: {okLabel: "Si", cancelLabel: "No"},
-  duration: 2000,
+  labels: {
+    tip: "Consejo",
+    info: "Información",
+    success: "¡Hecho!",
+    warning: "Atención",
+    alert: "¡Error!",
+    async: "Cargando",
+    confirm: "Confirmar"
+  },
+  modal: {okLabel: "Sí", cancelLabel: "No"},
+  duration: 5000
 }
 
 Vue.config.debug = true;
@@ -47,12 +55,13 @@ const router = new VueRouter({
   routes: [
     {name: "home", path: "/", component: HomeScreen},
     {name: "login", path: "/login", component: LoginScreen},
-    {name: "patients-list", path: "/patients", component: PatientsScreen},
-    {name: "patient-show", path: "/patient/:patientId", component: PatientScreen},
-    {name: "new-patient", path: "/patients/new", component: PatientCreateScreen},
     {name: "users-list", path: "/users", component: UsersListScreen},
     {name: "users-show", path: "/users/:userId", component: UsersShowScreen},
     {name: "users-edit", path: "/users/edit/:userId", component: UsersEditScreen},
+    {name: "users-activate", path: "/users/password/:userId", component: SurgeonsFormScreen},
+    {name: "patients-list", path: "/patients", component: PatientsScreen},
+    {name: "patient-show", path: "/patient/:patientId", component: PatientScreen},
+    {name: "new-patient", path: "/patients/new", component: PatientCreateScreen},
     {name: "surgeons-list", path: "/surgeons", component: SurgeonsListScreen},
     {name: "surgeons-new", path: "/surgeons/new", component: SurgeonsFormScreen},
     {name: "surgeons-edit", path: "/surgeons/edit/:surgeonId", component: SurgeonsFormScreen},

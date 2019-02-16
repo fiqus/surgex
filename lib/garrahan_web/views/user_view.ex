@@ -20,4 +20,9 @@ defmodule GarrahanWeb.UserView do
     |> Map.put(:surgeonId, surgeon.id)
     |> Map.merge(render("user.json", %{user: user}))
   end
+
+  def render("set_password.html", %{changeset: changeset, user: user}) do
+    IO.inspect changeset, label: "set_password.html CHANGESET"
+    IO.inspect user, label: "set_password.html USER"
+  end
 end

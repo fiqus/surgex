@@ -51,14 +51,13 @@ export default {
       this.$router.push({name: "surgeons-edit", params: {surgeonId: surgeon.id}});
     },
     onDelete(surgeon) {
-      if (confirm(`¿Eliminar al cirujano ${surgeon.lastName}, ${surgeon.firstName}?`)) {
-        this.$store.dispatch("deleteSurgeon", surgeon.id)
-          .then((rs) => {
-            this.surgeons = this.surgeons.filter((s) => {
-              return s.id !== surgeon.id;
-            });
-          });
-      }
+      const success = () => {
+        this.surgeons = this.surgeons.filter((s) => {
+          return s.id !== surgeon.id;
+        });
+      };
+
+      this.$store.dispatch("deleteSurgeon", {component: this, surgeon, success});
     }
   }
 }

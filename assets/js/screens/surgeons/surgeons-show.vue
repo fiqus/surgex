@@ -33,12 +33,11 @@ export default {
       this.$router.push({name: "surgeons-edit", params: {surgeonId: surgeon.id}});
     },
     onDelete(surgeon) {
-      if (confirm(`¿Eliminar al cirujano ${surgeon.lastName}, ${surgeon.firstName}?`)) {
-        this.$store.dispatch("deleteSurgeon", surgeon.id)
-          .then(() => {
-            this.$router.go(-1);
-          });
-      }
+      const success = () => {
+        this.$router.go(-1);
+      };
+
+      this.$store.dispatch("deleteSurgeon", {component: this, surgeon, success});
     }
   }
 }

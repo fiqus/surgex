@@ -7,6 +7,20 @@ const initialState = {
   surgeries: []
 };
 
+function deleteItem({component, success, error, question, url, loadingMsg, okMsg, errMsg}) {
+  component.$awn.confirm(question, () => {
+    component.$awn.asyncBlock(
+      apiClient.httpDelete(url),
+      (rs) => {
+        component.$awn.success(okMsg);
+        return success(rs);
+      },
+      errMsg,
+      loadingMsg
+    ).catch(error || (() => {}));
+  });
+}
+
 const actions = {
   proccessApiResponse(res) {
     if (res.status === 401) {
@@ -90,9 +104,14 @@ const actions = {
     return apiClient.httpGet(`/surgeons/${surgeonId}`)
       .then(actions.proccessApiResponse);
   },
-  deleteSurgeon(_, surgeonId) {
-    return apiClient.httpDelete(`/surgeons/${surgeonId}`)
-      .then(actions.proccessApiResponse);
+  deleteSurgeon(_, {component, surgeon, success, error}) {
+    deleteItem({component, success, error,
+      question: `¿Eliminar al cirujano ${surgeon.lastName}, ${surgeon.firstName}?`,
+      url: `/surgeons/${surgeon.id}`,
+      loadingMsg: "Eliminando cirujano",
+      okMsg: "El cirujano ha sido eliminado.",
+      errMsg: "El cirujano no pudo ser eliminado."
+    });
   },
   updateSurgeon(_, surgeon) {
     // @TODO We should consider this format at backend, doesn't make much sense as it is

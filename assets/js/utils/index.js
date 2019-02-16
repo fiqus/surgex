@@ -36,7 +36,8 @@ export function checkStatus(response) {
     return response;
   }
 
-  return Promise.reject(Object.assign({code: response.status}, response.data));
+  const data = typeof response.data === "string" ? {message: response.data} : response.data;
+  return Promise.reject(Object.assign({code: response.status}, data));
 }
 
 export function createApiClient(opts = {}) {
