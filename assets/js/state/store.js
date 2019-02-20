@@ -38,11 +38,15 @@ const actions = {
         commit("setPatient", patient);
       });
   },
-  createPatient(_, dataPatient) {
-    return apiClient.httpPost("/patients", dataPatient)
-      .then(actions.proccessApiResponse);
+  createPatient(_, {component, data, onSuccess, onError}) {
+    actionsHelper.createItem({component, onSuccess, onError, data, onResponse: actions.proccessApiResponse,
+      url: "/patients",
+      loadingMsg: "Creando cirujano",
+      okMsg: "El cirujano ha sido creado.",
+      errMsg: "El cirujano no pudo ser creado."
+    });
   },
-  updatePatient(_, dataPatient) {
+  updatePatient(_, {component, dataPatient, onSuccess, onError}) {
     const data = {
       id: dataPatient.id,
       patient: {
@@ -55,12 +59,22 @@ const actions = {
         birthdate: dataPatient.birthdate
       }
     };
-    return apiClient.httpPut(`/patients/${dataPatient.id}`, data)
-      .then(actions.proccessApiResponse);
+
+    actionsHelper.updateItem({component, onSuccess, onError, data, onResponse: actions.proccessApiResponse,
+      url: `/patients/${dataPatient.id}`,
+      loadingMsg: "Guardando paciente",
+      okMsg: "El paciente ha sido guardado.",
+      errMsg: "El paciente no pudo ser guardado."
+    });
   },
-  deletePatient(_, patientId) {
-    return apiClient.httpDelete(`/patients/${patientId}`)
-      .then(actions.proccessApiResponse);
+  deletePatient(_, {component, dataPatient, onSuccess, onError}) {
+    actionsHelper.deleteItem({component, onSuccess, onError,
+      url: `/patients/${dataPatient.id}`,
+      question: `¿Eliminar al paciente ${dataPatient.last_name}, ${dataPatient.first_name}?`,
+      loadingMsg: "Eliminando paciente",
+      okMsg: "El paciente ha sido eliminado.",
+      errMsg: "El paciente no pudo ser eliminado."
+    });
   },
   fetchUsers() {
     return apiClient.httpGet("/users")

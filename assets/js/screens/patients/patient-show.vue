@@ -51,14 +51,7 @@ export default {
       this.$router.push({name: "patients-list"});
     },
     edit: function(payload) {
-      return this.$store.dispatch("updatePatient", payload)
-        .then((res) => {
-          this.$awn.success("Paciente Editado");
-          this.backToList();
-        })
-        .catch((_) => {
-          this.$awn.alert("Error al editar el Paciente");
-        });
+      return this.$store.dispatch("updatePatient", {component: this, dataPatient: payload, onSuccess: this.backToList})
     }
   },
 }

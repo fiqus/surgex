@@ -37,14 +37,7 @@ export default {
       this.$router.push({name: "patients-list"});
     },
     newPatient: function(payload) {
-      this.$store.dispatch("createPatient", JSON.stringify({patient: payload}))
-        .then((res) => {
-          this.$awn.success("Paciente Creado");
-          this.backToList();
-        })
-        .catch((_) => {
-          this.$awn.alert("Error al crear el Paciente");
-        });
+      this.$store.dispatch("createPatient", {component: this, data: JSON.stringify({patient: payload}), onSuccess: this.backToList})
     }
   },
 }

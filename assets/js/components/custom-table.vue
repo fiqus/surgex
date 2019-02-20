@@ -13,7 +13,7 @@
         v-on:click="clicked(d.id)">
           {{ d[header.key] }}
         </td>
-        <td v-on:click="deleteRow(d.id)">
+        <td v-on:click="deleteRow(d)">
           <i class="fa fa-trash-o"></i>
         </td>
       </tr>
