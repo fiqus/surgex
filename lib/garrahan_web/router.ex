@@ -26,6 +26,7 @@ defmodule GarrahanWeb.Router do
     pipe_through :browser
 
     get "/", IndexController, :index
+
     # INSECURE: We could change a password by just knowing the user ID unless we check the token inside!
     # put("/users/:id/password", UserController, :update_password)
   end

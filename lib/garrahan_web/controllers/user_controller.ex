@@ -35,10 +35,11 @@ defmodule GarrahanWeb.UserController do
   def activate(conn, %{"token" => token}) do
     with {:ok, user_id} <- ActivationToken.verify(token),
          %User{password_hash: nil} = user <- Accounts.get_user!(user_id) do
-        render(conn, "show.json", user: Accounts.attach_surgeon_data(user))
+      render(conn, "show.json", user: Accounts.attach_surgeon_data(user))
     else
       %User{password_hash: password_hash} when is_binary(password_hash) ->
         render_error(conn, "ALREADY_ACTIVATED")
+
       _ ->
         render_error(conn, "WRONG_TOKEN")
     end
@@ -48,11 +49,12 @@ defmodule GarrahanWeb.UserController do
   def activate(conn, %{"token" => token, "password" => _password, "confirm" => _confirm}) do
     with {:ok, user_id} <- ActivationToken.verify(token),
          %User{password_hash: nil} = user <- Accounts.get_user!(user_id) do
-        #changeset = Accounts.change_user(user)
-        render(conn, "show.json", user: Accounts.attach_surgeon_data(user))
+      # changeset = Accounts.change_user(user)
+      render(conn, "show.json", user: Accounts.attach_surgeon_data(user))
     else
       %User{password_hash: password_hash} when is_binary(password_hash) ->
         render_error(conn, "ALREADY_ACTIVATED")
+
       _ ->
         render_error(conn, "WRONG_TOKEN")
     end
@@ -64,7 +66,7 @@ defmodule GarrahanWeb.UserController do
 
   defp render_error(conn, error) do
     conn
-      |> put_status(:bad_request)
-      |> render("error.json", error: error)
+    |> put_status(:bad_request)
+    |> render("error.json", error: error)
   end
 end

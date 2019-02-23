@@ -6,7 +6,7 @@ defmodule GarrahanWeb.SurgeryControllerTest do
   alias Garrahan.Fixtures
 
   import GarrahanWeb.AuthCase
-  
+
   @create_attrs %{
     date: ~D[2010-04-17],
     patient_id: "71695983-4e45-4025-ad58-17a7450f783b",
@@ -121,7 +121,7 @@ defmodule GarrahanWeb.SurgeryControllerTest do
       diagnostic: diagnostic,
       patient: patient
     } do
-      update_attrs = 
+      update_attrs =
         @update_attrs
         |> Map.put(:patient_id, patient.id)
         |> Map.put(:surgeon_id, surgeon.id)
