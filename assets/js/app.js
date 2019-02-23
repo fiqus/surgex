@@ -15,20 +15,6 @@ import {initialState, getters, mutations, actions} from "./state/store";
 
 import App from "./App"
 
-import HomeScreen from "./screens/home.vue";
-import LoginScreen from "./screens/login.vue";
-import PatientsScreen from "./screens/patients/patients-list.vue";
-import PatientScreen from "./screens/patients/patient-show.vue";
-import PatientCreateScreen from "./screens/patients/new-patient.vue";
-import UsersListScreen from "./screens/users/users-list.vue";
-import UsersShowScreen from "./screens/users/users-show.vue";
-import UsersEditScreen from "./screens/users/users-edit.vue";
-import SurgeonsListScreen from "./screens/surgeons/surgeons-list.vue";
-import SurgeonsShowScreen from "./screens/surgeons/surgeons-show.vue";
-import SurgeonsFormScreen from "./screens/surgeons/surgeons-form.vue";
-import SurgeriesScreen from "./screens/sugeries.vue";
-import NewSurgeryScreen from "./screens/new-surgery.vue";
-
 const options= {
   labels: {
     tip: "Consejo",
@@ -51,26 +37,9 @@ Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(VueAWN, options)
 
+import routes from "./routes"
 const router = new VueRouter({
-  routes: [
-    {name: "home", path: "/", component: HomeScreen},
-    {name: "login", path: "/login", component: LoginScreen},
-    {name: "users-list", path: "/users", component: UsersListScreen},
-    {name: "users-show", path: "/users/:userId", component: UsersShowScreen},
-    {name: "users-edit", path: "/users/edit/:userId", component: UsersEditScreen},
-    {name: "users-activate", path: "/users/password/:userId", component: SurgeonsFormScreen},
-    {name: "patients-list", path: "/patients", component: PatientsScreen},
-    {name: "patient-show", path: "/patient/:patientId", component: PatientScreen},
-    {name: "new-patient", path: "/patients/new", component: PatientCreateScreen},
-    {name: "surgeons-list", path: "/surgeons", component: SurgeonsListScreen},
-    {name: "surgeons-new", path: "/surgeons/new", component: SurgeonsFormScreen},
-    {name: "surgeons-edit", path: "/surgeons/edit/:surgeonId", component: SurgeonsFormScreen},
-    {name: "surgeons-show", path: "/surgeons/show/:surgeonId", component: SurgeonsShowScreen},
-    {name: "surgeries", path: "/surgeries", component: SurgeriesScreen},
-    {name: "newSurgery", path: "/surgeries/new", component: NewSurgeryScreen},
-    // Default redirect to home
-    { path: "*", redirect: "/" }
-  ],
+  routes,
   scrollBehavior() {
     return {x: 0, y: 0};
   }
@@ -78,7 +47,7 @@ const router = new VueRouter({
 
 // Redirect to login page if not logged in and trying to access a restricted page
 router.beforeEach((to, from, next) => {
-  const publicPages = ["/", "/login"],
+  const publicPages = ["/", "/login", "/users/activate"],
     authRequired = (path) => {
       return !publicPages.includes(path);
     };
@@ -105,5 +74,5 @@ new Vue({
   store,
   router,
   template: '<App/>',
-  components: { App }
+  components: {App}
 });

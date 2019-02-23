@@ -21,8 +21,7 @@ defmodule GarrahanWeb.UserView do
     |> Map.merge(render("user.json", %{user: user}))
   end
 
-  def render("set_password.html", %{changeset: changeset, user: user}) do
-    IO.inspect(changeset, label: "set_password.html CHANGESET")
-    IO.inspect(user, label: "set_password.html USER")
+  def render("error.json", %{error: code}) do
+    %{status: :error, code: code}
   end
 end

@@ -26,6 +26,14 @@ const actions = {
     localStorage.clear();
     return window.location.reload();
   },
+  getActivate(_, token) {
+    return apiClient.httpGet("/users/activate", {token})
+      .then(actions.proccessApiResponse);
+  },
+  putActivate(_, data) {
+    return apiClient.httpPut("/users/activate", data)
+      .then(actions.proccessApiResponse);
+  },
   fetchPatients() {
     return apiClient.httpGet("/patients")
       .then(actions.proccessApiResponse);
@@ -41,9 +49,9 @@ const actions = {
   createPatient(_, {component, data, onSuccess, onError}) {
     actionsHelper.createItem({component, onSuccess, onError, data, onResponse: actions.proccessApiResponse,
       url: "/patients",
-      loadingMsg: "Creando cirujano",
-      okMsg: "El cirujano ha sido creado.",
-      errMsg: "El cirujano no pudo ser creado."
+      loadingMsg: "Creando paciente",
+      okMsg: "El paciente ha sido creado.",
+      errMsg: "El paciente no pudo ser creado."
     });
   },
   updatePatient(_, {component, dataPatient, onSuccess, onError}) {

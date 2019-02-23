@@ -97,3 +97,12 @@ button:hover {
 .elem-details {
   margin: 2rem auto;
 }
+
+.big-error-message {
+  color: #000000;
+  background-color: #ffcbcb;
+  border: 2px solid #b3240b;
+  padding: 2rem;
+  margin: 4rem auto;
+  border-radius: 2rem;
+}

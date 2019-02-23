@@ -26,19 +26,21 @@ defmodule GarrahanWeb.Router do
     pipe_through :browser
 
     get "/", IndexController, :index
-    get("/users/password", UserController, :set_password)
-    put("/users/:id/password", UserController, :update_password)
+    # INSECURE: We could change a password by just knowing the user ID unless we check the token inside!
+    # put("/users/:id/password", UserController, :update_password)
   end
 
   scope "/api", GarrahanWeb do
     pipe_through :api
 
     post "/token", AuthController, :token
+    get "/users/activate", UserController, :activate
+    put "/users/activate", UserController, :activate
 
     scope "/" do
       pipe_through :auth
 
-      resources "/users", UserController, except: [:new, :edit]
+      resources "/users", UserController, except: [:new, :edit, :create, :delete]
       resources "/diagnostics", DiagnosticController, except: [:new, :edit]
       resources "/surgeons", SurgeonController, except: [:new, :edit]
       resources "/patients", PatientController, except: [:new, :edit]

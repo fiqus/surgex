@@ -2,8 +2,8 @@ const {createApiClient, buildHeaders, checkStatus} = require("./index");
 
 const client = createApiClient();
 
-function httpGet(url) {
-  return client.get(url, {headers: buildHeaders()})
+function httpGet(url, params = {}) {
+  return client.get(url, {headers: buildHeaders(), params})
     .then(checkStatus, checkStatus);
 }
 

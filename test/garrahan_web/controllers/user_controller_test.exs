@@ -26,8 +26,8 @@ defmodule GarrahanWeb.UserControllerTest do
 
   describe "create user" do
     test "can't create users directly - endpoint doesn't exist", %{conn: conn} do
-      assert_error_sent 500, fn ->
-        post(conn, Routes.user_path(conn, :create), user: %{})
+      assert_error_sent 404, fn ->
+        post(conn, Routes.user_path(conn, :index) <> "/create", user: %{})
       end
     end
   end
@@ -66,9 +66,9 @@ defmodule GarrahanWeb.UserControllerTest do
   end
 
   describe "delete user" do
-    test "can't delete users directly - endpoint doesn't exist", %{conn: conn, user: user} do
-      assert_error_sent 500, fn ->
-        delete(conn, Routes.user_path(conn, :delete, user))
+    test "can't delete users directly - endpoint doesn't exist", %{conn: conn} do
+      assert_error_sent 404, fn ->
+        delete(conn, Routes.user_path(conn, :index) <> "/delete")
       end
     end
   end

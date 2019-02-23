@@ -20,7 +20,7 @@ defmodule GarrahanWeb.SurgeonController do
          {:ok, %Surgeon{} = surgeon} <- Surgeries.create_surgeon(surgeon_params, user) do
       surgeon = Surgeries.preload_surgeon_user(surgeon)
       token = ActivationToken.generate(surgeon.user)
-      activation_url = Routes.user_url(conn, :set_password, token: token)
+      activation_url = Routes.index_url(conn, :index) <> "#/users/activate?token=" <> token
 
       try do
         Email.set_password_email(surgeon, activation_url) |> Mailer.deliver_now()

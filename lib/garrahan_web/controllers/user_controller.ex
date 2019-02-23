@@ -6,7 +6,7 @@ defmodule GarrahanWeb.UserController do
 
   action_fallback GarrahanWeb.FallbackController
   # Requires to be an admin!
-  plug(Garrahan.Auth.Plug.AdminUser, [] when action not in [:set_password, :update_password])
+  plug(Garrahan.Auth.Plug.AdminUser, [] when action not in [:activate])
 
   def index(conn, _params) do
     users =
@@ -15,15 +15,6 @@ defmodule GarrahanWeb.UserController do
 
     render(conn, "index.json", users: users)
   end
-
-  # def create(conn, %{"user" => user_params}) do
-  #   with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
-  #     conn
-  #     |> put_status(:created)
-  #     |> put_resp_header("location", Routes.user_path(conn, :show, user))
-  #     |> render("show.json", user: user)
-  #   end
-  # end
 
   def show(conn, %{"id" => id}) do
     user =
@@ -41,35 +32,39 @@ defmodule GarrahanWeb.UserController do
     end
   end
 
-  # def delete(conn, %{"id" => id}) do
-  #   user = Accounts.get_user!(id)
-
-  #   with {:ok, %User{}} <- Accounts.delete_user(user) do
-  #     send_resp(conn, :no_content, "")
-  #   end
-  # end
-
-  def set_password(conn, %{"token" => token}) do
+  def activate(conn, %{"token" => token}) do
     with {:ok, user_id} <- ActivationToken.verify(token),
          %User{password_hash: nil} = user <- Accounts.get_user!(user_id) do
-      changeset = Accounts.change_user(user)
-      render(conn, "set_password.html", changeset: changeset, user: user)
+        render(conn, "show.json", user: Accounts.attach_surgeon_data(user))
     else
       %User{password_hash: password_hash} when is_binary(password_hash) ->
-        conn
-        |> put_flash(:error, "You already have a password set.")
-        |> redirect(to: "/")
-
+        render_error(conn, "ALREADY_ACTIVATED")
       _ ->
-        render(conn, "invalid_token.html")
+        render_error(conn, "WRONG_TOKEN")
     end
   end
 
-  def set_password(conn, _) do
-    # If there is no token in our params, tell the user they've provided
-    # an invalid token or expired token
+  # @TODO WIP [DMC] #13: Pantalla de activación de usuario.
+  def activate(conn, %{"token" => token, "password" => _password, "confirm" => _confirm}) do
+    with {:ok, user_id} <- ActivationToken.verify(token),
+         %User{password_hash: nil} = user <- Accounts.get_user!(user_id) do
+        #changeset = Accounts.change_user(user)
+        render(conn, "show.json", user: Accounts.attach_surgeon_data(user))
+    else
+      %User{password_hash: password_hash} when is_binary(password_hash) ->
+        render_error(conn, "ALREADY_ACTIVATED")
+      _ ->
+        render_error(conn, "WRONG_TOKEN")
+    end
+  end
+
+  def activate(conn, _) do
+    render_error(conn, "WRONG_TOKEN")
+  end
+
+  defp render_error(conn, error) do
     conn
-    |> put_flash(:error, "The verification link is invalid.")
-    |> redirect(to: "/")
+      |> put_status(:bad_request)
+      |> render("error.json", error: error)
   end
 end
