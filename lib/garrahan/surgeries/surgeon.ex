@@ -11,9 +11,14 @@ defmodule Garrahan.Surgeries.Surgeon do
     field :first_name, :string
     field :last_name, :string
     field :license, :string
-    # field :user_id, :binary_id
     belongs_to(:user, User)
     has_many(:surgeries, Surgery)
+
+    many_to_many(
+      :assistants,
+      Surgery,
+      join_through: "surgeries_surgeons"
+    )
 
     timestamps()
   end

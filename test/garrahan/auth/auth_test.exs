@@ -5,11 +5,11 @@ defmodule Garrahan.AuthTest do
   alias Garrahan.{Accounts, Auth}
 
   describe "authenticate_user" do
-    test "the user is found by email and password checked", %{surgeon: surgeon, user: user} do
-      assert {:ok, auth_surgeon} = Auth.authenticate_user(surgeon.email, user.password)
-      assert auth_surgeon.id == surgeon.id
-      assert auth_surgeon.email == surgeon.email
-      assert auth_surgeon.user.id == user.id
+    test "the user is found by email and password checked", %{auth_surgeon: surgeon, user: user} do
+      assert {:ok, authorizated_surgeon} = Auth.authenticate_user(surgeon.email, user.password)
+      assert authorizated_surgeon.id == surgeon.id
+      assert authorizated_surgeon.email == surgeon.email
+      assert authorizated_surgeon.user.id == user.id
     end
 
     test "the user/email does not exist" do
@@ -17,13 +17,13 @@ defmodule Garrahan.AuthTest do
                Auth.authenticate_user("another_email@email.com", "password")
     end
 
-    test "cannot authenticate becase the user is disabled", %{surgeon: surgeon, user: user} do
+    test "cannot authenticate becase the user is disabled", %{auth_surgeon: surgeon, user: user} do
       {:ok, _user} = Accounts.update_user(user, %{disabled: true})
 
       assert {:error, "USER_DISABLED"} = Auth.authenticate_user(surgeon.email, user.password)
     end
 
-    test "the user is found by email but wrong password", %{surgeon: surgeon} do
+    test "the user is found by email but wrong password", %{auth_surgeon: surgeon} do
       assert {:error, "WRONG_PASSWORD"} = Auth.authenticate_user(surgeon.email, "badpass")
     end
   end

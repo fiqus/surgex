@@ -44,7 +44,7 @@ defmodule GarrahanWeb.AuthCase do
         user
       )
 
-    {:ok, admin: admin, user: user, surgeon: surgeon}
+    {:ok, admin: admin, user: user, auth_surgeon: surgeon}
   end
 
   defmacro test_auth_admin_required(func) do

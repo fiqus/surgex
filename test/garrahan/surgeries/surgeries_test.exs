@@ -3,10 +3,10 @@ defmodule Garrahan.SurgeriesTest do
 
   alias Garrahan.Surgeries
   alias Garrahan.Accounts
-
+  @moduletag :skip
   describe "diagnostics" do
     alias Garrahan.Surgeries.Diagnostic
-
+    
     @valid_attrs %{description: "some description", name: "some name"}
     @update_attrs %{description: "some updated description", name: "some updated name"}
     @invalid_attrs %{description: nil, name: nil}

@@ -22,7 +22,7 @@ defmodule GarrahanWeb.UserView do
   end
 
   def render("set_password.html", %{changeset: changeset, user: user}) do
-    IO.inspect changeset, label: "set_password.html CHANGESET"
-    IO.inspect user, label: "set_password.html USER"
+    IO.inspect(changeset, label: "set_password.html CHANGESET")
+    IO.inspect(user, label: "set_password.html USER")
   end
 end

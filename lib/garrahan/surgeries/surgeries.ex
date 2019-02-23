@@ -384,11 +384,14 @@ defmodule Garrahan.Surgeries do
   """
   def list_surgeries do
     Repo.all(Surgery)
+    |> preload_surgery_associations()
   end
 
   def list_surgeries(surgeon_id) do
     query = from(s in Surgery, where: s.surgeon_id == ^surgeon_id)
+
     Repo.all(query)
+    |> preload_surgery_associations()
   end
 
   @doc """
@@ -405,7 +408,19 @@ defmodule Garrahan.Surgeries do
       ** (Ecto.NoResultsError)
 
   """
-  def get_surgery!(id), do: Repo.get!(Surgery, id)
+  def get_surgery!(id) do
+    Repo.get!(Surgery, id)
+    |> preload_surgery_associations()
+  end
+
+  def preload_surgery_associations(surgery_or_surgeries) do
+    surgery_or_surgeries
+    |> Repo.preload(:surgeon)
+    |> Repo.preload(:assistants)
+    |> Repo.preload(:diagnostic)
+    |> Repo.preload(:patient)
+    |> Repo.preload(:photos)
+  end
 
   @doc """
   Creates a surgery.
