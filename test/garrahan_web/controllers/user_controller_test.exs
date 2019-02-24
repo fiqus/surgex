@@ -2,7 +2,7 @@ defmodule GarrahanWeb.UserControllerTest do
   use GarrahanWeb.ConnCase
   use GarrahanWeb.AuthCase
 
-  alias Garrahan.Accounts.User
+  alias Garrahan.Accounts.{User, ActivationToken}
 
   import GarrahanWeb.AuthCase
 
@@ -71,5 +71,176 @@ defmodule GarrahanWeb.UserControllerTest do
         delete(conn, Routes.user_path(conn, :index) <> "/delete")
       end
     end
+  end
+
+  describe "activate user (GET)" do
+    test "renders user when token and user are valid", %{conn: conn} do
+      {%{password_hash: nil} = user, surgeon} = fixture_activate_user()
+
+      data = %{"token" => ActivationToken.generate(user)}
+
+      conn = get(conn, Routes.user_path(conn, :activate), data)
+
+      assert %{
+               "id" => user.id,
+               "disabled" => user.disabled,
+               "isAdmin" => user.is_admin,
+               "surgeonId" => surgeon.id,
+               "email" => surgeon.email,
+               "firstName" => surgeon.first_name,
+               "lastName" => surgeon.last_name,
+               "license" => surgeon.license
+             } == json_response(conn, 200)["data"]
+    end
+
+    test "renders error 'WRONG_TOKEN' if the user was not found", %{
+      conn: conn,
+      user: user,
+      auth_surgeon: surgeon
+    } do
+      data = %{"token" => ActivationToken.generate(user)}
+
+      {:ok, _} = Garrahan.Surgeries.delete_surgeon(surgeon)
+      conn = get(conn, Routes.user_path(conn, :activate), data)
+
+      assert %{"code" => "WRONG_TOKEN", "status" => "error"} == json_response(conn, 400)
+    end
+
+    test "renders error 'WRONG_TOKEN' if token is not valid", %{conn: conn} do
+      data = %{"token" => "wrong"}
+
+      conn = get(conn, Routes.user_path(conn, :activate), data)
+
+      assert %{"code" => "WRONG_TOKEN", "status" => "error"} == json_response(conn, 400)
+    end
+
+    test "renders error 'ALREADY_ACTIVATED' if the user was already activated", %{
+      conn: conn,
+      user: user
+    } do
+      data = %{"token" => ActivationToken.generate(user)}
+
+      conn = get(conn, Routes.user_path(conn, :activate), data)
+
+      assert %{"code" => "ALREADY_ACTIVATED", "status" => "error"} == json_response(conn, 400)
+    end
+  end
+
+  describe "activate user (PUT)" do
+    test "renders user when activation data and user are valid", %{conn: conn} do
+      {%{password_hash: nil} = user, surgeon} = fixture_activate_user()
+
+      data = %{
+        "token" => ActivationToken.generate(user),
+        "password" => "asdasd",
+        "confirm" => "asdasd"
+      }
+
+      conn = put(conn, Routes.user_path(conn, :activate), data)
+
+      assert %{
+               "id" => user.id,
+               "disabled" => user.disabled,
+               "isAdmin" => user.is_admin,
+               "surgeonId" => surgeon.id,
+               "email" => surgeon.email,
+               "firstName" => surgeon.first_name,
+               "lastName" => surgeon.last_name,
+               "license" => surgeon.license
+             } == json_response(conn, 200)["data"]
+
+      user = Garrahan.Accounts.get_user!(user.id)
+      assert user.password_hash != nil && is_binary(user.password_hash)
+    end
+
+    test "renders error 'WRONG_TOKEN' if the user was not found", %{
+      conn: conn,
+      user: user,
+      auth_surgeon: surgeon
+    } do
+      data = %{
+        "token" => ActivationToken.generate(user),
+        "password" => "asdasd",
+        "confirm" => "asdasd"
+      }
+
+      {:ok, _} = Garrahan.Surgeries.delete_surgeon(surgeon)
+      conn = put(conn, Routes.user_path(conn, :activate), data)
+
+      assert %{"code" => "WRONG_TOKEN", "status" => "error"} == json_response(conn, 400)
+    end
+
+    test "renders error 'WRONG_TOKEN' if token is not valid", %{conn: conn} do
+      data = %{
+        "token" => "wrong",
+        "password" => "asdasd",
+        "confirm" => "asdasd"
+      }
+
+      conn = put(conn, Routes.user_path(conn, :activate), data)
+
+      assert %{"code" => "WRONG_TOKEN", "status" => "error"} == json_response(conn, 400)
+    end
+
+    test "renders error 'PASSWORD_MISMATCH' if password and confirm don't match", %{conn: conn} do
+      {user, _} = fixture_activate_user()
+
+      data = %{
+        "token" => ActivationToken.generate(user),
+        "password" => "asdasd",
+        "confirm" => "qweqwe"
+      }
+
+      conn = put(conn, Routes.user_path(conn, :activate), data)
+
+      assert %{"code" => "PASSWORD_MISMATCH", "status" => "error"} == json_response(conn, 400)
+    end
+
+    test "renders error 'PASSWORD_WEAK' if password doesn't match the minimum requirements", %{
+      conn: conn
+    } do
+      {user, _} = fixture_activate_user()
+
+      data = %{
+        "token" => ActivationToken.generate(user),
+        "password" => "asd",
+        "confirm" => "asd"
+      }
+
+      conn = put(conn, Routes.user_path(conn, :activate), data)
+
+      assert %{"code" => "PASSWORD_WEAK", "status" => "error"} == json_response(conn, 400)
+    end
+
+    test "renders error 'ALREADY_ACTIVATED' if the user was already activated", %{
+      conn: conn,
+      user: user
+    } do
+      data = %{
+        "token" => ActivationToken.generate(user),
+        "password" => "asdasd",
+        "confirm" => "asdasd"
+      }
+
+      conn = put(conn, Routes.user_path(conn, :activate), data)
+
+      assert %{"code" => "ALREADY_ACTIVATED", "status" => "error"} == json_response(conn, 400)
+    end
+  end
+
+  defp fixture_activate_user() do
+    {:ok, user} = Garrahan.Accounts.create_user(%{is_admin: false})
+
+    {:ok, surgeon} =
+      Garrahan.Surgeries.create_surgeon(
+        %{
+          email: "activate@test.com",
+          first_name: "Fiqus",
+          last_name: "User"
+        },
+        user
+      )
+
+    {user, surgeon}
   end
 end

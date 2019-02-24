@@ -1,8 +1,7 @@
 <template>
   <div class="center form-login">
-    <h1>Registro de Cirugía</h1>
-    <h3>Servicio de Cirugía Plástica</h3>
-    <h3 v-if="userAuth">{{ userAuth.email }}</h3>
+    <h1>Servicio de Cirugía Plástica</h1>
+    <h3 v-if="userAuth">{{ userAuth.lastName }}, {{ userAuth.firstName }}<br/><small>{{ userAuth.email }}</small></h3>
     <button v-if="!userAuth" v-on:click="redirectLogin">Iniciar Sesión</button>
   </div>
 </template>

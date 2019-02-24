@@ -62,9 +62,8 @@ export default {
       };
       this.$store.dispatch("putActivate", data)
         .then(() => {
-          this.$awn.success("WIP [DMC] #13: Pantalla de activación de usuario.");
-          // this.$awn.success("¡El usuario se activó correctamente!");
-          // this.$router.replace({name: "login"});
+          this.$awn.success("¡El usuario se activó correctamente!");
+          this.$router.replace({name: "login"});
         }).catch((err) => {
           if (err && err.code === "WRONG_TOKEN") {
             this.$awn.alert("El código de activación no es válido.");

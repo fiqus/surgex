@@ -4,9 +4,9 @@
       <h2 class="center"></h2>
 
       <div class="form-login">
-        <h1 class="center login-message">Bienvenido</h1>
+        <h1 class="center login-message">Inicio de Sesión</h1>
         <div>
-          <input name="email" class="button-login" type="text" v-model="login.email" placeholder="Usuario" required>
+          <input name="email" class="button-login" type="text" v-model="login.email" placeholder="Email" required>
         </div>
         <div>
           <input name="password" class="button-login" type="password" v-model="login.password" placeholder="Contraseña" required>

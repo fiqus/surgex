@@ -32,24 +32,30 @@ defmodule GarrahanWeb.UserController do
     end
   end
 
-  def activate(conn, %{"token" => token}) do
-    with {:ok, user_id} <- ActivationToken.verify(token),
-         %User{password_hash: nil} = user <- Accounts.get_user!(user_id) do
+  def activate(conn, %{"token" => token, "password" => password, "confirm" => confirm}) do
+    with ^password <- confirm,
+         {:ok, user_id} <- ActivationToken.verify(token),
+         %User{password_hash: nil} = user <- Accounts.get_user(user_id),
+         {:ok, %User{} = user} <- Accounts.update_user(user, %{"password" => password}) do
       render(conn, "show.json", user: Accounts.attach_surgeon_data(user))
     else
       %User{password_hash: password_hash} when is_binary(password_hash) ->
         render_error(conn, "ALREADY_ACTIVATED")
+
+      {:error, %Ecto.Changeset{errors: [password: _]}} ->
+        render_error(conn, "PASSWORD_WEAK")
+
+      _ when password != confirm ->
+        render_error(conn, "PASSWORD_MISMATCH")
 
       _ ->
         render_error(conn, "WRONG_TOKEN")
     end
   end
 
-  # @TODO WIP [DMC] #13: Pantalla de activación de usuario.
-  def activate(conn, %{"token" => token, "password" => _password, "confirm" => _confirm}) do
+  def activate(conn, %{"token" => token}) do
     with {:ok, user_id} <- ActivationToken.verify(token),
-         %User{password_hash: nil} = user <- Accounts.get_user!(user_id) do
-      # changeset = Accounts.change_user(user)
+         %User{password_hash: nil} = user <- Accounts.get_user(user_id) do
       render(conn, "show.json", user: Accounts.attach_surgeon_data(user))
     else
       %User{password_hash: password_hash} when is_binary(password_hash) ->
