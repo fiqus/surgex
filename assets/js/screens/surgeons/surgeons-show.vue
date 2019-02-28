@@ -2,14 +2,14 @@
   <div v-if="!loading">
     <h3 class="subtitle">Detalle de Cirujano</h3>
     <section class="elem-details">
-      <div><b>Cirujano:</b> {{ surgeon.lastName }}, {{ surgeon.firstName }}</div>
+      <div><b>Cirujano:</b> {{surgeon.lastName}}, {{surgeon.firstName}}</div>
       <div><b>Email:</b> {{surgeon.email}}</div>
-      <div><b>Licencia:</b> {{surgeon.license}}</div>
+      <div><b>Licencia:</b> {{surgeon.license || "-"}}</div>
     </section>
     <div class="action-bar-buttons">
-      <button v-on:click="$router.go(-1)">Volver</button>
-      <button @click="showEdit(surgeon)">Editar</button>
-      <button @click="onDelete(surgeon)">Eliminar</button>
+      <button class="button" @click="$router.go(-1)"><i class="fa fa-arrow-left"></i> Volver</button>
+      <button class="button" @click="showEdit(surgeon)"><i class="fa fa-edit"></i> Editar</button>
+      <button class="button" @click="onDelete(surgeon)"><i class="fa fa-trash"></i> Eliminar</button>
     </div>
   </div>
 </template>

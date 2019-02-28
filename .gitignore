@@ -44,3 +44,4 @@ npm-debug.log
 
 # Ignore VSCode files
 .elixir_ls/
+.vscode/

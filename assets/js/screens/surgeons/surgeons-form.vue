@@ -22,8 +22,8 @@
           <input type="text" v-model="surgeon.license">
         </div>
         <div class="action-bar-buttons">
-          <button type="button" v-on:click="$router.go(-1)">Cancelar</button>
-          <button type="submit">Guardar</button>
+          <button type="button" class="button" @click="$router.go(-1)"><i class="fa fa-arrow-left"></i> Cancelar</button>
+          <button type="submit" class="button"><i class="fa fa-save"></i> Guardar</button>
         </div>
       </div>
     </form>
