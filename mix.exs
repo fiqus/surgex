@@ -56,7 +56,8 @@ defmodule Garrahan.MixProject do
       {:bcrypt_elixir, "~> 1.0"},
       {:excoveralls, "~> 0.10", only: :test},
       {:bamboo, "~> 1.1"},
-      {:bamboo_smtp, "~> 1.6.0"}
+      {:bamboo_smtp, "~> 1.6.0"},
+      {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false}
     ]
   end
 
