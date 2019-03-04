@@ -192,7 +192,15 @@ const actions = {
         // @TODO This shouldn't be needed anymore!
         commit("setSurgeries", surgeries);
       });
-  }
+  },
+  createSurgery(_, {component, surgery, onSuccess, onError}) {
+    actionsHelper.createItem({component, onSuccess, onError, data: {surgery}, onResponse: actions.proccessApiResponse,
+      url: "/surgeries",
+      loadingMsg: "Creando cirugia",
+      okMsg: "La cirugia ha sido creada.",
+      errMsg: "La cirugia no pudo ser creada."
+    });
+  },
 };
 
 const mutations = {

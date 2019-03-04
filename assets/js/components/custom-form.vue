@@ -2,8 +2,12 @@
   <div>
 		<h3 class="subtitle">{{formName}} </h3>
     <form>
-			<div v-for="(field, index) in fields" :key="index">
-				<input :type="field.type || 'text'" :placeholder="field.placeholder" v-model="data[field.key]">
+			<div v-for="field in fields" :key="field.key">
+				<select v-if="field.type === 'select'" :placeholder="field.placeholder" v-model="data[field.key]">
+					<option value="">{{field.placeholder}}</option>
+					<option v-for="option in field.options" :key="option.key" :value="option.key">{{option.value}}</option>
+				</select>
+				<input v-else :type="field.type || 'text'" :placeholder="field.placeholder" v-model="data[field.key]">
 			</div>
 			<button class="button" v-on:click="sendData">Guardar</button>
 		</form>

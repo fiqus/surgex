@@ -10,6 +10,7 @@ import VueRouter from "vue-router"
 import Vuex from "vuex"
 import createPersistedState from "vuex-persistedstate"
 import VueAWN from "vue-awesome-notifications";
+import Vuelidate from "vuelidate";
 
 import {initialState, getters, mutations, actions} from "./state/store";
 
@@ -36,6 +37,7 @@ Vue.config.silent = false;
 Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(VueAWN, options)
+Vue.use(Vuelidate)
 
 import routes from "./routes"
 const router = new VueRouter({

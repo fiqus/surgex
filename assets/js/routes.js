@@ -12,8 +12,8 @@ import UsersEditScreen from "./screens/users/users-edit.vue";
 import SurgeonsListScreen from "./screens/surgeons/surgeons-list.vue";
 import SurgeonsShowScreen from "./screens/surgeons/surgeons-show.vue";
 import SurgeonsFormScreen from "./screens/surgeons/surgeons-form.vue";
-import SurgeriesScreen from "./screens/sugeries.vue";
-import NewSurgeryScreen from "./screens/new-surgery.vue";
+import SurgeriesListScreen from "./screens/surgeries/sugeries-list.vue";
+import SurgeryFormScreen from "./screens/surgeries/surgery-form.vue";
 
 export default [
   {name: "home", path: "/", component: HomeScreen, meta: {access: "public"}},
@@ -31,8 +31,8 @@ export default [
   {name: "surgeons-new", path: "/surgeons/new", component: SurgeonsFormScreen},
   {name: "surgeons-edit", path: "/surgeons/edit/:surgeonId", component: SurgeonsFormScreen},
   {name: "surgeons-show", path: "/surgeons/show/:surgeonId", component: SurgeonsShowScreen},
-  {name: "surgeries", path: "/surgeries", component: SurgeriesScreen},
-  {name: "newSurgery", path: "/surgeries/new", component: NewSurgeryScreen},
+  {name: "surgeries-list", path: "/surgeries", component: SurgeriesListScreen},
+    {name: "surgery-new", path: "/surgeries/new", component: SurgeryFormScreen},
   // Default redirect to home
   { path: "*", redirect: "/" }
 ];
