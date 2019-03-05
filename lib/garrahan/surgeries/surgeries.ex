@@ -18,6 +18,7 @@ defmodule Garrahan.Surgeries do
 
   """
   def list_diagnostics do
+    # @TODO Add order_by
     Repo.all(Diagnostic)
   end
 
@@ -114,7 +115,7 @@ defmodule Garrahan.Surgeries do
 
   """
   def list_surgeons do
-    Repo.all(Surgeon)
+    Repo.all(from s in Surgeon, order_by: [s.last_name, s.first_name])
     |> preload_surgeon_user()
   end
 
@@ -287,7 +288,7 @@ defmodule Garrahan.Surgeries do
 
   """
   def list_patients do
-    Repo.all(Patient)
+    Repo.all(from p in Patient, order_by: [p.last_name, p.first_name])
   end
 
   @doc """
@@ -383,12 +384,12 @@ defmodule Garrahan.Surgeries do
 
   """
   def list_surgeries do
-    Repo.all(Surgery)
+    Repo.all(from s in Surgery, order_by: [desc: s.date])
     |> preload_surgery_associations()
   end
 
   def list_surgeries(surgeon_id) do
-    query = from(s in Surgery, where: s.surgeon_id == ^surgeon_id)
+    query = from(s in Surgery, where: s.surgeon_id == ^surgeon_id, order_by: [desc: s.date])
 
     Repo.all(query)
     |> preload_surgery_associations()

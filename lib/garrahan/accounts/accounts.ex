@@ -19,7 +19,8 @@ defmodule Garrahan.Accounts do
 
   """
   def list_users do
-    Repo.all(User)
+    # @TODO Add order_by surgeon last/first names
+    Repo.all(from u in User, order_by: u.disabled)
   end
 
   @doc """
