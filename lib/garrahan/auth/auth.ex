@@ -44,6 +44,6 @@ defmodule Garrahan.Auth do
   end
 
   defp encode_and_sign(user, claims) do
-    Garrahan.Auth.Guardian.encode_and_sign(user, claims, ttl: {24, :hours})
+    Garrahan.Auth.Guardian.encode_and_sign(user, claims)
   end
 end

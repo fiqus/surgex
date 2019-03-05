@@ -20,6 +20,8 @@ config :garrahan, Garrahan.Repo,
 # Configure Guardian
 config :garrahan, Garrahan.Auth.Guardian,
   issuer: "garrahan",
+  verify_issuer: true,
+  ttl: {5, :minutes},
   secret_key: "UDR8nL8PI/JN+fJioxlErRSa82h8nyL4SzhA/N8Wc5ox+KrGgUZdZZI0gSMN+TPQ"
 
 config :garrahan,

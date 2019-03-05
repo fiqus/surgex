@@ -8,8 +8,8 @@
     </section>
     <div class="action-bar-buttons">
       <button class="button" @click="$router.go(-1)"><i class="fa fa-arrow-left"></i> Volver</button>
-      <button class="button" @click="showEdit(surgeon)"><i class="fa fa-edit"></i> Editar</button>
-      <button class="button" @click="onDelete(surgeon)"><i class="fa fa-trash"></i> Eliminar</button>
+      <button class="button" @click="showEdit(surgeon)" v-if="isAdmin"><i class="fa fa-edit"></i> Editar</button>
+      <button class="button" @click="onDelete(surgeon)" v-if="isAdmin"><i class="fa fa-trash"></i> Eliminar</button>
     </div>
   </div>
 </template>
@@ -27,6 +27,13 @@ export default {
         this.surgeon = surgeon;
         this.loading = false;
       });
+  },
+  computed: {
+    isAdmin: {
+      get() {
+        return this.$store.getters.isAdmin;
+      }
+    }
   },
   methods: {
     showEdit(surgeon) {

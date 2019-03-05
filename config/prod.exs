@@ -20,6 +20,8 @@ config :logger, level: :info
 # Configure Guardian
 config :garrahan, Garrahan.Auth.Guardian,
   issuer: "garrahan",
+  verify_issuer: true,
+  ttl: {24, :hours},
   secret_key: {:system, "GUARDIAN_SECRET_KEY"}
 
 config :garrahan,

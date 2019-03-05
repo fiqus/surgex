@@ -187,9 +187,10 @@ const mutations = {
 };
 
 const getters = {
-  getToken(state) {
-    return state.token;
-  }
+  isLogged: (state) => state.authUser && state.token,
+  isAdmin: (state) => state.authUser && state.authUser.isAdmin,
+  getUser: (state) => state.authUser,
+  getToken: (state) => state.token
 };
 
 module.exports = {

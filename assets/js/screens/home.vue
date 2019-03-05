@@ -1,8 +1,8 @@
 <template>
   <div class="center form-login">
     <h1>Servicio de Cirugía Plástica</h1>
-    <h3 v-if="userAuth">{{ userAuth.lastName }}, {{ userAuth.firstName }}<br/><small>{{ userAuth.email }}</small></h3>
-    <button v-if="!userAuth" v-on:click="redirectLogin">Iniciar Sesión</button>
+    <h3 v-if="user">{{ user.lastName }}, {{ user.firstName }}<br/><small>{{ user.email }}</small></h3>
+    <button v-if="!user" v-on:click="redirectLogin">Iniciar Sesión</button>
   </div>
 </template>
 
@@ -14,9 +14,9 @@
       }
     },
     computed: {
-      userAuth: {
+      user: {
         get() {
-          return this.$store.state.authUser;
+          return this.$store.getters.getUser;
         }
       }
     },

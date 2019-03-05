@@ -11,7 +11,7 @@
       <button v-if="token" v-on:click="redirect('surgeries')">Cirugías</button>
       <button v-if="token" v-on:click="redirect('patients-list')">Pacientes</button>
       <button v-if="token" v-on:click="redirect('surgeons-list')">Cirujanos</button>
-      <button v-if="user.isAdmin" v-on:click="redirect('users-list')">Usuarios</button>
+      <button v-if="isAdmin" v-on:click="redirect('users-list')">Usuarios</button>
       <button v-if="token" v-on:click="redirect('logout')">Cerrar Sesión</button>
     </div>
   </div>
@@ -23,14 +23,19 @@ export default {
     }
   },
   computed: {
+    isAdmin: {
+      get() {
+        return this.$store.getters.isAdmin;
+      }
+    },
     user: {
       get() {
-        return this.$store.state.authUser;
+        return this.$store.getters.getUser;
       }
     },
     token: {
       get() {
-        return this.$store.state.token;
+        return this.$store.getters.getToken;
       }
     }
   },
