@@ -75,4 +75,19 @@ defmodule GarrahanWeb.AuthControllerTest do
              } = json_response(conn, 200)
     end
   end
+
+  describe "is_auth" do
+    test "should return %{'auth' => true} if token is valid", %{conn: conn, user: user} do
+      {:ok, token} = Garrahan.Auth.token(user)
+      conn = post(conn, Routes.auth_path(conn, :is_auth), %{token: token})
+
+      assert %{"auth" => true} = json_response(conn, 200)
+    end
+
+    test "should return %{'auth' => false} if token is not valid", %{conn: conn} do
+      conn = post(conn, Routes.auth_path(conn, :is_auth), %{token: "wrong-token"})
+
+      assert %{"auth" => false} = json_response(conn, 200)
+    end
+  end
 end

@@ -47,12 +47,7 @@ const router = new VueRouter({
 
 // Redirect to login page if not logged in and trying to access a restricted page
 router.beforeEach((to, from, next) => {
-  const publicPages = ["/", "/login", "/users/activate"],
-    authRequired = (path) => {
-      return !publicPages.includes(path);
-    };
-
-  if (authRequired(to.path) && !store.getters.getToken) {
+  if (to.meta.access != "public" && !store.getters.getToken) {
     return next("/login");
   }
 

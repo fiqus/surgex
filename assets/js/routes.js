@@ -14,9 +14,9 @@ import SurgeriesScreen from "./screens/sugeries.vue";
 import NewSurgeryScreen from "./screens/new-surgery.vue";
 
 export default [
-  {name: "home", path: "/", component: HomeScreen},
-  {name: "login", path: "/login", component: LoginScreen},
-  {name: "activate", path: "/users/activate", component: ActivateScreen},
+  {name: "home", path: "/", component: HomeScreen, meta: {access: "public"}},
+  {name: "login", path: "/login", component: LoginScreen, meta: {access: "public"}},
+  {name: "activate", path: "/users/activate", component: ActivateScreen, meta: {access: "public"}},
   {name: "users-list", path: "/users", component: UsersListScreen},
   {name: "users-show", path: "/users/:userId", component: UsersShowScreen},
   {name: "users-edit", path: "/users/edit/:userId", component: UsersEditScreen},

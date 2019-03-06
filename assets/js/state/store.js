@@ -26,6 +26,19 @@ const actions = {
     localStorage.clear();
     return window.location.reload();
   },
+  isAuth({commit}, token) {
+    function clearAuthUser() {
+      commit("clearAuthUser");
+    }
+
+    return !token ? clearAuthUser() : apiClient.httpPost("/auth", {token})
+      .then((res) => {
+        if (!(res && res.auth)) {
+          throw new Error("Token is not valid anymore! => Will call clearAuthUser()");
+        }
+      })
+      .catch(clearAuthUser);
+  },
   getActivate(_, token) {
     return apiClient.httpGet("/users/activate", {token})
       .then(actions.proccessApiResponse);
@@ -175,6 +188,10 @@ const mutations = {
   setAuthUser(state, authUser) {
     state.authUser = authUser.user;
     state.token = authUser.token;
+  },
+  clearAuthUser(state) {
+    state.authUser = null;
+    state.token = null;
   },
   // @TODO This shouldn't be needed anymore!
   setPatient(state, patient) {

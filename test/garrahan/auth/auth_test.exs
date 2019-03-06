@@ -34,4 +34,15 @@ defmodule Garrahan.AuthTest do
       assert String.length(token) > 100
     end
   end
+
+  describe "is_auth?" do
+    test "should return true if token is valid", %{user: user} do
+      {:ok, token} = Auth.token(user)
+      assert Auth.is_auth?(token) == true
+    end
+
+    test "should return false if token is not valid" do
+      assert Auth.is_auth?("wrong-token") == false
+    end
+  end
 end

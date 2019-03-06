@@ -10,4 +10,12 @@ defmodule GarrahanWeb.AuthController do
         render(conn, "error.json", error: reason)
     end
   end
+
+  def is_auth(conn, %{"token" => token}) do
+    render(conn, "auth.json", auth: Garrahan.Auth.is_auth?(token))
+  end
+
+  def is_auth(conn, _) do
+    render(conn, "auth.json", auth: false)
+  end
 end

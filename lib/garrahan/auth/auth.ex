@@ -46,4 +46,14 @@ defmodule Garrahan.Auth do
   defp encode_and_sign(user, claims) do
     Garrahan.Auth.Guardian.encode_and_sign(user, claims)
   end
+
+  def is_auth?(token) do
+    case Garrahan.Auth.Guardian.decode_and_verify(token) do
+      {:ok, _} ->
+        true
+
+      _ ->
+        false
+    end
+  end
 end

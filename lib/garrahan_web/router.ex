@@ -35,6 +35,7 @@ defmodule GarrahanWeb.Router do
     pipe_through :api
 
     post "/token", AuthController, :token
+    post "/auth", AuthController, :is_auth
     get "/users/activate", UserController, :activate
     put "/users/activate", UserController, :activate
 

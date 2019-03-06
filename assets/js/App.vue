@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if="!loading">
   <userBar/>
   <div id="app" class="container">
     <div id="main">
@@ -16,6 +16,17 @@ export default {
   name: "App",
   components: {
     userBar
+  },
+  data() {
+    return {
+      loading: true
+    }
+  },
+  created() {
+    this.$store.dispatch("isAuth", this.$store.getters.getToken)
+      .then(() => {
+        this.loading = false;
+      });
   }
 }
 </script>
