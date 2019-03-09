@@ -15,8 +15,12 @@ defmodule GarrahanWeb.UserView do
     %{id: user.id, isAdmin: user.is_admin, disabled: user.disabled}
   end
 
-  def render("user_with_surgeon_data.json", %{user: {user, surgeon}}) do
+  def render("surgeon.json", %{surgeon: surgeon}) do
     render_one(surgeon, SurgeonView, "surgeon.json")
+  end
+
+  def render("user_with_surgeon_data.json", %{user: {user, surgeon}}) do
+    render("surgeon.json", %{surgeon: surgeon})
     |> Map.put(:surgeonId, surgeon.id)
     |> Map.merge(render("user.json", %{user: user}))
   end

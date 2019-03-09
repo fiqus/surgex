@@ -73,6 +73,40 @@ defmodule GarrahanWeb.UserControllerTest do
     end
   end
 
+  describe "recover user (POST)" do
+    test "renders surgeron when email is valid", %{conn: conn} do
+      {_, surgeon} = fixture_recover_user()
+
+      data = %{"email" => surgeon.email}
+
+      conn = post(conn, Routes.user_path(conn, :recover), data)
+
+      assert %{
+               "id" => surgeon.id,
+               "email" => surgeon.email,
+               "firstName" => surgeon.first_name,
+               "lastName" => surgeon.last_name,
+               "license" => surgeon.license
+             } == json_response(conn, 200)
+    end
+
+    test "renders error 'EMAIL_NOT_EXISTS' if the email was not found", %{conn: conn} do
+      data = %{"email" => "nobody@email.com"}
+
+      conn = post(conn, Routes.user_path(conn, :recover), data)
+
+      assert %{"code" => "EMAIL_NOT_EXISTS", "status" => "error"} == json_response(conn, 400)
+    end
+
+    test "renders error 'WRONG_REQUEST' if request is not valid", %{conn: conn} do
+      data = %{"whatever" => "something"}
+
+      conn = post(conn, Routes.user_path(conn, :recover), data)
+
+      assert %{"code" => "WRONG_REQUEST", "status" => "error"} == json_response(conn, 400)
+    end
+  end
+
   describe "activate user (GET)" do
     test "renders user when token and user are valid", %{conn: conn} do
       {%{password_hash: nil} = user, surgeon} = fixture_activate_user()
@@ -226,6 +260,22 @@ defmodule GarrahanWeb.UserControllerTest do
 
       assert %{"code" => "ALREADY_ACTIVATED", "status" => "error"} == json_response(conn, 400)
     end
+  end
+
+  defp fixture_recover_user() do
+    {:ok, user} = Garrahan.Accounts.create_user(%{password: "whatever", is_admin: false})
+
+    {:ok, surgeon} =
+      Garrahan.Surgeries.create_surgeon(
+        %{
+          email: "recover@test.com",
+          first_name: "Fiqus",
+          last_name: "User"
+        },
+        user
+      )
+
+    {user, surgeon}
   end
 
   defp fixture_activate_user() do

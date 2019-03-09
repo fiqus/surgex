@@ -1,5 +1,6 @@
 import HomeScreen from "./screens/home.vue";
 import LoginScreen from "./screens/login.vue";
+import RecoverScreen from "./screens/recover.vue";
 import ActivateScreen from "./screens/activate.vue";
 import PatientsScreen from "./screens/patients/patients-list.vue";
 import PatientScreen from "./screens/patients/patient-show.vue";
@@ -16,6 +17,7 @@ import NewSurgeryScreen from "./screens/new-surgery.vue";
 export default [
   {name: "home", path: "/", component: HomeScreen, meta: {access: "public"}},
   {name: "login", path: "/login", component: LoginScreen, meta: {access: "public"}},
+  {name: "recover", path: "/users/recover", component: RecoverScreen, meta: {access: "public"}},
   {name: "activate", path: "/users/activate", component: ActivateScreen, meta: {access: "public"}},
   {name: "users-list", path: "/users", component: UsersListScreen},
   {name: "users-show", path: "/users/:userId", component: UsersShowScreen},

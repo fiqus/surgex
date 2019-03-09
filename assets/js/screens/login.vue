@@ -1,8 +1,6 @@
 <template>
   <div>
     <form v-on:submit="submit">
-      <h2 class="center"></h2>
-
       <div class="form-login">
         <h1 class="center login-message">Inicio de Sesión</h1>
         <div>
@@ -12,6 +10,7 @@
           <input name="password" class="button-login" type="password" v-model="login.password" placeholder="Contraseña" required>
         </div>
         <button :disabled="disabled">Iniciar Sesión</button>
+        <button type="button" v-on:click="recover" :disabled="disabled">Olvidé mi Contraseña</button>
       </div>
     </form>
   </div>
@@ -54,6 +53,9 @@ export default {
             this.$awn.alert("No se pudo iniciar sesión. Intente nuevamente en unos instantes.");
           }
         });
+    },
+    recover: function () {
+      this.$router.replace({name: "recover"});
     }
 	}
 }

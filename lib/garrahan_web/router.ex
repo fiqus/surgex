@@ -36,6 +36,7 @@ defmodule GarrahanWeb.Router do
 
     post "/token", AuthController, :token
     post "/auth", AuthController, :is_auth
+    post "/users/recover", UserController, :recover
     get "/users/activate", UserController, :activate
     put "/users/activate", UserController, :activate
 
