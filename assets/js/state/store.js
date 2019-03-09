@@ -20,6 +20,7 @@ const actions = {
     return apiClient.httpPost("/token", data)
       .then((res) => {
         commit("setAuthUser", res);
+        return res.user;
       });
   },
   logout() {

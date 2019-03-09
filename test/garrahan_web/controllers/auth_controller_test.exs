@@ -39,8 +39,8 @@ defmodule GarrahanWeb.AuthControllerTest do
 
       assert %{
                "status" => "error",
-               "reason" => "EMAIL_NOT_EXISTS"
-             } = json_response(conn, 200)
+               "code" => "EMAIL_NOT_EXISTS"
+             } = json_response(conn, 403)
     end
 
     test "should return an error because user is disabled", %{
@@ -58,8 +58,8 @@ defmodule GarrahanWeb.AuthControllerTest do
 
       assert %{
                "status" => "error",
-               "reason" => "USER_DISABLED"
-             } = json_response(conn, 200)
+               "code" => "USER_DISABLED"
+             } = json_response(conn, 403)
     end
 
     test "should return an error because password is wrong", %{conn: conn, auth_surgeon: surgeon} do
@@ -71,8 +71,8 @@ defmodule GarrahanWeb.AuthControllerTest do
 
       assert %{
                "status" => "error",
-               "reason" => "WRONG_PASSWORD"
-             } = json_response(conn, 200)
+               "code" => "WRONG_PASSWORD"
+             } = json_response(conn, 403)
     end
   end
 

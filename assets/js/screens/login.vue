@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form action="/api/token" method="post" v-on:submit="validateForm">
+    <form v-on:submit="submit">
       <h2 class="center"></h2>
 
       <div class="form-login">
@@ -11,41 +11,49 @@
         <div>
           <input name="password" class="button-login" type="password" v-model="login.password" placeholder="Contraseña" required>
         </div>
-        <button>Iniciar Sesión</button>
+        <button :disabled="disabled">Iniciar Sesión</button>
       </div>
     </form>
   </div>
 </template>
 <script>
 export default {
-  created() {
-  },
   data() {
     return {
       login: {
         email: "",
         password: ""
       },
-      formSubmit: false,
-      loading: false
+      disabled: false
     }
 	},
 	computed: {
-    missingUser: function () { return this.login.user === ''; },
-    missingPassword: function () { return this.login.password === ''; },
+    missingRequiredFields: function () { return this.login.email === "" || this.login.password === ""; }
 	},
 	methods: {
-    validateForm: function (event) {
-      this.formSubmit = true;
+    submit: function (event) {
       event.preventDefault();
-      if (this.missingName || this.missingPassword) {
-        return false;
-      } 
-      this.loading = true;
+      if (this.missingRequiredFields) {
+        return this.$awn.warning("Por favor complete su email y contraseña.");
+      }
+
+      this.disabled = true;
       this.$store.dispatch("login", this.login)
-        .then((data) => {
-          this.$router.push({name: "home"});
-        })
+        .then((user) => {
+          this.$awn.success(`¡Bienvenido ${user.firstName}!`);
+          this.$router.replace({name: "home"});
+        }).catch((err) => {
+          this.disabled = false;
+          if (err && err.code === "EMAIL_NOT_EXISTS") {
+            this.$awn.alert("El email no está registrado en el sistema.");
+          } else if (err && err.code === "USER_DISABLED") {
+            this.$awn.alert("Su usuario se encuentra desactivado.");
+          } else if (err && err.code === "WRONG_PASSWORD") {
+            this.$awn.alert("La contraseña es incorrecta.");
+          } else {
+            this.$awn.alert("No se pudo iniciar sesión. Intente nuevamente en unos instantes.");
+          }
+        });
     }
 	}
 }

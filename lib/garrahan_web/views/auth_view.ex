@@ -21,7 +21,7 @@ defmodule GarrahanWeb.AuthView do
     %{auth: auth}
   end
 
-  def render("error.json", %{error: error}) do
-    %{status: :error, reason: error}
+  def render("error.json", %{error: code}) do
+    %{status: :error, code: code}
   end
 end

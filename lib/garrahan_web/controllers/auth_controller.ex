@@ -7,7 +7,9 @@ defmodule GarrahanWeb.AuthController do
       render(conn, "token.json", token: token, surgeon: surgeon)
     else
       {:error, reason} ->
-        render(conn, "error.json", error: reason)
+        conn
+        |> put_status(:forbidden)
+        |> render("error.json", error: reason)
     end
   end
 

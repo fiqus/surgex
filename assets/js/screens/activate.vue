@@ -15,7 +15,7 @@
           <label>Repita y confirme la contraseña:</label>
           <input name="confirm" type="password" v-model="user.confirm" required>
         </div>
-        <button>Activar Usuario</button>
+        <button :disabled="disabled">Activar Usuario</button>
       </form>
     </div>
   </div>
@@ -27,6 +27,7 @@ export default {
     return {
       user: {},
       loading: true,
+      disabled: false,
       error: null
     }
   },
@@ -60,11 +61,14 @@ export default {
         password: this.user.password,
         confirm: this.user.confirm
       };
+
+      this.disabled = true;
       this.$store.dispatch("putActivate", data)
         .then(() => {
           this.$awn.success("¡El usuario se activó correctamente!");
           this.$router.replace({name: "login"});
         }).catch((err) => {
+          this.disabled = false;
           if (err && err.code === "WRONG_TOKEN") {
             this.$awn.alert("El código de activación no es válido.");
             this.$router.replace({name: "home"});
