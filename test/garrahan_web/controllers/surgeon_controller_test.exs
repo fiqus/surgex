@@ -62,10 +62,7 @@ defmodule GarrahanWeb.SurgeonControllerTest do
 
       conn = get(conn, Routes.surgeon_path(conn, :show, id))
 
-      assert_email_delivered_with(
-        subject:
-          "Hola #{@create_attrs.first_name} #{@create_attrs.last_name}, por favor activa tu cuenta"
-      )
+      assert_email_delivered_with(subject: "Activar nueva cuenta")
 
       assert %{
                "id" => id,

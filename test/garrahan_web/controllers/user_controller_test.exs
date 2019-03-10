@@ -1,6 +1,7 @@
 defmodule GarrahanWeb.UserControllerTest do
   use GarrahanWeb.ConnCase
   use GarrahanWeb.AuthCase
+  use Bamboo.Test
 
   alias Garrahan.Accounts.{User, ActivationToken, RecoverToken}
 
@@ -74,10 +75,15 @@ defmodule GarrahanWeb.UserControllerTest do
   end
 
   describe "recover user (POST)" do
-    test "renders surgeron when email is valid", %{conn: conn, surgeon: surgeon} do
+    test "renders surgeron when email is valid and sends the recovery email", %{
+      conn: conn,
+      surgeon: surgeon
+    } do
       data = %{"email" => surgeon.email}
 
       conn = post(conn, Routes.user_path(conn, :recover), data)
+
+      assert_email_delivered_with(subject: "Recuperar acceso a cuenta")
 
       assert %{
                "id" => surgeon.id,
