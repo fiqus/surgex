@@ -25,7 +25,7 @@ defmodule GarrahanWeb.SurgeryControllerTest do
   }
   @invalid_attrs %{date: nil}
 
-  def fixture(attrs, auth_surgeon) do
+  def fixture(attrs, surgeon) do
     {:ok, patient} = Fixtures.create_patient()
     {:ok, assistant1} = Fixtures.create_surgeon(%{email: "assistant1@test.com", license: "1"})
     {:ok, assistant2} = Fixtures.create_surgeon(%{email: "assistant2@test.com", license: "2"})
@@ -35,7 +35,7 @@ defmodule GarrahanWeb.SurgeryControllerTest do
     surgery_attrs = %{
       patient_id: patient.id,
       assistants: [assistant1, assistant2, assistant3],
-      surgeon_id: auth_surgeon.id,
+      surgeon_id: surgeon.id,
       diagnostic_id: diagnostic.id
     }
 
@@ -161,8 +161,8 @@ defmodule GarrahanWeb.SurgeryControllerTest do
     end
   end
 
-  defp create_surgery(%{auth_surgeon: auth_surgeon}) do
-    surgery = fixture(@create_attrs, auth_surgeon)
+  defp create_surgery(%{surgeon: surgeon}) do
+    surgery = fixture(@create_attrs, surgeon)
     {:ok, surgery: surgery}
   end
 

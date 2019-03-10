@@ -7,7 +7,7 @@ defmodule GarrahanWeb.AuthControllerTest do
   describe "token" do
     test "should return an access token and some user data", %{
       conn: conn,
-      auth_surgeon: surgeon,
+      surgeon: surgeon,
       user: user
     } do
       conn =
@@ -45,7 +45,7 @@ defmodule GarrahanWeb.AuthControllerTest do
 
     test "should return an error because user is disabled", %{
       conn: conn,
-      auth_surgeon: surgeon,
+      surgeon: surgeon,
       user: user
     } do
       {:ok, _user} = Accounts.update_user(user, %{disabled: true})
@@ -62,7 +62,7 @@ defmodule GarrahanWeb.AuthControllerTest do
              } = json_response(conn, 403)
     end
 
-    test "should return an error because password is wrong", %{conn: conn, auth_surgeon: surgeon} do
+    test "should return an error because password is wrong", %{conn: conn, surgeon: surgeon} do
       conn =
         post(conn, Routes.auth_path(conn, :token), %{
           email: surgeon.email,

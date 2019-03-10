@@ -40,7 +40,7 @@ defmodule GarrahanWeb.UserControllerTest do
     test "renders user when data is valid", %{
       conn: conn,
       user: %User{id: id} = user,
-      auth_surgeon: surgeon
+      surgeon: surgeon
     } do
       conn = put(conn, Routes.user_path(conn, :update, user), user: @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
@@ -74,7 +74,7 @@ defmodule GarrahanWeb.UserControllerTest do
   end
 
   describe "recover user (POST)" do
-    test "renders surgeron when email is valid", %{conn: conn, auth_surgeon: surgeon} do
+    test "renders surgeron when email is valid", %{conn: conn, surgeon: surgeon} do
       data = %{"email" => surgeon.email}
 
       conn = post(conn, Routes.user_path(conn, :recover), data)
@@ -106,7 +106,7 @@ defmodule GarrahanWeb.UserControllerTest do
   end
 
   describe "recover user (GET)" do
-    test "renders surgeon when token is valid", %{conn: conn, auth_surgeon: surgeon} do
+    test "renders surgeon when token is valid", %{conn: conn, surgeon: surgeon} do
       data = %{"token" => RecoverToken.generate(surgeon.email)}
 
       conn = get(conn, Routes.user_path(conn, :recover), data)
@@ -122,7 +122,7 @@ defmodule GarrahanWeb.UserControllerTest do
 
     test "renders error 'WRONG_TOKEN' if the surgeon was not found", %{
       conn: conn,
-      auth_surgeon: surgeon
+      surgeon: surgeon
     } do
       data = %{"token" => RecoverToken.generate(surgeon.email)}
 
@@ -150,7 +150,7 @@ defmodule GarrahanWeb.UserControllerTest do
   end
 
   describe "recover user (PUT)" do
-    test "renders surgeon when recovery data is valid", %{conn: conn, auth_surgeon: surgeon} do
+    test "renders surgeon when recovery data is valid", %{conn: conn, surgeon: surgeon} do
       data = %{
         "token" => RecoverToken.generate(surgeon.email),
         "password" => "asdasd",
@@ -170,7 +170,7 @@ defmodule GarrahanWeb.UserControllerTest do
 
     test "renders error 'WRONG_TOKEN' if the surgeon was not found", %{
       conn: conn,
-      auth_surgeon: surgeon
+      surgeon: surgeon
     } do
       data = %{
         "token" => RecoverToken.generate(surgeon.email),
@@ -198,7 +198,7 @@ defmodule GarrahanWeb.UserControllerTest do
 
     test "renders error 'PASSWORD_MISMATCH' if password and confirm don't match", %{
       conn: conn,
-      auth_surgeon: surgeon
+      surgeon: surgeon
     } do
       data = %{
         "token" => RecoverToken.generate(surgeon.email),
@@ -213,7 +213,7 @@ defmodule GarrahanWeb.UserControllerTest do
 
     test "renders error 'PASSWORD_WEAK' if password doesn't match the minimum requirements", %{
       conn: conn,
-      auth_surgeon: surgeon
+      surgeon: surgeon
     } do
       data = %{
         "token" => RecoverToken.generate(surgeon.email),
@@ -250,7 +250,7 @@ defmodule GarrahanWeb.UserControllerTest do
     test "renders error 'WRONG_TOKEN' if the user was not found", %{
       conn: conn,
       user: user,
-      auth_surgeon: surgeon
+      surgeon: surgeon
     } do
       data = %{"token" => ActivationToken.generate(user)}
 
@@ -310,7 +310,7 @@ defmodule GarrahanWeb.UserControllerTest do
     test "renders error 'WRONG_TOKEN' if the user was not found", %{
       conn: conn,
       user: user,
-      auth_surgeon: surgeon
+      surgeon: surgeon
     } do
       data = %{
         "token" => ActivationToken.generate(user),
