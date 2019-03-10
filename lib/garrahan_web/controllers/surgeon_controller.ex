@@ -23,10 +23,11 @@ defmodule GarrahanWeb.SurgeonController do
       activation_url = Routes.index_url(conn, :index) <> "#/users/activate?token=" <> token
 
       try do
+        # @TODO How to "easily" test when this fails?
         Email.set_password_email(surgeon, activation_url) |> Mailer.deliver_now()
       rescue
         error ->
-          mailer_error_msg = "There was an error sending the email to #{surgeon.email}"
+          mailer_error_msg = "There was an error sending the activation email to #{surgeon.email}"
           Logger.error("#{mailer_error_msg} :: #{inspect(error)}")
       end
 

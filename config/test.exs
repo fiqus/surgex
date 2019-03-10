@@ -25,7 +25,8 @@ config :garrahan, Garrahan.Auth.Guardian,
   secret_key: "UDR8nL8PI/JN+fJioxlErRSa82h8nyL4SzhA/N8Wc5ox+KrGgUZdZZI0gSMN+TPQ"
 
 config :garrahan,
-  user_verification_salt: "PoK23VE8yrKYjMq6V/mPSyhCcIiOH0Lb5OtQMH5KUM9YjLXrugibt9B4Xuq/+yP6"
+  user_verification_salt: "PoK23VE8yrKYjMq6V/mPSyhCcIiOH0Lb5OtQMH5KUM9YjLXrugibt9B4Xuq/+yP6",
+  user_recover_salt: "V5jGQH2KgrghNjOZMr0vzeAZjFGldOYr270SgbVFzMAtP8n2OGl094qiOzX8OVR6"
 
 # Configures bamboo mailer
 config :garrahan, Garrahan.Mailer, adapter: Bamboo.TestAdapter

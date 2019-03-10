@@ -25,4 +25,5 @@ config :garrahan, Garrahan.Auth.Guardian,
   secret_key: {:system, "GUARDIAN_SECRET_KEY"}
 
 config :garrahan,
-  user_verification_salt: {:system, "USER_VERIFICATION_SALT"}
+  user_verification_salt: {:system, "USER_VERIFICATION_SALT"},
+  user_recover_salt: {:system, "USER_RECOVER_SALT"}

@@ -5,12 +5,12 @@ end
 defmodule Garrahan.Email do
   import Bamboo.Email
 
-  def set_password_email(user, activation_url) when is_binary(activation_url) do
-    name = "#{user.first_name} #{user.last_name}"
+  def set_password_email(surgeon, activation_url) when is_binary(activation_url) do
+    name = "#{surgeon.first_name} #{surgeon.last_name}"
 
     new_email()
-    |> to({name, user.email})
-    |> from({"Garrahan app", "info+garrahan@fiqus.com"})
+    |> to({name, surgeon.email})
+    |> from({"Garrahan App", "info+garrahan@fiqus.com"})
     |> put_header("Reply-To", "no-reply@fiqus.com")
     |> subject("Hola #{name}, por favor activa tu cuenta")
     |> html_body(
@@ -22,6 +22,24 @@ defmodule Garrahan.Email do
       "Bienvenido #{name}!\nPor favor clickeá aquí para setear tu password y activar tu cuenta:\n#{
         activation_url
       }"
+    )
+  end
+
+  def set_recover_email(surgeon, recover_url) when is_binary(recover_url) do
+    name = "#{surgeon.first_name} #{surgeon.last_name}"
+
+    new_email()
+    |> to({name, surgeon.email})
+    |> from({"Garrahan App", "info+garrahan@fiqus.com"})
+    |> put_header("Reply-To", "no-reply@fiqus.com")
+    |> subject("Recuperar acceso a cuenta")
+    |> html_body(
+      "<strong>Hola #{name}!</strong><br/>Por favor clickee aquí para recuperar su cuenta:<br/>#{
+        recover_url
+      }"
+    )
+    |> text_body(
+      "Hola #{name}!\nPor favor clickee aquí para recuperar su cuenta:\n#{recover_url}"
     )
   end
 end

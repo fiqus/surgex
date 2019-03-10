@@ -37,7 +37,7 @@ export default {
       }
 
       this.disabled = true;
-      this.$store.dispatch("recover", this.email)
+      this.$store.dispatch("postRecover", this.email)
         .then((res) => {
           this.$awn.success("El email se envió correctamente.");
           this.sent = true;

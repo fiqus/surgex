@@ -40,8 +40,15 @@ const actions = {
       })
       .catch(clearAuthUser);
   },
-  recover(_, email) {
+  postRecover(_, email) {
     return apiClient.httpPost("/users/recover", {email});
+  },
+  getRecover(_, token) {
+    return apiClient.httpGet("/users/recover", {token});
+  },
+  putRecover(_, data) {
+    return apiClient.httpPut("/users/recover", data)
+      .then(actions.proccessApiResponse);
   },
   getActivate(_, token) {
     return apiClient.httpGet("/users/activate", {token})

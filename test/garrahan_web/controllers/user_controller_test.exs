@@ -2,7 +2,7 @@ defmodule GarrahanWeb.UserControllerTest do
   use GarrahanWeb.ConnCase
   use GarrahanWeb.AuthCase
 
-  alias Garrahan.Accounts.{User, ActivationToken}
+  alias Garrahan.Accounts.{User, ActivationToken, RecoverToken}
 
   import GarrahanWeb.AuthCase
 
@@ -74,9 +74,7 @@ defmodule GarrahanWeb.UserControllerTest do
   end
 
   describe "recover user (POST)" do
-    test "renders surgeron when email is valid", %{conn: conn} do
-      {_, surgeon} = fixture_recover_user()
-
+    test "renders surgeron when email is valid", %{conn: conn, auth_surgeon: surgeon} do
       data = %{"email" => surgeon.email}
 
       conn = post(conn, Routes.user_path(conn, :recover), data)
@@ -104,6 +102,128 @@ defmodule GarrahanWeb.UserControllerTest do
       conn = post(conn, Routes.user_path(conn, :recover), data)
 
       assert %{"code" => "WRONG_REQUEST", "status" => "error"} == json_response(conn, 400)
+    end
+  end
+
+  describe "recover user (GET)" do
+    test "renders surgeon when token is valid", %{conn: conn, auth_surgeon: surgeon} do
+      data = %{"token" => RecoverToken.generate(surgeon.email)}
+
+      conn = get(conn, Routes.user_path(conn, :recover), data)
+
+      assert %{
+               "id" => surgeon.id,
+               "email" => surgeon.email,
+               "firstName" => surgeon.first_name,
+               "lastName" => surgeon.last_name,
+               "license" => surgeon.license
+             } == json_response(conn, 200)
+    end
+
+    test "renders error 'WRONG_TOKEN' if the surgeon was not found", %{
+      conn: conn,
+      auth_surgeon: surgeon
+    } do
+      data = %{"token" => RecoverToken.generate(surgeon.email)}
+
+      {:ok, _} = Garrahan.Surgeries.delete_surgeon(surgeon)
+      conn = get(conn, Routes.user_path(conn, :recover), data)
+
+      assert %{"code" => "WRONG_TOKEN", "status" => "error"} == json_response(conn, 400)
+    end
+
+    test "renders error 'WRONG_TOKEN' if token is not valid", %{conn: conn} do
+      data = %{"token" => "wrong"}
+
+      conn = get(conn, Routes.user_path(conn, :recover), data)
+
+      assert %{"code" => "WRONG_TOKEN", "status" => "error"} == json_response(conn, 400)
+    end
+
+    test "renders error 'WRONG_REQUEST' if request is not valid", %{conn: conn} do
+      data = %{"whatever" => "something"}
+
+      conn = get(conn, Routes.user_path(conn, :recover), data)
+
+      assert %{"code" => "WRONG_REQUEST", "status" => "error"} == json_response(conn, 400)
+    end
+  end
+
+  describe "recover user (PUT)" do
+    test "renders surgeon when recovery data is valid", %{conn: conn, auth_surgeon: surgeon} do
+      data = %{
+        "token" => RecoverToken.generate(surgeon.email),
+        "password" => "asdasd",
+        "confirm" => "asdasd"
+      }
+
+      conn = put(conn, Routes.user_path(conn, :recover), data)
+
+      assert %{
+               "id" => surgeon.id,
+               "email" => surgeon.email,
+               "firstName" => surgeon.first_name,
+               "lastName" => surgeon.last_name,
+               "license" => surgeon.license
+             } == json_response(conn, 200)
+    end
+
+    test "renders error 'WRONG_TOKEN' if the surgeon was not found", %{
+      conn: conn,
+      auth_surgeon: surgeon
+    } do
+      data = %{
+        "token" => RecoverToken.generate(surgeon.email),
+        "password" => "asdasd",
+        "confirm" => "asdasd"
+      }
+
+      {:ok, _} = Garrahan.Surgeries.delete_surgeon(surgeon)
+      conn = put(conn, Routes.user_path(conn, :recover), data)
+
+      assert %{"code" => "WRONG_TOKEN", "status" => "error"} == json_response(conn, 400)
+    end
+
+    test "renders error 'WRONG_TOKEN' if token is not valid", %{conn: conn} do
+      data = %{
+        "token" => "wrong",
+        "password" => "asdasd",
+        "confirm" => "asdasd"
+      }
+
+      conn = put(conn, Routes.user_path(conn, :recover), data)
+
+      assert %{"code" => "WRONG_TOKEN", "status" => "error"} == json_response(conn, 400)
+    end
+
+    test "renders error 'PASSWORD_MISMATCH' if password and confirm don't match", %{
+      conn: conn,
+      auth_surgeon: surgeon
+    } do
+      data = %{
+        "token" => RecoverToken.generate(surgeon.email),
+        "password" => "asdasd",
+        "confirm" => "qweqwe"
+      }
+
+      conn = put(conn, Routes.user_path(conn, :recover), data)
+
+      assert %{"code" => "PASSWORD_MISMATCH", "status" => "error"} == json_response(conn, 400)
+    end
+
+    test "renders error 'PASSWORD_WEAK' if password doesn't match the minimum requirements", %{
+      conn: conn,
+      auth_surgeon: surgeon
+    } do
+      data = %{
+        "token" => RecoverToken.generate(surgeon.email),
+        "password" => "asd",
+        "confirm" => "asd"
+      }
+
+      conn = put(conn, Routes.user_path(conn, :recover), data)
+
+      assert %{"code" => "PASSWORD_WEAK", "status" => "error"} == json_response(conn, 400)
     end
   end
 
@@ -260,22 +380,6 @@ defmodule GarrahanWeb.UserControllerTest do
 
       assert %{"code" => "ALREADY_ACTIVATED", "status" => "error"} == json_response(conn, 400)
     end
-  end
-
-  defp fixture_recover_user() do
-    {:ok, user} = Garrahan.Accounts.create_user(%{password: "whatever", is_admin: false})
-
-    {:ok, surgeon} =
-      Garrahan.Surgeries.create_surgeon(
-        %{
-          email: "recover@test.com",
-          first_name: "Fiqus",
-          last_name: "User"
-        },
-        user
-      )
-
-    {user, surgeon}
   end
 
   defp fixture_activate_user() do

@@ -21,6 +21,7 @@ You will have to install:
   * `SMTP_PASSWORD` - for the mailer
   * `GUARDIAN_SECRET_KEY` - for token generation
   * `USER_VERIFICATION_SALT` - for user token in the activation email
+  * `USER_RECOVER_SALT` - for user token in the recover email
 
 ## Start the server
 
