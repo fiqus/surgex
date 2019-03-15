@@ -201,6 +201,15 @@ const actions = {
       errMsg: "La cirugia no pudo ser creada."
     });
   },
+  deleteSurgery(_, {component, surgery, onSuccess, onError}) {
+    actionsHelper.deleteItem({component, onSuccess, onError,
+      url: `/surgeries/${surgery.id}`,
+      question: `¿Desea eliminar la cirugia seleccionada?`,
+      loadingMsg: "Eliminando cirugia",
+      okMsg: "La cirgua ha sido eliminada.",
+      errMsg: "La cirgua no pudo ser eliminada."
+    });
+  },
 };
 
 const mutations = {

@@ -25,7 +25,7 @@
       },
       getValue(item) {
         if (item) {
-          return this.field.options.find((op) => {
+          return this.options.find((op) => {
             return op.key === item;
           }).value;
         }

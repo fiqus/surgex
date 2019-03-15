@@ -18,7 +18,8 @@ defmodule GarrahanWeb.SurgeryController do
   end
 
   def create(conn, %{"surgery" => surgery_params}) do
-    with {:ok, %Surgery{} = surgery} <- Surgeries.create_surgery(surgery_params) do
+    with {:ok, %Surgery{} = surgery} <- Surgeries.create_surgery(surgery_params),
+         surgery <- Surgeries.preload_surgery_associations(surgery) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.surgery_path(conn, :show, surgery))

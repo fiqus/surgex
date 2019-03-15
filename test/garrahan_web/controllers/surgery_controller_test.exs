@@ -65,7 +65,6 @@ defmodule GarrahanWeb.SurgeryControllerTest do
       surgery: %Surgery{id: id}
     } do
       conn = get(conn, Routes.surgery_path(conn, :index))
-
       assert hd(json_response(conn, 200)["data"])["id"] == id
     end
   end
