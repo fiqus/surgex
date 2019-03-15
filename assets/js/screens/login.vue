@@ -1,17 +1,34 @@
 <template>
-  <div>
+  <!--<div>
     <form v-on:submit="submit">
-      <div class="form-login">
+      <div class="form">
         <h1 class="center login-message">Inicio de Sesión</h1>
-        <div>
-          <input name="email" class="button-login" type="text" v-model="login.email" placeholder="Email" required>
+        <div class="input-group mb-3">
+          <input class="form-control" v-model="login.email" placeholder="Email" required>
         </div>
-        <div>
-          <input name="password" class="button-login" type="password" v-model="login.password" placeholder="Contraseña" required>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" v-model="login.password" placeholder="Contraseña">
         </div>
-        <button :disabled="disabled">Iniciar Sesión</button>
-        <button type="button" v-on:click="recover" :disabled="disabled">Olvidé mi Contraseña</button>
+        <button class="btn btn-primary" :disabled="disabled">Iniciar Sesión</button>
+        <button class="btn btn-primary" type="button" v-on:click="recover" :disabled="disabled">Olvidé mi Contraseña</button>
       </div>
+    </form>
+  </div>
+  -->
+
+  <div class="container">
+    <form class="form-signin">
+      <h2 class="form-signin-heading">Please sign in</h2>
+      <label for="inputEmail" class="sr-only">Email address</label>
+      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     </form>
   </div>
 </template>

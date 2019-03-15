@@ -3,6 +3,7 @@
 // its own CSS file.
 require("vue-awesome-notifications/dist/styles/style.css");
 import css from "../css/app.css"
+import "bootstrap";
 
 import "phoenix_html"
 import Vue from "vue"

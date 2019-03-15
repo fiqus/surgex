@@ -1,20 +1,30 @@
 <template>
-  <div v-if="token" class="user-bar">
-    <div class="logo-home">
-      <a href="#/home"><img src="/images/logo-home.png"></a>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand">{{user.firstName}} {{user.lastName}}</a>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" v-if="token" v-on:click="redirect('surgeries')">Cirugías</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" v-if="token" v-on:click="redirect('patients-list')">Pacientes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" v-if="token" v-on:click="redirect('surgeons-list')">Cirujanos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" v-if="user.isAdmin" v-on:click="redirect('users-list')">Usuarios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" v-if="token" v-on:click="redirect('logout')">Cerrar Sesión</a>
+        </li>
+      </ul>
     </div>
     <div class="left">
       <p>{{user.firstName}} {{user.lastName}}</p>
     </div>
-    <div class="right">
-      <button v-if="!token" v-on:click="redirect('login')">Iniciar Sesión</button>
-      <button v-if="token" v-on:click="redirect('surgeries-list')">Cirugías</button>
-      <button v-if="token" v-on:click="redirect('patients-list')">Pacientes</button>
-      <button v-if="token" v-on:click="redirect('surgeons-list')">Cirujanos</button>
-      <button v-if="isAdmin" v-on:click="redirect('users-list')">Usuarios</button>
-      <button v-if="token" v-on:click="redirect('logout')">Cerrar Sesión</button>
-    </div>
-  </div>
+  </nav>
 </template>
 <script>
 export default {

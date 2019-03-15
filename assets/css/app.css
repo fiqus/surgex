@@ -1,9 +1,19 @@
 /* This file is for your main application css. */
 
-@import "./phoenix.css";
+@import "~bootstrap/dist/css/bootstrap.css";
 
 header {
   background: #fff;
+}
+/* LOGIN STYLE */
+.form-login {
+  background-color: #681777;
+  width: 60rem;
+  padding: 10rem 5rem;
+  border-radius: 3rem;
+  box-shadow: 0 0 25px 0 #00000033, 0 5px 5px 0 #0000003d;
+  margin: 10rem auto auto auto;
+  color: white
 }
 
 .user-bar {
@@ -61,33 +71,6 @@ header {
 
 a {
   cursor: pointer;
-}
-
-input {
-  margin-bottom: 3rem;
-  color: black;
-  background-color: #cccccc;
-}
-input:hover {
-  border-color: #64526e;
-}
-input:disabled {
-  color: #797979;
-  background-color: #cccccc;
-}
-
-button {
-  -webkit-transition-duration: 0.4s; 
-  transition-duration: 0.4s;
-  background-color: white;
-  color: #483752;
-  border-color: #483752;
-}
-
-button:hover {
-  background-color: #d3cdd6;
-  color: #483752;
-  border-color: #483752;
 }
 
 @media (min-width: 40.0rem) { /* Small devices (landscape phones, 576px and up) */
