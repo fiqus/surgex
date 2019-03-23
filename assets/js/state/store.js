@@ -196,18 +196,18 @@ const actions = {
   createSurgery(_, {component, surgery, onSuccess, onError}) {
     actionsHelper.createItem({component, onSuccess, onError, data: {surgery}, onResponse: actions.proccessApiResponse,
       url: "/surgeries",
-      loadingMsg: "Creando cirugia",
-      okMsg: "La cirugia ha sido creada.",
-      errMsg: "La cirugia no pudo ser creada."
+      loadingMsg: "Creando cirugía",
+      okMsg: "La cirugía ha sido creada.",
+      errMsg: "La cirugía no pudo ser creada."
     });
   },
   deleteSurgery(_, {component, surgery, onSuccess, onError}) {
     actionsHelper.deleteItem({component, onSuccess, onError,
       url: `/surgeries/${surgery.id}`,
-      question: `¿Desea eliminar la cirugia seleccionada?`,
-      loadingMsg: "Eliminando cirugia",
-      okMsg: "La cirgua ha sido eliminada.",
-      errMsg: "La cirgua no pudo ser eliminada."
+      question: `¿Desea eliminar la cirugía seleccionada?`,
+      loadingMsg: "Eliminando cirugía",
+      okMsg: "La cirugía ha sido eliminada.",
+      errMsg: "La cirugía no pudo ser eliminada."
     });
   },
 };

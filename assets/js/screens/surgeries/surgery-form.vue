@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="subtitle">Crear cirugia</h3>
+    <h3 class="subtitle">Crear Cirugía</h3>
     <form v-on:submit.prevent="submit">
       <div class="form-user">
         <div>
