@@ -56,7 +56,22 @@ defmodule Garrahan.AccountsTest do
     end
 
     test "change_user/1 returns a user changeset", %{user: user} do
-      assert %Ecto.Changeset{} = Accounts.change_user(user)
+      assert %Ecto.Changeset{valid?: true} = Accounts.change_user(user)
+    end
+
+    test "changeset_login/1 returns a user changeset with updated login data", %{user: user} do
+      datetime = DateTime.utc_now() |> DateTime.truncate(:second)
+
+      changeset_login = User.changeset_login(user)
+      assert %Ecto.Changeset{valid?: true} = changeset_login
+      assert DateTime.diff(changeset_login.changes.last_login, datetime) >= 0
+    end
+
+    test "save_user_login/1 will update user login data", %{user: user} do
+      datetime = DateTime.utc_now() |> DateTime.truncate(:second)
+
+      assert {:ok, %User{} = user} = Accounts.save_user_login(user)
+      assert DateTime.diff(user.last_login, datetime) >= 0
     end
   end
 end

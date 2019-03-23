@@ -56,7 +56,8 @@ defmodule GarrahanWeb.UserControllerTest do
                "email" => surgeon.email,
                "firstName" => surgeon.first_name,
                "lastName" => surgeon.last_name,
-               "license" => nil
+               "license" => nil,
+               "lastLogin" => nil
              } == json_response(conn, 200)["data"]
     end
 
@@ -249,7 +250,8 @@ defmodule GarrahanWeb.UserControllerTest do
                "email" => surgeon.email,
                "firstName" => surgeon.first_name,
                "lastName" => surgeon.last_name,
-               "license" => surgeon.license
+               "license" => surgeon.license,
+               "lastLogin" => nil
              } == json_response(conn, 200)["data"]
     end
 
@@ -306,7 +308,8 @@ defmodule GarrahanWeb.UserControllerTest do
                "email" => surgeon.email,
                "firstName" => surgeon.first_name,
                "lastName" => surgeon.last_name,
-               "license" => surgeon.license
+               "license" => surgeon.license,
+               "lastLogin" => nil
              } == json_response(conn, 200)["data"]
 
       user = Garrahan.Accounts.get_user!(user.id)

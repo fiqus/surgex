@@ -76,6 +76,13 @@ defmodule Garrahan.Accounts do
     |> Repo.update()
   end
 
+  @doc false
+  def save_user_login(%User{} = user) do
+    user
+    |> User.changeset_login()
+    |> Repo.update()
+  end
+
   @doc """
   Deletes a User.
 

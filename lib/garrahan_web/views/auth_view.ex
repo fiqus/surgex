@@ -8,6 +8,7 @@ defmodule GarrahanWeb.AuthView do
       user: %{
         userId: surgeon.user.id,
         isAdmin: surgeon.user.is_admin,
+        lastLogin: surgeon.user.last_login,
         surgeonId: surgeon.id,
         email: surgeon.email,
         firstName: surgeon.first_name,

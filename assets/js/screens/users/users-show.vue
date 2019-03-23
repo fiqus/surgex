@@ -6,6 +6,7 @@
       <div><b>Email:</b> {{user.email}}</div>
       <div><b>Admin:</b> {{ user.isAdmin ? "S" : "N" }}</div>
       <div><b>Activo:</b> {{ user.disabled ? "N" : "S" }}</div>
+      <div><b>Última Sesión:</b> {{ formatDate(user.lastLogin) }}</div>
     </section>
     <div class="action-bar-buttons">
       <button v-on:click="$router.go(-1)">Volver</button>
@@ -14,11 +15,13 @@
   </div>
 </template>
 <script>
+import {formatDate} from "../../utils";
 export default {
   data() {
     return {
       user: null,
-      loading: true
+      loading: true,
+      formatDate
     }
   },
   created() {

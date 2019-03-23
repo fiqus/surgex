@@ -9,6 +9,7 @@
       <thead>
         <th>Persona</th>
         <th>Email</th>
+        <th>Última Sesión</th>
         <th>Admin</th>
         <th>Activo</th>
         <th>Acciones</th>
@@ -17,6 +18,7 @@
         <tr v-for="user in users" :key="user.id">
           <td><a @click="showDetail(user)">{{ user.lastName }}, {{ user.firstName }}</a></td>
           <td>{{ user.email }}</td>
+          <td>{{ formatDate(user.lastLogin) }}</td>
           <td>{{ user.isAdmin ? "S" : "N" }}</td>
           <td>{{ user.disabled ? "N" : "S" }}</td>
           <td>
@@ -29,6 +31,7 @@
 </template>
 <script>
 import customTable from "../../components/custom-table.vue";
+import {formatDate} from "../../utils";
 export default {
   components: {
     customTable
@@ -42,7 +45,8 @@ export default {
         {key: "email", value: "Email"}, 
         {key: "isAdmin", value: "Admin"}, 
         {key: "disabled", value: "Activo"}
-      ]
+      ],
+      formatDate
     }
   },
   created() {

@@ -1,8 +1,9 @@
 defmodule Garrahan.Auth do
   require Logger
 
-  alias Garrahan.Accounts.User
   alias Garrahan.Surgeries
+  alias Garrahan.Accounts
+  alias Garrahan.Accounts.User
 
   def authenticate_user(email, given_password) do
     Surgeries.get_surgeon_by_email(email)
@@ -15,8 +16,9 @@ defmodule Garrahan.Auth do
     user = surgeon.user
 
     with :ok <- check_user_disabled(user),
-         :ok <- verify_password_hash(given_password, user) do
-      {:ok, surgeon}
+         :ok <- verify_password_hash(given_password, user),
+         {:ok, user} <- Accounts.save_user_login(user) do
+      {:ok, surgeon |> Map.put(:user, user)}
     else
       error ->
         error

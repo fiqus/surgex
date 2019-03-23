@@ -28,6 +28,10 @@ defmodule GarrahanWeb.AuthControllerTest do
       assert auth_user["email"] == surgeon.email
       assert auth_user["firstName"] == surgeon.first_name
       assert auth_user["lastName"] == surgeon.last_name
+
+      datetime = DateTime.utc_now() |> DateTime.truncate(:second)
+      {:ok, last_login, _} = DateTime.from_iso8601(auth_user["lastLogin"])
+      assert DateTime.diff(datetime, last_login) >= 0
     end
 
     test "should return an error because email was not found", %{conn: conn} do

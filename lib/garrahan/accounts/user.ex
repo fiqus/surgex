@@ -8,6 +8,7 @@ defmodule Garrahan.Accounts.User do
     field :password_hash, :string
     field :password, :string, virtual: true
     field :is_admin, :boolean, default: false
+    field :last_login, :utc_datetime, default: nil
     field :disabled, :boolean, default: false
     has_one :surgeon, Garrahan.Surgeries.Surgeon
 
@@ -29,6 +30,14 @@ defmodule Garrahan.Accounts.User do
     |> validate_required([])
     |> validate_password()
   end
+
+  @doc false
+  def changeset_login(user) do
+    change(user)
+    |> force_change(:last_login, get_utc_now())
+  end
+
+  defp get_utc_now(), do: DateTime.utc_now() |> DateTime.truncate(:second)
 
   defp validate_password(changeset) do
     changeset

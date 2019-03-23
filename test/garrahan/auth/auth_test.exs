@@ -6,10 +6,12 @@ defmodule Garrahan.AuthTest do
 
   describe "authenticate_user" do
     test "the user is found by email and password checked", %{surgeon: surgeon, user: user} do
-      assert {:ok, authorizated_surgeon} = Auth.authenticate_user(surgeon.email, user.password)
-      assert authorizated_surgeon.id == surgeon.id
-      assert authorizated_surgeon.email == surgeon.email
-      assert authorizated_surgeon.user.id == user.id
+      datetime = DateTime.utc_now() |> DateTime.truncate(:second)
+      assert {:ok, authorized_surgeon} = Auth.authenticate_user(surgeon.email, user.password)
+      assert authorized_surgeon.id == surgeon.id
+      assert authorized_surgeon.email == surgeon.email
+      assert authorized_surgeon.user.id == user.id
+      assert DateTime.diff(authorized_surgeon.user.last_login, datetime) >= 0
     end
 
     test "the user/email does not exist" do

@@ -50,6 +50,11 @@ export function createApiClient(opts = {}) {
   return axios;
 }
 
+export function formatDate(date) {
+  const opts = {year: "2-digit", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false};
+  return date ? (new Date(date)).toLocaleString("es-AR", opts) : "-";
+}
+
 function setupResponseErrorFormatter(http) {
   http.interceptors.response.use((response) => {
     return response;
