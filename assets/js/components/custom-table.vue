@@ -1,20 +1,17 @@
 <template>
   <div>
-    <table>
-      <th
-      v-for="header in headers">
+    <table class="custom-table">
+      <th v-for="header in headers" :key="header.key">
         {{ header.value }}
       </th>
-      <tr
-      style="cursor: pointer" 
-      v-for="d in data">
-        <td 
-        v-for="header in headers"
-        v-on:click="clicked(d.id)">
-          {{ d[header.key] }}
+      <tr style="cursor: pointer" v-for="elem in data" :key="elem.id">
+        <td v-for="header in headers" v-on:click="onClick(elem)" :key="header.key">
+          {{ parseElem(header, elem) }}
         </td>
-        <td v-on:click="deleteRow(d)">
-          <i class="fa fa-trash-o"></i>
+        <td>
+          <a @click="onEdit(elem)">Editar</a>
+          |
+          <a @click="onDelete(elem)">Eliminar</a>
         </td>
       </tr>
     </table>
@@ -26,26 +23,39 @@ export default {
     headers: {
       type: Array,
       default: [],
-      required: true,
+      required: true
     },
     data: {
       type: Array,
       default: [],
-      required: true,
+      required: true
     }
   },
   data() {
     return {
-    }
+      parseElem(header, elem) {
+        if (header.parser) {
+            try {
+              return header.parser(elem);
+            } catch (err) {
+              console.trace(`Can't parse the element for '${header.key}'!`, err);
+            }
+          }
+          return elem[header.key];
+      }
+    };
   },
   computed: {
   },
   methods: {
-    clicked(id) {
-      this.$emit("clicked", id);
+    onClick(elem) {
+      this.$emit("onClick", elem);
     },
-    deleteRow(id) {
-      this.$emit("deleteRow", id);
+    onEdit(elem) {
+      this.$emit("onEdit", elem);
+    },
+    onDelete(elem) {
+      this.$emit("onDelete", elem);
     }
   }
 }

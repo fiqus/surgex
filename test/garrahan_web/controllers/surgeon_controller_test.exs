@@ -66,10 +66,18 @@ defmodule GarrahanWeb.SurgeonControllerTest do
 
       assert %{
                "id" => id,
+               "socialId" => nil,
+               "license" => "some license",
                "firstName" => "some first_name",
                "lastName" => "some last_name",
-               "license" => "some license"
-             } = json_response(conn, 200)["data"]
+               "email" => "some@email.com",
+               "phone" => nil,
+               "nationality" => nil,
+               "address" => nil,
+               "birthdate" => nil,
+               "city" => nil,
+               "province" => nil
+             } == json_response(conn, 200)["data"]
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -94,10 +102,18 @@ defmodule GarrahanWeb.SurgeonControllerTest do
 
       assert %{
                "id" => id,
+               "socialId" => nil,
+               "license" => "some updated license",
                "firstName" => "some updated first_name",
                "lastName" => "some updated last_name",
-               "license" => "some updated license"
-             } = json_response(conn, 200)["data"]
+               "email" => "updated@email.com",
+               "phone" => nil,
+               "nationality" => nil,
+               "address" => nil,
+               "birthdate" => nil,
+               "city" => nil,
+               "province" => nil
+             } == json_response(conn, 200)["data"]
     end
 
     test "renders errors when data is invalid", %{conn: conn, surgeon: surgeon} do

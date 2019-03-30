@@ -5,14 +5,15 @@
       v-if="this.patients"
       :headers="this.headers"
       :data="this.patients"
-      @clicked="patientSelect"
-      @deleteRow="deletePatient">
+      @onClick="showDetail"
+      @onEdit="showEdit"
+      @onDelete="onDelete">
     </customTable>
-    <button class="button" v-on:click="createPatient">
+    <button class="button" v-on:click="showNew">
       <i class="fa fa-plus"></i>
       Agregar Paciente
     </button>
-    <h4 v-if="!this.patients">Aún no tiene Pacientes cargados</h4>
+    <h4 v-if="!this.patients.length">Aún no hay pacientes ingresados.</h4>
   </div>
 </template>
 
@@ -25,40 +26,45 @@ export default {
   created() {
     this.$store.dispatch("fetchPatients")
       .then((patients) => {
-        if(patients.length) {
-          this.patients = patients;
-        }
+        this.patients = patients;
       });
   },
   data() {
     return {
       headers: [
-        {key: "first_name", value: "Nombre"}, 
-        {key: "last_name", value: "Apellido"}, 
-        {key: "address", value: "Dirección"},
-        {key: "city", value: "Ciudad"},
-        {key: "province", value: "Provincia"},
-        {key: "birthdate", value: "Fecha de Nacimiento"}
+        {key: "fullName", value: "Paciente", parser: (p) => `${p.lastName}, ${p.firstName}`},
+        {key: "medicalHistory", value: "Historia Clínica"},
+        {key: "city", value: "Ciudad"}
       ],
-      patients: null,
-      patientSelected: null
+      patients: []
     }
   },
   computed: {
+    isAdmin: {
+      get() {
+        return this.$store.getters.isAdmin;
+      }
+    }
   },
   methods: {
-    patientSelect(id) {
-      return this.$router.push({path: `patient/${id}`});
+    showNew() {
+      this.$router.push({name: "new-patient"});
     },
-    createPatient() {
-      return this.$router.push({name: "new-patient"});
+    showDetail(patient) {
+      this.$router.push({name: "patients-show", params: {patientId: patient.id}});
     },
-    deletePatient: function(payload) {
+    showEdit(patient) {
+      this.$router.push({name: "patients-edit", params: {patientId: patient.id}});
+    },
+    onDelete: function(patient) {
       const onSuccess = () => {
-        this.$router.go(0);
-      }; 
-      this.$store.dispatch("deletePatient", {component: this, dataPatient: payload, onSuccess})
-    },
+        this.patients = this.patients.filter((p) => {
+          return p.id !== patient.id;
+        });
+      };
+
+      this.$store.dispatch("deletePatient", {component: this, patient, onSuccess})
+    }
   }
 }
 </script>

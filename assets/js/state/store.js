@@ -99,10 +99,10 @@ const actions = {
       errMsg: "El paciente no pudo ser guardado."
     });
   },
-  deletePatient(_, {component, dataPatient, onSuccess, onError}) {
+  deletePatient(_, {component, patient, onSuccess, onError}) {
     actionsHelper.deleteItem({component, onSuccess, onError,
-      url: `/patients/${dataPatient.id}`,
-      question: `¿Eliminar al paciente ${dataPatient.last_name}, ${dataPatient.first_name}?`,
+      url: `/patients/${patient.id}`,
+      question: `¿Eliminar al paciente ${patient.last_name}, ${patient.first_name}?`,
       loadingMsg: "Eliminando paciente",
       okMsg: "El paciente ha sido eliminado.",
       errMsg: "El paciente no pudo ser eliminado."

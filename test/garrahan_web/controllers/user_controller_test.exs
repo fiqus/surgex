@@ -53,10 +53,17 @@ defmodule GarrahanWeb.UserControllerTest do
                "disabled" => user.disabled,
                "isAdmin" => @update_attrs.is_admin,
                "surgeonId" => surgeon.id,
+               "socialId" => surgeon.social_id,
                "email" => surgeon.email,
                "firstName" => surgeon.first_name,
                "lastName" => surgeon.last_name,
-               "license" => nil,
+               "license" => surgeon.license,
+               "address" => surgeon.address,
+               "birthdate" => surgeon.birthdate,
+               "city" => surgeon.city,
+               "nationality" => surgeon.nationality,
+               "phone" => surgeon.phone,
+               "province" => surgeon.province,
                "lastLogin" => nil
              } == json_response(conn, 200)["data"]
     end
@@ -88,10 +95,17 @@ defmodule GarrahanWeb.UserControllerTest do
 
       assert %{
                "id" => surgeon.id,
+               "socialId" => surgeon.social_id,
                "email" => surgeon.email,
                "firstName" => surgeon.first_name,
                "lastName" => surgeon.last_name,
-               "license" => surgeon.license
+               "license" => surgeon.license,
+               "address" => surgeon.address,
+               "birthdate" => surgeon.birthdate,
+               "city" => surgeon.city,
+               "nationality" => surgeon.nationality,
+               "phone" => surgeon.phone,
+               "province" => surgeon.province
              } == json_response(conn, 200)
     end
 
@@ -120,10 +134,17 @@ defmodule GarrahanWeb.UserControllerTest do
 
       assert %{
                "id" => surgeon.id,
+               "socialId" => surgeon.social_id,
                "email" => surgeon.email,
                "firstName" => surgeon.first_name,
                "lastName" => surgeon.last_name,
-               "license" => surgeon.license
+               "license" => surgeon.license,
+               "address" => surgeon.address,
+               "birthdate" => surgeon.birthdate,
+               "city" => surgeon.city,
+               "nationality" => surgeon.nationality,
+               "phone" => surgeon.phone,
+               "province" => surgeon.province
              } == json_response(conn, 200)
     end
 
@@ -168,10 +189,17 @@ defmodule GarrahanWeb.UserControllerTest do
 
       assert %{
                "id" => surgeon.id,
+               "socialId" => surgeon.social_id,
                "email" => surgeon.email,
                "firstName" => surgeon.first_name,
                "lastName" => surgeon.last_name,
-               "license" => surgeon.license
+               "license" => surgeon.license,
+               "address" => surgeon.address,
+               "birthdate" => surgeon.birthdate,
+               "city" => surgeon.city,
+               "nationality" => surgeon.nationality,
+               "phone" => surgeon.phone,
+               "province" => surgeon.province
              } == json_response(conn, 200)
     end
 
@@ -247,10 +275,17 @@ defmodule GarrahanWeb.UserControllerTest do
                "disabled" => user.disabled,
                "isAdmin" => user.is_admin,
                "surgeonId" => surgeon.id,
+               "socialId" => surgeon.social_id,
                "email" => surgeon.email,
                "firstName" => surgeon.first_name,
                "lastName" => surgeon.last_name,
                "license" => surgeon.license,
+               "address" => surgeon.address,
+               "birthdate" => surgeon.birthdate,
+               "city" => surgeon.city,
+               "nationality" => surgeon.nationality,
+               "phone" => surgeon.phone,
+               "province" => surgeon.province,
                "lastLogin" => nil
              } == json_response(conn, 200)["data"]
     end
@@ -305,10 +340,17 @@ defmodule GarrahanWeb.UserControllerTest do
                "disabled" => user.disabled,
                "isAdmin" => user.is_admin,
                "surgeonId" => surgeon.id,
+               "socialId" => surgeon.social_id,
                "email" => surgeon.email,
                "firstName" => surgeon.first_name,
                "lastName" => surgeon.last_name,
                "license" => surgeon.license,
+               "address" => surgeon.address,
+               "birthdate" => surgeon.birthdate,
+               "city" => surgeon.city,
+               "nationality" => surgeon.nationality,
+               "phone" => surgeon.phone,
+               "province" => surgeon.province,
                "lastLogin" => nil
              } == json_response(conn, 200)["data"]
 

@@ -1,15 +1,9 @@
 /* This file is for your main application css. */
 
 @import "./phoenix.css";
-/* LOGIN STYLE */
-.form-login {
-  background-color: #681777;
-  width: 60rem;
-  padding: 10rem 5rem;
-  border-radius: 3rem;
-  box-shadow: 0 0 25px 0 #00000033, 0 5px 5px 0 #0000003d;
-  margin: 10rem auto auto auto;
-  color: white
+
+header {
+  background: #fff;
 }
 
 .user-bar {
@@ -19,6 +13,16 @@
   padding: 0rem 2.5rem;
   border-radius: 0.5rem;
   color: white;
+}
+
+.form-login {
+  background-color: #681777;
+  width: 60rem;
+  padding: 10rem 5rem;
+  border-radius: 3rem;
+  box-shadow: 0 0 25px 0 #00000033, 0 5px 5px 0 #0000003d;
+  margin: 10rem auto auto auto;
+  color: white
 }
 
 .login-message {

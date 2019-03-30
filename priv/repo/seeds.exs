@@ -42,21 +42,25 @@ Surgeries.create_surgeon(%{
 
 # Patients
 Surgeries.create_patient(%{
-  medical_history: "1234",
-  first_name: "someFirt1",
-  last_name: "someLast1",
+  social_id: "11111111",
+  medical_history: "A11111111",
+  first_name: "Pablo",
+  last_name: "Ferrabrud",
+  email: "pferrabrud@fiqus.com",
   birthdate: nil,
-  city: "someCity",
-  province: "someProvince",
-  address: "someAddres"
+  city: "C.A.B.A.",
+  province: "Bs. As.",
+  address: "Lambireaux 482"
 })
 
 Surgeries.create_patient(%{
-  medical_history: "4321",
-  first_name: "someFirt2",
-  last_name: "someLast12",
+  social_id: "22222222",
+  medical_history: "A22222222",
+  first_name: "Diego",
+  last_name: "Mansillero",
+  email: "dmansillero@fiqus.com",
   birthdate: nil,
-  city: "someCity",
-  province: "someProvince",
-  address: "someAddres"
+  city: "Villa La Angostura",
+  province: "Neuquén",
+  address: "Gigesilva 1375"
 })

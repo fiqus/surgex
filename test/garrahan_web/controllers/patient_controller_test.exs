@@ -65,13 +65,18 @@ defmodule GarrahanWeb.PatientControllerTest do
 
       assert %{
                "id" => id,
+               "socialId" => nil,
+               "medicalHistory" => nil,
+               "email" => nil,
+               "phone" => nil,
+               "nationality" => nil,
+               "firstName" => "some first_name",
+               "lastName" => "some last_name",
                "address" => "some address",
                "birthdate" => "2010-04-17",
                "city" => "some city",
-               "first_name" => "some first_name",
-               "last_name" => "some last_name",
                "province" => "some province"
-             } = json_response(conn, 200)["data"]
+             } == json_response(conn, 200)["data"]
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -95,13 +100,18 @@ defmodule GarrahanWeb.PatientControllerTest do
 
       assert %{
                "id" => id,
+               "socialId" => nil,
+               "medicalHistory" => nil,
+               "email" => nil,
+               "phone" => nil,
+               "nationality" => nil,
+               "firstName" => "some updated first_name",
+               "lastName" => "some updated last_name",
                "address" => "some updated address",
                "birthdate" => "2011-05-18",
                "city" => "some updated city",
-               "first_name" => "some updated first_name",
-               "last_name" => "some updated last_name",
                "province" => "some updated province"
-             } = json_response(conn, 200)["data"]
+             } == json_response(conn, 200)["data"]
     end
 
     test "renders errors when data is invalid", %{conn: conn, patient: patient} do

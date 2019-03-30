@@ -7,10 +7,17 @@ defmodule Garrahan.Surgeries.Surgeon do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "surgeons" do
-    field :email, :string
+    field :social_id, :string
+    field :license, :string
     field :first_name, :string
     field :last_name, :string
-    field :license, :string
+    field :email, :string
+    field :phone, :string
+    field :birthdate, :date
+    field :nationality, :string
+    field :address, :string
+    field :city, :string
+    field :province, :string
     belongs_to(:user, User)
     has_many(:surgeries, Surgery)
 
@@ -33,9 +40,23 @@ defmodule Garrahan.Surgeries.Surgeon do
   @doc false
   def changeset(surgeon, attrs) do
     surgeon
-    |> cast(attrs, [:user_id, :email, :first_name, :last_name, :license])
+    |> cast(attrs, [
+      :user_id,
+      :social_id,
+      :license,
+      :first_name,
+      :last_name,
+      :email,
+      :phone,
+      :birthdate,
+      :nationality,
+      :address,
+      :city,
+      :province
+    ])
     |> validate_required([:email, :first_name, :last_name])
-    |> unique_constraint(:email)
+    |> unique_constraint(:social_id)
     |> unique_constraint(:license)
+    |> unique_constraint(:email)
   end
 end
