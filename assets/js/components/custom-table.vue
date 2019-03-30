@@ -1,19 +1,24 @@
 <template>
   <div>
     <table class="custom-table">
-      <th v-for="header in headers" :key="header.key">
-        {{ header.value }}
-      </th>
-      <tr style="cursor: pointer" v-for="elem in data" :key="elem.id">
-        <td v-for="header in headers" v-on:click="onClick(elem)" :key="header.key">
-          {{ parseElem(header, elem) }}
-        </td>
-        <td>
-          <a @click="onEdit(elem)">Editar</a>
-          |
-          <a @click="onDelete(elem)">Eliminar</a>
-        </td>
-      </tr>
+      <thead>
+        <th v-for="header in headers" :key="header.key">
+          {{ header.value }}
+        </th>
+        <th>Acciones</th>
+      </thead>
+      <tbody>
+        <tr style="cursor: pointer" v-for="elem in data" :key="elem.id">
+          <td v-for="header in headers" @click="onClick(elem)" :key="header.key">
+            {{ parseElem(header, elem) }}
+          </td>
+          <td>
+            <a @click="onEdit(elem)">Editar</a>
+            |
+            <a @click="onDelete(elem)">Eliminar</a>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>

@@ -3,15 +3,15 @@ import LoginScreen from "./screens/login.vue";
 import RecoverScreen from "./screens/recover.vue";
 import RecoverTokenScreen from "./screens/recover-token.vue";
 import ActivateScreen from "./screens/activate.vue";
-import PatientsScreen from "./screens/patients/patients-list.vue";
-import PatientScreen from "./screens/patients/patient-show.vue";
-import PatientCreateScreen from "./screens/patients/new-patient.vue";
 import UsersListScreen from "./screens/users/users-list.vue";
 import UsersShowScreen from "./screens/users/users-show.vue";
 import UsersEditScreen from "./screens/users/users-edit.vue";
 import SurgeonsListScreen from "./screens/surgeons/surgeons-list.vue";
 import SurgeonsShowScreen from "./screens/surgeons/surgeons-show.vue";
-import SurgeonsFormScreen from "./screens/surgeons/surgeons-form.vue";
+import SurgeonsFormScreen from "./screens/surgeons/surgeons-form.vue"
+import PatientsListScreen from "./screens/patients/patients-list.vue";
+import PatientsShowScreen from "./screens/patients/patients-show.vue";
+import PatientsFormScreen from "./screens/patients/patients-form.vue";;
 import SurgeriesListScreen from "./screens/surgeries/sugeries-list.vue";
 import SurgeryFormScreen from "./screens/surgeries/surgery-form.vue";
 
@@ -24,15 +24,16 @@ export default [
   {name: "users-list", path: "/users", component: UsersListScreen},
   {name: "users-show", path: "/users/:userId", component: UsersShowScreen},
   {name: "users-edit", path: "/users/edit/:userId", component: UsersEditScreen},
-  {name: "patients-list", path: "/patients", component: PatientsScreen},
-  {name: "patient-show", path: "/patient/:patientId", component: PatientScreen},
-  {name: "new-patient", path: "/patients/new", component: PatientCreateScreen},
   {name: "surgeons-list", path: "/surgeons", component: SurgeonsListScreen},
   {name: "surgeons-new", path: "/surgeons/new", component: SurgeonsFormScreen},
   {name: "surgeons-edit", path: "/surgeons/edit/:surgeonId", component: SurgeonsFormScreen},
   {name: "surgeons-show", path: "/surgeons/show/:surgeonId", component: SurgeonsShowScreen},
+  {name: "patients-list", path: "/patients", component: PatientsListScreen},
+  {name: "patients-new", path: "/patients/new", component: PatientsFormScreen},
+  {name: "patients-edit", path: "/patients/edit/:patientId", component: PatientsFormScreen},
+  {name: "patients-show", path: "/patients/show/:patientId", component: PatientsShowScreen},
   {name: "surgeries-list", path: "/surgeries", component: SurgeriesListScreen},
-    {name: "surgery-new", path: "/surgeries/new", component: SurgeryFormScreen},
+  {name: "surgery-new", path: "/surgeries/new", component: SurgeryFormScreen},
   // Default redirect to home
   { path: "*", redirect: "/" }
 ];

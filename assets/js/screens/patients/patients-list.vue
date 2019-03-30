@@ -1,18 +1,18 @@
 <template>
   <div>
     <h3 class="subtitle">Listado de Pacientes</h3>
+    <button class="button float-right" v-on:click="showNew">
+      <i class="fa fa-plus"></i>
+      Agregar Paciente
+    </button>
     <customTable 
-      v-if="this.patients"
+      v-if="this.patients.length"
       :headers="this.headers"
       :data="this.patients"
       @onClick="showDetail"
       @onEdit="showEdit"
       @onDelete="onDelete">
     </customTable>
-    <button class="button" v-on:click="showNew">
-      <i class="fa fa-plus"></i>
-      Agregar Paciente
-    </button>
     <h4 v-if="!this.patients.length">Aún no hay pacientes ingresados.</h4>
   </div>
 </template>
@@ -34,7 +34,8 @@ export default {
       headers: [
         {key: "fullName", value: "Paciente", parser: (p) => `${p.lastName}, ${p.firstName}`},
         {key: "medicalHistory", value: "Historia Clínica"},
-        {key: "city", value: "Ciudad"}
+        {key: "socialId", value: "DNI"},
+        {key: "phone", value: "Teléfono"}
       ],
       patients: []
     }
@@ -48,7 +49,7 @@ export default {
   },
   methods: {
     showNew() {
-      this.$router.push({name: "new-patient"});
+      this.$router.push({name: "patients-new"});
     },
     showDetail(patient) {
       this.$router.push({name: "patients-show", params: {patientId: patient.id}});

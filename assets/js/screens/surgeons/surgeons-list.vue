@@ -5,16 +5,18 @@
       <i class="fa fa-plus"></i>
       Agregar Cirujano
     </button>
-    <table>
+    <table v-if="this.surgeons.length">
       <thead>
         <th>Cirujano</th>
         <th>Email</th>
+        <th>Teléfono</th>
         <th v-if="isAdmin">Acciones</th>
       </thead>
       <tbody>
         <tr v-for="surgeon in surgeons" :key="surgeon.id">
           <td><a @click="showDetail(surgeon)">{{ surgeon.lastName }}, {{ surgeon.firstName }}</a></td>
           <td>{{ surgeon.email }}</td>
+          <td>{{ surgeon.phone }}</td>
           <td v-if="isAdmin">
             <a @click="showEdit(surgeon)">Editar</a>
             |
@@ -23,6 +25,7 @@
         </tr>
       </tbody>
     </table>
+    <h4 v-if="!this.surgeons.length">Aún no hay cirujanos ingresados.</h4>
   </div>
 </template>
 <script>
