@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="surgeries-form">
     <h3 class="subtitle">Crear Cirugía</h3>
     <form v-on:submit.prevent="submit">
       <div class="form-user">
@@ -66,7 +66,7 @@
         this.patients = patients.map((obj) => {
           return {
             key: obj.id,
-            value: `${obj.first_name} ${obj.last_name}`
+            value: `${obj.firstName} ${obj.lastName}`
           }
         });
         this.surgeons = surgeons.map((obj) => {

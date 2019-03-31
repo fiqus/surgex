@@ -1,32 +1,32 @@
 <template>
-  <div id="users-list" v-if="!loading">
+  <div id="users-list">
     <h3 class="subtitle">Listado de Usuarios</h3>
-    <!-- <customTable
-      :headers="this.headers"
-      :data="this.users">
-    </customTable> -->
-    <table>
-      <thead>
-        <th>Persona</th>
-        <th>Email</th>
-        <th>Última Sesión</th>
-        <th>Admin</th>
-        <th>Activo</th>
-        <th>Acciones</th>
-      </thead>
-      <tbody>
-        <tr v-for="user in users" :key="user.id">
-          <td><a @click="showDetail(user)">{{ user.lastName }}, {{ user.firstName }}</a></td>
-          <td>{{ user.email }}</td>
-          <td>{{ formatDate(user.lastLogin) }}</td>
-          <td>{{ user.isAdmin ? "S" : "N" }}</td>
-          <td>{{ user.disabled ? "N" : "S" }}</td>
-          <td>
-            <a @click="showEdit(user)">Editar</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div v-if="loading">Cargando...</div>
+    <div v-if="!loading">
+      <table v-if="users.length">
+        <thead>
+          <th>Persona</th>
+          <th>Email</th>
+          <th>Última Sesión</th>
+          <th>Admin</th>
+          <th>Activo</th>
+          <th>Acciones</th>
+        </thead>
+        <tbody>
+          <tr v-for="user in users" :key="user.id">
+            <td><a @click="showDetail(user)">{{ user.lastName }}, {{ user.firstName }}</a></td>
+            <td>{{ user.email }}</td>
+            <td>{{ formatDate(user.lastLogin) }}</td>
+            <td>{{ user.isAdmin ? "S" : "N" }}</td>
+            <td>{{ user.disabled ? "N" : "S" }}</td>
+            <td>
+              <a @click="showEdit(user)">Editar</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h4 v-if="!users.length">Aún no hay usuarios ingresados.</h4>
+    </div>
   </div>
 </template>
 <script>
@@ -38,14 +38,14 @@ export default {
   },
   data() {
     return {
-      users: [],
-      loading: true,
       headers: [
         {key: "lastName", value: "Persona"}, 
         {key: "email", value: "Email"}, 
         {key: "isAdmin", value: "Admin"}, 
         {key: "disabled", value: "Activo"}
       ],
+      users: [],
+      loading: true,
       formatDate
     }
   },

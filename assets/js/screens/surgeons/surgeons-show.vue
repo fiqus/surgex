@@ -1,15 +1,25 @@
 <template>
-  <div v-if="!loading">
-    <h3 class="subtitle">Detalle de Cirujano</h3>
-    <section class="elem-details">
-      <div><b>Cirujano:</b> {{surgeon.lastName}}, {{surgeon.firstName}}</div>
-      <div><b>Email:</b> {{surgeon.email}}</div>
-      <div><b>Licencia:</b> {{surgeon.license || "-"}}</div>
-    </section>
-    <div class="action-bar-buttons">
-      <button class="button" @click="$router.go(-1)"><i class="fa fa-arrow-left"></i> Volver</button>
-      <button class="button" @click="showEdit(surgeon)" v-if="isAdmin"><i class="fa fa-edit"></i> Editar</button>
-      <button class="button" @click="onDelete(surgeon)" v-if="isAdmin"><i class="fa fa-trash"></i> Eliminar</button>
+  <div id="surgeons-show">
+    <h3 class="subtitle">Detalle del Cirujano</h3>
+    <div v-if="loading">Cargando...</div>
+    <div v-if="!loading">
+      <section class="elem-details">
+        <div><b>Cirujano:</b> {{surgeon.lastName}}, {{surgeon.firstName}}</div>
+        <div><b>DNI:</b> {{surgeon.socialId || "-"}}</div>
+        <div><b>Licencia:</b> {{surgeon.license || "-"}}</div>
+        <div><b>Email:</b> {{surgeon.email}}</div>
+        <div><b>Teléfono:</b> {{surgeon.phone || "-"}}</div>
+        <div><b>Fecha Nacimiento:</b> {{surgeon.birthdate || "-"}}</div>
+        <div><b>Nacionalidad:</b> {{surgeon.nationality || "-"}}</div>
+        <div><b>Dirección:</b> {{surgeon.address || "-"}}</div>
+        <div><b>Ciudad:</b> {{surgeon.city || "-"}}</div>
+        <div><b>Provincia:</b> {{surgeon.province || "-"}}</div>
+      </section>
+      <div class="action-bar-buttons">
+        <button class="button" @click="$router.go(-1)"><i class="fa fa-arrow-left"></i> Volver</button>
+        <button class="button" @click="showEdit(surgeon)" v-if="isAdmin"><i class="fa fa-edit"></i> Editar</button>
+        <button class="button" @click="onDelete(surgeon)" v-if="isAdmin"><i class="fa fa-trash"></i> Eliminar</button>
+      </div>
     </div>
   </div>
 </template>

@@ -1,16 +1,19 @@
 <template>
-  <div v-if="!loading">
-    <h3 class="subtitle">Detalle de Usuario</h3>
-    <section class="elem-details">
-      <div><b>Persona:</b> {{ user.lastName }}, {{ user.firstName }}</div>
-      <div><b>Email:</b> {{user.email}}</div>
-      <div><b>Admin:</b> {{ user.isAdmin ? "S" : "N" }}</div>
-      <div><b>Activo:</b> {{ user.disabled ? "N" : "S" }}</div>
-      <div><b>Última Sesión:</b> {{ formatDate(user.lastLogin) }}</div>
-    </section>
-    <div class="action-bar-buttons">
-      <button v-on:click="$router.go(-1)">Volver</button>
-      <button @click="showEdit(user)">Editar</button>
+  <div id="users-show">
+    <h3 class="subtitle">Detalle del Usuario</h3>
+    <div v-if="loading">Cargando...</div>
+    <div v-if="!loading">
+      <section class="elem-details">
+        <div><b>Persona:</b> {{ user.lastName }}, {{ user.firstName }}</div>
+        <div><b>Email:</b> {{user.email}}</div>
+        <div><b>Admin:</b> {{ user.isAdmin ? "S" : "N" }}</div>
+        <div><b>Activo:</b> {{ user.disabled ? "N" : "S" }}</div>
+        <div><b>Última Sesión:</b> {{ formatDate(user.lastLogin) }}</div>
+      </section>
+      <div class="action-bar-buttons">
+        <button v-on:click="$router.go(-1)">Volver</button>
+        <button @click="showEdit(user)">Editar</button>
+      </div>
     </div>
   </div>
 </template>

@@ -93,6 +93,11 @@ button:hover {
   }
 }
 
+#surgeries-list table th,
+#surgeries-list table td {
+  white-space: nowrap;
+}
+
 .subtitle {
   padding-top: 1rem;
   border-bottom: 1px solid #eaeaea;

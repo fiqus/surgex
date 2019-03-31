@@ -1,19 +1,22 @@
 <template>
-  <div>
+  <div id="patients-list">
     <h3 class="subtitle">Listado de Pacientes</h3>
-    <button class="button float-right" v-on:click="showNew">
-      <i class="fa fa-plus"></i>
-      Agregar Paciente
-    </button>
-    <customTable 
-      v-if="this.patients.length"
-      :headers="this.headers"
-      :data="this.patients"
-      @onClick="showDetail"
-      @onEdit="showEdit"
-      @onDelete="onDelete">
-    </customTable>
-    <h4 v-if="!this.patients.length">Aún no hay pacientes ingresados.</h4>
+    <div v-if="loading">Cargando...</div>
+    <div v-if="!loading">
+      <button class="button float-right" v-on:click="showNew">
+        <i class="fa fa-plus"></i>
+        Agregar Paciente
+      </button>
+      <customTable 
+        v-if="patients.length"
+        :headers="headers"
+        :data="patients"
+        @onClick="showDetail"
+        @onEdit="showEdit"
+        @onDelete="onDelete">
+      </customTable>
+      <h4 v-if="!patients.length">Aún no hay pacientes ingresados.</h4>
+    </div>
   </div>
 </template>
 
@@ -23,12 +26,6 @@ export default {
   components: {
     customTable
   },
-  created() {
-    this.$store.dispatch("fetchPatients")
-      .then((patients) => {
-        this.patients = patients;
-      });
-  },
   data() {
     return {
       headers: [
@@ -37,8 +34,16 @@ export default {
         {key: "socialId", value: "DNI"},
         {key: "phone", value: "Teléfono"}
       ],
-      patients: []
+      patients: [],
+      loading: true
     }
+  },
+  created() {
+    this.$store.dispatch("fetchPatients")
+      .then((patients) => {
+        this.patients = patients;
+        this.loading = false;
+      });
   },
   computed: {
     isAdmin: {
