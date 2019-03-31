@@ -6,25 +6,26 @@
       <section class="elem-details">
         <div><b>Persona:</b> {{ user.lastName }}, {{ user.firstName }}</div>
         <div><b>Email:</b> {{user.email}}</div>
-        <div><b>Admin:</b> {{ user.isAdmin ? "S" : "N" }}</div>
-        <div><b>Activo:</b> {{ user.disabled ? "N" : "S" }}</div>
+        <div><b>Admin:</b> {{ formatBoolean(user.isAdmin) }}</div>
+        <div><b>Activo:</b> {{ formatBoolean(user.disabled) }}</div>
         <div><b>Última Sesión:</b> {{ formatDate(user.lastLogin) }}</div>
       </section>
       <div class="action-bar-buttons">
-        <button v-on:click="$router.go(-1)">Volver</button>
-        <button @click="showEdit(user)">Editar</button>
+        <button class="button" @click="$router.go(-1)"><i class="fa fa-arrow-left"></i> Volver</button>
+        <button class="button" @click="showEdit(user)" v-if="isAdmin"><i class="fa fa-edit"></i> Editar</button>
       </div>
     </div>
   </div>
 </template>
 <script>
-import {formatDate} from "../../utils";
+import {formatDate, formatBoolean} from "../../utils";
 export default {
   data() {
     return {
       user: null,
       loading: true,
-      formatDate
+      formatDate,
+      formatBoolean
     }
   },
   created() {
@@ -33,6 +34,13 @@ export default {
         this.user = user;
         this.loading = false;
       });
+  },
+  computed: {
+    isAdmin: {
+      get() {
+        return this.$store.getters.isAdmin;
+      }
+    }
   },
   methods: {
     showEdit(user) {

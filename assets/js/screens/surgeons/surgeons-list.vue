@@ -7,39 +7,39 @@
         <i class="fa fa-plus"></i>
         Agregar Cirujano
       </button>
-      <table v-if="surgeons.length">
-        <thead>
-          <th>Cirujano</th>
-          <th>Email</th>
-          <th>Teléfono</th>
-          <th v-if="isAdmin">Acciones</th>
-        </thead>
-        <tbody>
-          <tr v-for="surgeon in surgeons" :key="surgeon.id">
-            <td><a @click="showDetail(surgeon)">{{ surgeon.lastName }}, {{ surgeon.firstName }}</a></td>
-            <td>{{ surgeon.email }}</td>
-            <td>{{ surgeon.phone }}</td>
-            <td v-if="isAdmin">
-              <a @click="showEdit(surgeon)">Editar</a>
-              |
-              <a @click="onDelete(surgeon)">Eliminar</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <customTable 
+        v-if="surgeons.length"
+        :params="params"
+        :headers="headers"
+        :data="surgeons"
+        @onClick="showDetail"
+        @onEdit="showEdit"
+        @onDelete="onDelete">
+      </customTable>
       <h4 v-if="!surgeons.length">Aún no hay cirujanos ingresados.</h4>
     </div>
   </div>
 </template>
 <script>
+import customTable from "../../components/custom-table";
 export default {
+  components: {
+    customTable
+  },
   data() {
     return {
+      params: {},
+      headers: [
+        {key: "fullName", value: "Cirujano", parser: (p) => `${p.lastName}, ${p.firstName}`},
+        {key: "email", value: "Email"},
+        {key: "phone", value: "Teléfono"}
+      ],
       surgeons: [],
       loading: true
     }
   },
   created() {
+    this.params.hideActions = !this.isAdmin;
     this.$store.dispatch("fetchSurgeons")
       .then((surgeons) => {
         this.surgeons = surgeons;

@@ -33,6 +33,10 @@ header {
   text-align: center;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .left {
   width: 45%;
   float: left;

@@ -6,7 +6,7 @@
       <section class="elem-details">
         <div><b>Cirujano:</b> {{surgery.surgeon.lastName}}, {{surgery.surgeon.firstName}}</div>
         <div><b>Paciente:</b> {{surgery.patient.lastName}}, {{surgery.patient.firstName}}</div>
-        <div><b>Fecha:</b> {{surgery.date}}</div>
+        <div><b>Fecha:</b> {{formatDate(surgery.date, {time: false})}}</div>
       </section>
       <div class="action-bar-buttons">
         <button class="button" @click="$router.go(-1)"><i class="fa fa-arrow-left"></i> Volver</button>
@@ -17,11 +17,13 @@
   </div>
 </template>
 <script>
+import {formatDate} from "../../utils";
 export default {
   data() {
     return {
       surgery: null,
-      loading: true
+      loading: true,
+      formatDate
     }
   },
   created() {

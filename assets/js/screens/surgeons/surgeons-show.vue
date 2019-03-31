@@ -9,7 +9,7 @@
         <div><b>Licencia:</b> {{surgeon.license || "-"}}</div>
         <div><b>Email:</b> {{surgeon.email}}</div>
         <div><b>Teléfono:</b> {{surgeon.phone || "-"}}</div>
-        <div><b>Fecha Nacimiento:</b> {{surgeon.birthdate || "-"}}</div>
+        <div><b>Fecha Nacimiento:</b> {{formatDate(surgeon.birthdate, {time: false})}}</div>
         <div><b>Nacionalidad:</b> {{surgeon.nationality || "-"}}</div>
         <div><b>Dirección:</b> {{surgeon.address || "-"}}</div>
         <div><b>Ciudad:</b> {{surgeon.city || "-"}}</div>
@@ -24,11 +24,13 @@
   </div>
 </template>
 <script>
+import {formatDate} from "../../utils";
 export default {
   data() {
     return {
       surgeon: null,
-      loading: true
+      loading: true,
+      formatDate
     }
   },
   created() {

@@ -3,58 +3,53 @@
     <h3 class="subtitle">Listado de Usuarios</h3>
     <div v-if="loading">Cargando...</div>
     <div v-if="!loading">
-      <table v-if="users.length">
-        <thead>
-          <th>Persona</th>
-          <th>Email</th>
-          <th>Última Sesión</th>
-          <th>Admin</th>
-          <th>Activo</th>
-          <th>Acciones</th>
-        </thead>
-        <tbody>
-          <tr v-for="user in users" :key="user.id">
-            <td><a @click="showDetail(user)">{{ user.lastName }}, {{ user.firstName }}</a></td>
-            <td>{{ user.email }}</td>
-            <td>{{ formatDate(user.lastLogin) }}</td>
-            <td>{{ user.isAdmin ? "S" : "N" }}</td>
-            <td>{{ user.disabled ? "N" : "S" }}</td>
-            <td>
-              <a @click="showEdit(user)">Editar</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <customTable 
+        v-if="users.length"
+        :params="params"
+        :headers="headers"
+        :data="users"
+        @onClick="showDetail"
+        @onEdit="showEdit">
+      </customTable>
       <h4 v-if="!users.length">Aún no hay usuarios ingresados.</h4>
     </div>
   </div>
 </template>
 <script>
 import customTable from "../../components/custom-table.vue";
-import {formatDate} from "../../utils";
+import {formatDate, formatBoolean} from "../../utils";
 export default {
   components: {
     customTable
   },
   data() {
     return {
+      params: {hideDelete: true},
       headers: [
-        {key: "lastName", value: "Persona"}, 
+        {key: "lastName", value: "Persona", parser: (u) => `${u.lastName}, ${u.firstName}`}, 
         {key: "email", value: "Email"}, 
-        {key: "isAdmin", value: "Admin"}, 
-        {key: "disabled", value: "Activo"}
+        {key: "lastLogin", value: "Última Sesión", parser: (p) => formatDate(p.lastLogin)}, 
+        {key: "isAdmin", value: "Admin", parser: (p) => formatBoolean(p.isAdmin)}, 
+        {key: "disabled", value: "Activo", parser: (p) => formatBoolean(p.disabled)}
       ],
       users: [],
-      loading: true,
-      formatDate
+      loading: true
     }
   },
   created() {
+    this.params.hideActions = !this.isAdmin;
     this.$store.dispatch("fetchUsers")
       .then((users) => {
         this.users = users;
         this.loading = false;
       });
+  },
+  computed: {
+    isAdmin: {
+      get() {
+        return this.$store.getters.isAdmin;
+      }
+    }
   },
   methods: {
     showDetail(user) {

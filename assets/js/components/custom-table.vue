@@ -5,17 +5,17 @@
         <th v-for="header in headers" :key="header.key">
           {{ header.value }}
         </th>
-        <th>Acciones</th>
+        <th v-if="!params.hideActions">Acciones</th>
       </thead>
       <tbody>
-        <tr style="cursor: pointer" v-for="elem in data" :key="elem.id">
-          <td v-for="header in headers" @click="onClick(elem)" :key="header.key">
+        <tr v-for="elem in data" :key="elem.id">
+          <td class="cursor-pointer" v-for="header in headers" @click="onClick(elem)" :key="header.key">
             {{ parseElem(header, elem) }}
           </td>
-          <td>
-            <a @click="onEdit(elem)">Editar</a>
-            |
-            <a @click="onDelete(elem)">Eliminar</a>
+          <td v-if="!params.hideActions">
+            <a v-if="!params.hideEdit" @click="onEdit(elem)">Editar</a>
+            <span v-if="!params.hideEdit && !params.hideDelete">|</span>
+            <a v-if="!params.hideDelete" @click="onDelete(elem)">Eliminar</a>
           </td>
         </tr>
       </tbody>
@@ -34,6 +34,15 @@ export default {
       type: Array,
       default: [],
       required: true
+    },
+    params: {
+      type: Object,
+      default: {
+        hideActions: false,
+        hideEdit: false,
+        hideDelete: false
+      },
+      required: false
     }
   },
   data() {

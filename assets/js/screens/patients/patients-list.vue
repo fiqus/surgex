@@ -9,6 +9,7 @@
       </button>
       <customTable 
         v-if="patients.length"
+        :params="params"
         :headers="headers"
         :data="patients"
         @onClick="showDetail"
@@ -28,6 +29,7 @@ export default {
   },
   data() {
     return {
+      params: {},
       headers: [
         {key: "fullName", value: "Paciente", parser: (p) => `${p.lastName}, ${p.firstName}`},
         {key: "medicalHistory", value: "Historia Clínica"},
@@ -44,13 +46,6 @@ export default {
         this.patients = patients;
         this.loading = false;
       });
-  },
-  computed: {
-    isAdmin: {
-      get() {
-        return this.$store.getters.isAdmin;
-      }
-    }
   },
   methods: {
     showNew() {

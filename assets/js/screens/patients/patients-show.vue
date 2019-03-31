@@ -9,7 +9,7 @@
         <div><b>Historia Clínica:</b> {{patient.medicalHistory || "-"}}</div>
         <div><b>Email:</b> {{patient.email || "-"}}</div>
         <div><b>Teléfono:</b> {{patient.phone || "-"}}</div>
-        <div><b>Fecha Nacimiento:</b> {{patient.birthdate || "-"}}</div>
+        <div><b>Fecha Nacimiento:</b> {{formatDate(patient.birthdate, {time: false})}}</div>
         <div><b>Nacionalidad:</b> {{patient.nationality || "-"}}</div>
         <div><b>Dirección:</b> {{patient.address || "-"}}</div>
         <div><b>Ciudad:</b> {{patient.city || "-"}}</div>
@@ -17,18 +17,20 @@
       </section>
       <div class="action-bar-buttons">
         <button class="button" @click="$router.go(-1)"><i class="fa fa-arrow-left"></i> Volver</button>
-        <button class="button" @click="showEdit(patient)" v-if="isAdmin"><i class="fa fa-edit"></i> Editar</button>
-        <button class="button" @click="onDelete(patient)" v-if="isAdmin"><i class="fa fa-trash"></i> Eliminar</button>
+        <button class="button" @click="showEdit(patient)"><i class="fa fa-edit"></i> Editar</button>
+        <button class="button" @click="onDelete(patient)"><i class="fa fa-trash"></i> Eliminar</button>
       </div>
     </div>
   </div>
 </template>
 <script>
+import {formatDate} from "../../utils";
 export default {
   data() {
     return {
       patient: null,
-      loading: true
+      loading: true,
+      formatDate
     }
   },
   created() {
@@ -37,13 +39,6 @@ export default {
         this.patient = patient;
         this.loading = false;
       });
-  },
-  computed: {
-    isAdmin: {
-      get() {
-        return this.$store.getters.isAdmin;
-      }
-    }
   },
   methods: {
     showEdit(patient) {

@@ -50,9 +50,22 @@ export function createApiClient(opts = {}) {
   return axios;
 }
 
-export function formatDate(date) {
-  const opts = {year: "2-digit", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false};
-  return date ? (new Date(date)).toLocaleString("es-AR", opts) : "-";
+export function formatDate(datetime, {locale = "es-AR", date = true, time = true, seconds = false, hour12 = false} = {}) {
+  let opts = {};
+  if (date) {
+    opts = Object.assign(opts, {year: "2-digit", month: "2-digit", day: "2-digit"});
+  }
+  if (time) {
+    opts = Object.assign(opts, {hour: "2-digit", minute: "2-digit", hour12});
+  }
+  if (seconds) {
+    opts = Object.assign(opts, {second: "2-digit"});
+  }
+  return datetime ? (new Date(datetime)).toLocaleString(locale, opts) : "-";
+}
+
+export function formatBoolean(value, {y = "S", n = "N"} = {}) {
+  return Boolean(value) ? y : n;
 }
 
 function setupResponseErrorFormatter(http) {
