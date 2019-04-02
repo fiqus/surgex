@@ -24,6 +24,9 @@ defmodule GarrahanWeb do
       import Plug.Conn
       import GarrahanWeb.Gettext
       alias GarrahanWeb.Router.Helpers, as: Routes
+
+      def current_surgeon(conn), do: conn.assigns.current_surgeon
+      def current_user(conn), do: conn.assigns.current_user
     end
   end
 

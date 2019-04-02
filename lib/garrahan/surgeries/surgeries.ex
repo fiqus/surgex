@@ -388,7 +388,16 @@ defmodule Garrahan.Surgeries do
     |> preload_surgery_associations()
   end
 
-  def list_surgeries(surgeon_id) do
+  @doc """
+  Returns the list of surgeries for given surgeon.
+
+  ## Examples
+
+      iex> list_surgeries(%Surgeon{})
+      [%Surgery{}, ...]
+
+  """
+  def list_surgeries(%Surgeon{id: surgeon_id}) do
     query = from(s in Surgery, where: s.surgeon_id == ^surgeon_id, order_by: [desc: s.date])
 
     Repo.all(query)

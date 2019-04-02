@@ -12,8 +12,7 @@ defmodule GarrahanWeb.SurgeryController do
   end
 
   def index(conn, _params) do
-    current_surgeon = conn.assigns.current_surgeon
-    surgeries = Surgeries.list_surgeries(current_surgeon.id)
+    surgeries = Surgeries.list_surgeries(current_surgeon(conn))
     render(conn, "index.json", surgeries: surgeries)
   end
 
