@@ -3,7 +3,7 @@
     <h3 class="subtitle" v-if="loading">Cargando...</h3>
     <div v-if="!loading">
       <h3 v-if="isNew" class="subtitle">Crear cirujano</h3>
-      <h3 v-if="!isNew" class="subtitle">Editar cirujano: {{ surgeon.lastName }}, {{ surgeon.firstName }}</h3>
+      <h3 v-if="!isNew" class="subtitle">Editar cirujano: {{ formatFullName(surgeon) }}</h3>
       <form v-on:submit="submit">
         <div class="form-surgeon">
           <div>
@@ -60,13 +60,15 @@
   </div>
 </template>
 <script>
+import {formatFullName} from "../../utils";
 export default {
   data() {
     return {
       surgeon: {},
       loading: true,
       isNew: !Boolean(this.$route.params.surgeonId),
-      action: "/api/surgeons"
+      action: "/api/surgeons",
+      formatFullName
     }
 	},
   created() {

@@ -23,6 +23,7 @@
 
 <script>
 import customTable from "../../components/custom-table";
+import {formatFullName} from "../../utils";
 export default {
   components: {
     customTable
@@ -31,7 +32,7 @@ export default {
     return {
       params: {},
       headers: [
-        {key: "fullName", value: "Paciente", parser: (p) => `${p.lastName}, ${p.firstName}`},
+        {key: "fullName", value: "Paciente", parser: formatFullName},
         {key: "medicalHistory", value: "Historia Clínica"},
         {key: "socialId", value: "DNI"},
         {key: "phone", value: "Teléfono"}

@@ -4,8 +4,8 @@
     <div v-if="loading">Cargando...</div>
     <div v-if="!loading">
       <section class="elem-details">
-        <div><b>Cirujano:</b> {{surgery.surgeon.lastName}}, {{surgery.surgeon.firstName}}</div>
-        <div><b>Paciente:</b> {{surgery.patient.lastName}}, {{surgery.patient.firstName}}</div>
+        <div><b>Cirujano:</b> {{formatFullName(surgery.surgeon)}}</div>
+        <div><b>Paciente:</b> {{formatFullName(surgery.patient)}}</div>
         <div><b>Fecha:</b> {{formatDate(surgery.date, {time: false})}}</div>
       </section>
       <div class="action-bar-buttons">
@@ -17,13 +17,14 @@
   </div>
 </template>
 <script>
-import {formatDate} from "../../utils";
+import {formatDate, formatFullName} from "../../utils";
 export default {
   data() {
     return {
       surgery: null,
       loading: true,
-      formatDate
+      formatDate,
+      formatFullName
     }
   },
   created() {

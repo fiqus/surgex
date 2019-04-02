@@ -2,7 +2,7 @@
   <div id="users-form">
     <h3 class="subtitle" v-if="loading">Cargando...</h3>
     <div v-if="!loading">
-      <h3 class="subtitle">Editar usuario: {{ user.lastName }}, {{ user.firstName }}</h3>
+      <h3 class="subtitle">Editar usuario: {{ formatFullName(user) }}</h3>
       <form action="/api/users/edit" method="post" v-on:submit="submit">
         <div class="form-user">
           <div>
@@ -27,11 +27,13 @@
   </div>
 </template>
 <script>
+import {formatFullName} from "../../utils";
 export default {
   data() {
     return {
       user: {},
-      loading: true
+      loading: true,
+      formatFullName
     }
 	},
   created() {

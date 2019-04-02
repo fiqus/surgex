@@ -1,3 +1,4 @@
+const utils = require("../utils");
 const apiClient = require("../utils/api-client");
 const actionsHelper = require("../utils/actions-helper");
 
@@ -120,7 +121,7 @@ const actions = {
   deletePatient(_, {component, patient, onSuccess, onError}) {
     actionsHelper.deleteItem({component, onSuccess, onError,
       url: `/patients/${patient.id}`,
-      question: `¿Eliminar al paciente ${patient.lastName}, ${patient.firstName}?`,
+      question: `¿Eliminar al paciente ${utils.formatFullName(patient)}?`,
       loadingMsg: "Eliminando paciente",
       okMsg: "El paciente ha sido eliminado.",
       errMsg: "El paciente no pudo ser eliminado."
@@ -158,7 +159,7 @@ const actions = {
   deleteSurgeon(_, {component, surgeon, onSuccess, onError}) {
     actionsHelper.deleteItem({component, onSuccess, onError,
       url: `/surgeons/${surgeon.id}`,
-      question: `¿Eliminar al cirujano ${surgeon.lastName}, ${surgeon.firstName}?`,
+      question: `¿Eliminar al cirujano ${utils.formatFullName(surgeon)}?`,
       loadingMsg: "Eliminando cirujano",
       okMsg: "El cirujano ha sido eliminado.",
       errMsg: "El cirujano no pudo ser eliminado."

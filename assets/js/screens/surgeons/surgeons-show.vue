@@ -4,7 +4,7 @@
     <div v-if="loading">Cargando...</div>
     <div v-if="!loading">
       <section class="elem-details">
-        <div><b>Cirujano:</b> {{surgeon.lastName}}, {{surgeon.firstName}}</div>
+        <div><b>Cirujano:</b> {{formatFullName(surgeon)}}</div>
         <div><b>DNI:</b> {{surgeon.socialId || "-"}}</div>
         <div><b>Licencia:</b> {{surgeon.license || "-"}}</div>
         <div><b>Email:</b> {{surgeon.email}}</div>
@@ -24,13 +24,14 @@
   </div>
 </template>
 <script>
-import {formatDate} from "../../utils";
+import {formatDate, formatFullName} from "../../utils";
 export default {
   data() {
     return {
       surgeon: null,
       loading: true,
-      formatDate
+      formatDate,
+      formatFullName
     }
   },
   created() {

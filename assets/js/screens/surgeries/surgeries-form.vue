@@ -41,73 +41,74 @@
   </div>
 </template>
 <script>
-  import TaggerField from "../../components/tagger-field.vue";
-  import {required} from "vuelidate/lib/validators";
+import TaggerField from "../../components/tagger-field.vue";
+import {required} from "vuelidate/lib/validators";
+import {formatFullName} from "../../utils";
 
-  function formatToSelect(list, fnValue) {
-    return list.map((obj) => {
-      return {
-        key: obj.id,
-        value: fnValue()
-      }
-    });
-  }
+function formatToSelect(list, fnValue) {
+  return list.map((obj) => {
+    return {
+      key: obj.id,
+      value: fnValue()
+    }
+  });
+}
 
-  export default {
-    components: {
-      TaggerField
-    },
-    created() {
-      return Promise.all([
-        this.$store.dispatch("fetchPatients"),
-        this.$store.dispatch("fetchSurgeons")
-      ])
-      .then(([patients, surgeons]) => {
-        this.patients = patients.map((obj) => {
-          return {
-            key: obj.id,
-            value: `${obj.firstName} ${obj.lastName}`
-          }
-        });
-        this.surgeons = surgeons.map((obj) => {
-          return {
-            key: obj.id,
-            value: `${obj.firstName} ${obj.lastName}`
-          }
-        });
+export default {
+  components: {
+    TaggerField
+  },
+  created() {
+    return Promise.all([
+      this.$store.dispatch("fetchPatients"),
+      this.$store.dispatch("fetchSurgeons")
+    ])
+    .then(([patients, surgeons]) => {
+      this.patients = patients.map((obj) => {
+        return {
+          key: obj.id,
+          value: formatFullName(obj)
+        }
       });
+      this.surgeons = surgeons.map((obj) => {
+        return {
+          key: obj.id,
+          value: formatFullName(obj)
+        }
+      });
+    });
+  },
+  methods: {
+    backToList() {
+      this.$router.push({name: "surgeries-list"});
     },
-    methods: {
-      backToList() {
-        this.$router.push({name: "surgeries-list"});
-      },
-      submit() {
-        this.$v.$touch();
+    submit() {
+      this.$v.$touch();
 
-        if (!this.$v.$invalid) {
-          this.$store.dispatch("createSurgery", {component: this, surgery: this.surgery, onSuccess: this.backToList});
-        }
-      }
-    },
-    data() {
-      return {
-        patients: [],
-        surgeons: [],
-        surgery: {
-          "date": "",
-          "surgeon_id": "",
-          "patient_id": "",
-          "assistants": []
-        }
-      }
-    },
-    validations: {
-      surgery: {
-        "surgeon_id": {required},
-        "patient_id": {required},
-        "date": {required}
+      if (!this.$v.$invalid) {
+        this.$store.dispatch("createSurgery", {component: this, surgery: this.surgery, onSuccess: this.backToList});
       }
     }
+  },
+  data() {
+    return {
+      patients: [],
+      surgeons: [],
+      surgery: {
+        "date": "",
+        "surgeon_id": "",
+        "patient_id": "",
+        "assistants": []
+      }
+    }
+  },
+  validations: {
+    surgery: {
+      "surgeon_id": {required},
+      "patient_id": {required},
+      "date": {required}
+    }
   }
+}
 </script>
 

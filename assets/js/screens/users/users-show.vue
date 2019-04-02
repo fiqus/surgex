@@ -4,11 +4,11 @@
     <div v-if="loading">Cargando...</div>
     <div v-if="!loading">
       <section class="elem-details">
-        <div><b>Persona:</b> {{ user.lastName }}, {{ user.firstName }}</div>
+        <div><b>Persona:</b> {{ formatFullName(user) }}</div>
         <div><b>Email:</b> {{user.email}}</div>
-        <div><b>Admin:</b> {{ formatBoolean(user.isAdmin) }}</div>
-        <div><b>Activo:</b> {{ formatBoolean(user.disabled) }}</div>
         <div><b>Última Sesión:</b> {{ formatDate(user.lastLogin) }}</div>
+        <div><b>Es administrador:</b> {{ formatBoolean(user.isAdmin) }}</div>
+        <div><b>Acceso activado:</b> {{ formatBoolean(!user.disabled) }}</div>
       </section>
       <div class="action-bar-buttons">
         <button class="button" @click="$router.go(-1)"><i class="fa fa-arrow-left"></i> Volver</button>
@@ -18,13 +18,14 @@
   </div>
 </template>
 <script>
-import {formatDate, formatBoolean} from "../../utils";
+import {formatDate, formatFullName, formatBoolean} from "../../utils";
 export default {
   data() {
     return {
       user: null,
       loading: true,
       formatDate,
+      formatFullName,
       formatBoolean
     }
   },

@@ -3,7 +3,7 @@
     <div v-if="error"><h1 class="big-error-message" v-html="error"></h1></div>
     <div v-if="!loading">
       <h1 class="subtitle">Activación de Usuario</h1>
-      <h3><b>{{ user.lastName }}, {{ user.firstName }}</b><br/>{{ user.email }}</h3>
+      <h3><b>{{ formatFullName(user) }}</b><br/>{{ user.email }}</h3>
       <p class="alert-warning">La contraseña debe tener al menos 6 caracteres.</p>
 
       <form v-on:submit="submit">
@@ -21,14 +21,17 @@
   </div>
 </template>
 <script>
+import {formatFullName} from "../utils";
 const genericError = "No se pudo activar el usuario.<br/>Si el problema persiste, contacte al administrador.";
+
 export default {
   data() {
     return {
       user: {},
       loading: true,
       disabled: false,
-      error: null
+      error: null,
+      formatFullName
     }
   },
   created() {

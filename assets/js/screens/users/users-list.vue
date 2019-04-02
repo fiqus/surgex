@@ -17,7 +17,7 @@
 </template>
 <script>
 import customTable from "../../components/custom-table.vue";
-import {formatDate, formatBoolean} from "../../utils";
+import {formatDate, formatFullName, formatBoolean} from "../../utils";
 export default {
   components: {
     customTable
@@ -26,11 +26,11 @@ export default {
     return {
       params: {hideDelete: true},
       headers: [
-        {key: "lastName", value: "Persona", parser: (u) => `${u.lastName}, ${u.firstName}`}, 
+        {key: "fullName", value: "Persona", parser: formatFullName}, 
         {key: "email", value: "Email"}, 
         {key: "lastLogin", value: "Última Sesión", parser: (p) => formatDate(p.lastLogin)}, 
         {key: "isAdmin", value: "Admin", parser: (p) => formatBoolean(p.isAdmin)}, 
-        {key: "disabled", value: "Activo", parser: (p) => formatBoolean(p.disabled)}
+        {key: "disabled", value: "Activo", parser: (p) => formatBoolean(!p.disabled)}
       ],
       users: [],
       loading: true

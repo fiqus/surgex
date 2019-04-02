@@ -12,7 +12,7 @@
         Volver al listado
       </button-->
       <h3 v-if="isNew" class="subtitle">Crear Paciente</h3>
-      <h3 v-if="!isNew" class="subtitle">Editar paciente: {{ patient.lastName }}, {{ patient.firstName }}</h3>
+      <h3 v-if="!isNew" class="subtitle">Editar paciente: {{ formatFullName(patient) }}</h3>
       <form v-on:submit="submit">
         <div class="form-patient">
           <div>
@@ -70,6 +70,7 @@
 </template>
 <script>
 import customForm from "../../components/custom-form";
+import {formatFullName} from "../../utils";
 export default {
 	components: {
 		customForm
@@ -79,7 +80,8 @@ export default {
       patient: {},
       loading: true,
       isNew: !Boolean(this.$route.params.patientId),
-      action: "/api/patients"
+      action: "/api/patients",
+      formatFullName
       // fields: [
       //   {key: "firstName", placeholder: "Nombre"},
       //   {key: "lastName", placeholder: "Apellido"},

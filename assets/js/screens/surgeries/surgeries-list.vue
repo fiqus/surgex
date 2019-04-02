@@ -23,11 +23,11 @@
 
 <script>
 import customTable from "../../components/custom-table";
-import {formatDate} from "../../utils";
+import {formatDate, formatFullName} from "../../utils";
 
 function formatAssistants(assistants, limit) {
   return (assistants || []).map((a) => {
-    const val = `${a.lastName}, ${a.firstName}`;
+    const val = formatFullName(a);
     return val.length > limit ? `${value.substring(0, (limit - 3))}..` : val;
   }).join("</br>") || "-";
 }
@@ -41,9 +41,9 @@ export default {
       params: {},
       headers: [
         {key: "date", value: "Fecha", parser: (s) => formatDate(s.date, {time: false})},
-        {key: "surgeon", value: "Cirujano", parser: (s) => `${s.surgeon.lastName}, ${s.surgeon.firstName}`},
+        {key: "surgeon", value: "Cirujano", parser: (s) => formatFullName(s.surgeon)},
         {key: "assistants", value: "Ayudantes", parser: (s) => formatAssistants(s.assistants, 25)},
-        {key: "patient", value: "Paciente", parser: (s) => `${s.patient.lastName}, ${s.patient.firstName}`},
+        {key: "patient", value: "Paciente", parser: (s) => formatFullName(s.patient)},
         {key: "medicalHistory", value: "N° HC", parser: (s) => s.patient.medicalHistory},
         {key: "diagnostic", value: "Diagnóstico", parser: (s) => "--"}
       ],

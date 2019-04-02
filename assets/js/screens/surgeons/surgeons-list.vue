@@ -22,6 +22,7 @@
 </template>
 <script>
 import customTable from "../../components/custom-table";
+import {formatFullName} from "../../utils";
 export default {
   components: {
     customTable
@@ -30,7 +31,7 @@ export default {
     return {
       params: {},
       headers: [
-        {key: "fullName", value: "Cirujano", parser: (p) => `${p.lastName}, ${p.firstName}`},
+        {key: "fullName", value: "Cirujano", parser: formatFullName},
         {key: "email", value: "Email"},
         {key: "phone", value: "Teléfono"}
       ],
