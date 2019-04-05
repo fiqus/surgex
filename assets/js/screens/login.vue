@@ -1,5 +1,5 @@
 <template>
-  <!--<div>
+  <div>
     <form v-on:submit="submit">
       <div class="form">
         <h1 class="center login-message">Inicio de Sesión</h1>
@@ -14,9 +14,8 @@
       </div>
     </form>
   </div>
-  -->
 
-  <div class="container">
+  <!--div class="container">
     <form class="form-signin">
       <h2 class="form-signin-heading">Please sign in</h2>
       <label for="inputEmail" class="sr-only">Email address</label>
@@ -30,7 +29,7 @@
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     </form>
-  </div>
+  </div-->
 </template>
 <script>
 export default {
