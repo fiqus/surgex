@@ -30,13 +30,14 @@ defmodule GarrahanWeb.SurgeryController do
     end
   end
 
-  defp decode_photos_to_list(encoded_photos) when is_list encoded_photos do
+  defp decode_photos_to_list(encoded_photos) when is_list(encoded_photos) do
     encoded_photos
-    |> Enum.map(fn photo ->
+    |> Enum.with_index()
+    |> Enum.map(fn {photo, index} ->
       "data:image/jpeg;base64," <> raw = photo
       {:ok, data} = Base.decode64(raw)
       :ok = File.write("/tmp/file.gif", data, [:binary])
-      "file.gif"
+      "file#{index}.gif"
     end)
   end
 

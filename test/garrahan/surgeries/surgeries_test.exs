@@ -3,7 +3,7 @@ defmodule Garrahan.SurgeriesTest do
 
   alias Garrahan.Surgeries
   alias Garrahan.Accounts
-  @moduletag :skip
+
   describe "diagnostics" do
     alias Garrahan.Surgeries.Diagnostic
 
@@ -253,12 +253,36 @@ defmodule Garrahan.SurgeriesTest do
     @invalid_attrs %{date: nil}
 
     def surgery_fixture(attrs \\ %{}) do
+      {:ok, surgeon} =
+        Surgeries.create_surgeon(%{
+          user_id: nil,
+          email: "info+user@fiqus.com",
+          first_name: "Fiqus",
+          last_name: "User"
+        })
+
+      {:ok, patient} =
+        Surgeries.create_patient(%{
+          social_id: "11111111",
+          medical_history: "A11111111",
+          first_name: "Pablo",
+          last_name: "Ferrabrud",
+          email: "pferrabrud@fiqus.com",
+          birthdate: nil,
+          city: "C.A.B.A.",
+          province: "Bs. As.",
+          address: "Lambireaux 482"
+        })
+
       {:ok, surgery} =
         attrs
         |> Enum.into(@valid_attrs)
+        |> Map.put(:surgeon_id, surgeon.id)
+        |> Map.put(:patient_id, patient.id)
         |> Surgeries.create_surgery()
 
       surgery
+      |> Surgeries.preload_surgery_associations()
     end
 
     test "list_surgeries/0 returns all surgeries" do
@@ -272,7 +296,8 @@ defmodule Garrahan.SurgeriesTest do
     end
 
     test "create_surgery/1 with valid data creates a surgery" do
-      assert {:ok, %Surgery{} = surgery} = Surgeries.create_surgery(@valid_attrs)
+      surgery = surgery_fixture()
+      assert %Surgery{} = surgery
       assert surgery.date == ~D[2010-04-17]
     end
 
