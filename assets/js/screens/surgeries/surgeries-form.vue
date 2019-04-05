@@ -1,7 +1,7 @@
 <template>
   <div id="surgeries-form">
     <h3 class="subtitle">Crear Cirugía</h3>
-    <form v-on:submit.prevent="submit">
+    <form v-on:submit.prevent="submit" enctype="multipart/form-data">
       <div class="form-user">
         <div>
           <label>Fecha:</label>
@@ -31,6 +31,10 @@
             :options="surgeons"
             v-model="surgery.assistants">
           </tagger-field>
+        </div>
+        <div>
+          <label>Fotos:</label>
+          <input v-for="(photo, photoIdx) in surgery.encoded_photos" :key="photoIdx" type="file" @change="addPhoto($event, photoIdx)">
         </div>
       </div>
       <div class="action-bar-buttons">
@@ -79,6 +83,13 @@ export default {
     });
   },
   methods: {
+    addPhoto(event, idx) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        this.surgery.encoded_photos[idx] = reader.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
+    },
     backToList() {
       this.$router.push({name: "surgeries-list"});
     },
@@ -98,7 +109,8 @@ export default {
         "date": "",
         "surgeon_id": "",
         "patient_id": "",
-        "assistants": []
+        "assistants": [],
+        "encoded_photos": ["", "", ""]
       }
     }
   },

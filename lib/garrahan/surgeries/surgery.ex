@@ -63,7 +63,7 @@ defmodule Garrahan.Surgeries.Surgery do
     Repo.get_by(Photo, filename: filename) || maybe_insert_photo(filename)
   end
 
-  defp get_or_insert_photo(_), do: nil
+  defp get_or_insert_photos(_), do: nil
 
   defp maybe_insert_photo(filename) do
     %Photo{}

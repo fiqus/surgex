@@ -7,6 +7,8 @@ defmodule GarrahanWeb.SurgeryControllerTest do
 
   import GarrahanWeb.AuthCase
 
+  encoded_photo = Base.encode64("12wfd3rdf")
+
   @create_attrs %{
     date: ~D[2010-04-17],
     patient_id: "71695983-4e45-4025-ad58-17a7450f783b",
@@ -17,7 +19,7 @@ defmodule GarrahanWeb.SurgeryControllerTest do
       "71695983-4e45-4025-ad58-17a7450f7833",
       "71695983-4e45-4025-ad58-17a7450f7834"
     ],
-    photos: ["12wfd3rdf.jpg", "5675656.jpg"]
+    encoded_photos: ["data:image/jpeg;base64,#{encoded_photo}"]
   }
   @update_attrs %{
     date: ~D[2011-05-18],
