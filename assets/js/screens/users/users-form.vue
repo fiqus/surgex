@@ -18,8 +18,8 @@
             <input name="disabled" type="checkbox" v-model="user.disabled">
           </div>
           <div class="action-bar-buttons">
-            <button type="button" class="btn btn-primary" @click="$router.go(-1)"><i class="fa fa-arrow-left"></i> Cancelar</button>
-            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
+            <button type="button" class="btn btn-secondary" @click.stop="$router.go(-1)"><i class="fa fa-arrow-left"></i> Cancelar</button>
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
           </div>
         </div>
       </form>
@@ -46,11 +46,11 @@ export default {
 	methods: {
     submit: function (event) {
       event.preventDefault();
-      this.loading = true;
-      this.$store.dispatch("updateUser", this.user)
-        .then((data) => {
-          this.$router.go(-1);
-        });
+      const onSuccess = () => {
+        this.$router.go(-1);
+      };
+
+      this.$store.dispatch("updateUser", {component: this, user: this.user, onSuccess});
     }
 	}
 }

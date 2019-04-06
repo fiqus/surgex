@@ -135,7 +135,7 @@ const actions = {
     return apiClient.httpGet(`/users/${userId}`)
       .then(actions.proccessApiResponse);
   },
-  updateUser(_, user) {
+  updateUser(_, {component, user, onSuccess, onError}) {
     // @TODO We should consider this format at backend, doesn't make much sense as it is
     const data = {
       id: user.id,
@@ -145,8 +145,12 @@ const actions = {
       }
     };
 
-    return apiClient.httpPut(`/users/${user.id}`, data)
-      .then(actions.proccessApiResponse);
+    actionsHelper.updateItem({component, onSuccess, onError, data, onResponse: actions.proccessApiResponse,
+      url: `/users/${user.id}`,
+      loadingMsg: "Guardando usuario",
+      okMsg: "El usuario ha sido guardado.",
+      errMsg: "El usuario no pudo ser guardado."
+    });
   },
   fetchSurgeons() {
     return apiClient.httpGet("/surgeons")
