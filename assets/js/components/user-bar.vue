@@ -5,7 +5,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" v-if="token" v-on:click="redirect('surgeries')">Cirugías</a>
+          <a class="nav-link" v-if="token" v-on:click="redirect('surgeries-list')">Cirugías</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" v-if="token" v-on:click="redirect('patients-list')">Pacientes</a>

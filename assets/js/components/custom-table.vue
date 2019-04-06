@@ -13,9 +13,8 @@
             {{ parseElem(header, elem) }}
           </td>
           <td v-if="!params.hideActions">
-            <a v-if="!params.hideEdit" @click="onEdit(elem)">Editar</a>
-            <span v-if="!params.hideEdit && !params.hideDelete">|</span>
-            <a v-if="!params.hideDelete" @click="onDelete(elem)">Eliminar</a>
+            <button v-if="!params.hideEdit" class="btn btn-primary" @click.stop="onEdit(elem)" title="Editar"><i class="fa fa-edit"></i></button>
+            <button v-if="!params.hideDelete" class="btn btn-danger" @click.stop="onDelete(elem)" title="Eliminar"><i class="fa fa-trash"></i></button>
           </td>
         </tr>
       </tbody>

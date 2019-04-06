@@ -3,7 +3,7 @@
     <h3 class="subtitle">Listado de Pacientes</h3>
     <div v-if="loading">Cargando...</div>
     <div v-if="!loading">
-      <button class="button float-right" v-on:click="showNew">
+      <button class="btn btn-primary float-right" v-on:click="showNew">
         <i class="fa fa-plus"></i>
         Agregar Paciente
       </button>
