@@ -28,7 +28,7 @@ function formatAssistants(assistants, limit) {
   return (assistants || []).map((a) => {
     const val = formatFullName(a);
     return val.length > limit ? `${value.substring(0, (limit - 3))}..` : val;
-  }).join("</br>") || "-";
+  }).join("</br>");
 }
 
 export default {

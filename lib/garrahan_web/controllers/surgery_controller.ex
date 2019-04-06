@@ -32,6 +32,7 @@ defmodule GarrahanWeb.SurgeryController do
 
   defp decode_photos_to_list(encoded_photos) when is_list(encoded_photos) do
     encoded_photos
+    |> Enum.reject(&(&1 == ""))
     |> Enum.with_index()
     |> Enum.map(fn {photo, index} ->
       "data:image/jpeg;base64," <> raw = photo
