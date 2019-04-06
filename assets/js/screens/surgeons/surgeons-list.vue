@@ -31,7 +31,7 @@ export default {
     return {
       params: {},
       headers: [
-        {key: "fullName", value: "Cirujano", parser: formatFullName},
+        {key: "full_name", value: "Cirujano", parser: formatFullName},
         {key: "email", value: "Email"},
         {key: "phone", value: "Teléfono"}
       ],

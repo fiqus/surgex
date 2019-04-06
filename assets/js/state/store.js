@@ -70,19 +70,7 @@ const actions = {
   createPatient(_, {component, patient, onSuccess, onError}) {
     // @TODO We should consider this format at backend, doesn't make much sense as it is
     const data = {
-      patient: {
-        social_id: patient.socialId,
-        medical_history: patient.medicalHistory,
-        first_name: patient.firstName,
-        last_name: patient.lastName,
-        email: patient.email,
-        phone: patient.phone,
-        birthdate: patient.birthdate,
-        nationality: patient.nationality,
-        address: patient.address,
-        city: patient.city,
-        province: patient.province
-      }
+      patient
     };
 
     actionsHelper.createItem({component, onSuccess, onError, data, onResponse: actions.proccessApiResponse,
@@ -96,19 +84,7 @@ const actions = {
     // @TODO We should consider this format at backend, doesn't make much sense as it is
     const data = {
       id: patient.id,
-      patient: {
-        social_id: patient.socialId,
-        medical_history: patient.medicalHistory,
-        first_name: patient.firstName,
-        last_name: patient.lastName,
-        email: patient.email,
-        phone: patient.phone,
-        birthdate: patient.birthdate,
-        nationality: patient.nationality,
-        address: patient.address,
-        city: patient.city,
-        province: patient.province
-      }
+      patient
     };
 
     actionsHelper.updateItem({component, onSuccess, onError, data, onResponse: actions.proccessApiResponse,
@@ -140,7 +116,7 @@ const actions = {
     const data = {
       id: user.id,
       user: {
-        is_admin: user.isAdmin,
+        is_admin: user.is_admin,
         disabled: user.disabled
       }
     };
@@ -173,19 +149,7 @@ const actions = {
     // @TODO We should consider this format at backend, doesn't make much sense as it is
     const data = {
       id: surgeon.id,
-      surgeon: {
-        social_id: surgeon.socialId,
-        license: surgeon.license,
-        first_name: surgeon.firstName,
-        last_name: surgeon.lastName,
-        email: surgeon.email,
-        phone: surgeon.phone,
-        birthdate: surgeon.birthdate,
-        nationality: surgeon.nationality,
-        address: surgeon.address,
-        city: surgeon.city,
-        province: surgeon.province
-      }
+      surgeon
     };
 
     actionsHelper.updateItem({component, onSuccess, onError, data, onResponse: actions.proccessApiResponse,
@@ -200,19 +164,7 @@ const actions = {
       user: {
         is_admin: false
       },
-      surgeon: {
-        social_id: surgeon.socialId,
-        license: surgeon.license,
-        first_name: surgeon.firstName,
-        last_name: surgeon.lastName,
-        email: surgeon.email,
-        phone: surgeon.phone,
-        birthdate: surgeon.birthdate,
-        nationality: surgeon.nationality,
-        address: surgeon.address,
-        city: surgeon.city,
-        province: surgeon.province
-      }
+      surgeon
     };
 
     actionsHelper.createItem({component, onSuccess, onError, data, onResponse: actions.proccessApiResponse,
@@ -262,7 +214,7 @@ const mutations = {
 
 const getters = {
   isLogged: (state) => state.authUser && state.token,
-  isAdmin: (state) => state.authUser && state.authUser.isAdmin,
+  isAdmin: (state) => state.authUser && state.authUser.is_admin,
   getUser: (state) => state.authUser,
   getToken: (state) => state.token
 };

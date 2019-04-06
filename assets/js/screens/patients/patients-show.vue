@@ -5,8 +5,8 @@
     <div v-if="!loading">
       <section class="elem-details">
         <div><b>Paciente:</b> {{formatFullName(patient)}}</div>
-        <div><b>DNI:</b> {{patient.socialId || "-"}}</div>
-        <div><b>Historia Clínica:</b> {{patient.medicalHistory || "-"}}</div>
+        <div><b>DNI:</b> {{patient.social_id || "-"}}</div>
+        <div><b>Historia Clínica:</b> {{patient.medical_history || "-"}}</div>
         <div><b>Email:</b> {{patient.email || "-"}}</div>
         <div><b>Teléfono:</b> {{patient.phone || "-"}}</div>
         <div><b>Fecha Nacimiento:</b> {{formatDate(patient.birthdate, {time: false})}}</div>

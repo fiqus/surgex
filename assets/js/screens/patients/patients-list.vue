@@ -30,9 +30,9 @@ export default {
   data() {
     return {
       headers: [
-        {key: "fullName", value: "Paciente", parser: formatFullName},
-        {key: "medicalHistory", value: "Historia Clínica"},
-        {key: "socialId", value: "DNI"},
+        {key: "full_name", value: "Paciente", parser: formatFullName},
+        {key: "medical_history", value: "Historia Clínica"},
+        {key: "social_id", value: "DNI"},
         {key: "phone", value: "Teléfono"}
       ],
       patients: [],

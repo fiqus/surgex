@@ -5,7 +5,7 @@
     <div v-if="!loading">
       <section class="elem-details">
         <div><b>Cirujano:</b> {{formatFullName(surgeon)}}</div>
-        <div><b>DNI:</b> {{surgeon.socialId || "-"}}</div>
+        <div><b>DNI:</b> {{surgeon.social_id || "-"}}</div>
         <div><b>Licencia:</b> {{surgeon.license || "-"}}</div>
         <div><b>Email:</b> {{surgeon.email}}</div>
         <div><b>Teléfono:</b> {{surgeon.phone || "-"}}</div>

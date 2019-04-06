@@ -7,12 +7,12 @@ defmodule GarrahanWeb.AuthView do
       token: token,
       user: %{
         userId: surgeon.user.id,
-        isAdmin: surgeon.user.is_admin,
-        lastLogin: surgeon.user.last_login,
+        is_admin: surgeon.user.is_admin,
+        last_login: surgeon.user.last_login,
         surgeonId: surgeon.id,
         email: surgeon.email,
-        firstName: surgeon.first_name,
-        lastName: surgeon.last_name,
+        first_name: surgeon.first_name,
+        last_name: surgeon.last_name,
         license: surgeon.license
       }
     }

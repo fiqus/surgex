@@ -26,11 +26,11 @@ defmodule GarrahanWeb.AuthControllerTest do
       assert auth_user["userId"] == user.id
       assert auth_user["surgeonId"] == surgeon.id
       assert auth_user["email"] == surgeon.email
-      assert auth_user["firstName"] == surgeon.first_name
-      assert auth_user["lastName"] == surgeon.last_name
+      assert auth_user["first_name"] == surgeon.first_name
+      assert auth_user["last_name"] == surgeon.last_name
 
       datetime = DateTime.utc_now() |> DateTime.truncate(:second)
-      {:ok, last_login, _} = DateTime.from_iso8601(auth_user["lastLogin"])
+      {:ok, last_login, _} = DateTime.from_iso8601(auth_user["last_login"])
       assert DateTime.diff(datetime, last_login) >= 0
     end
 

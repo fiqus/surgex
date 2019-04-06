@@ -51,12 +51,12 @@ defmodule GarrahanWeb.UserControllerTest do
       assert %{
                "id" => user.id,
                "disabled" => user.disabled,
-               "isAdmin" => @update_attrs.is_admin,
+               "is_admin" => @update_attrs.is_admin,
                "surgeonId" => surgeon.id,
-               "socialId" => surgeon.social_id,
+               "social_id" => surgeon.social_id,
                "email" => surgeon.email,
-               "firstName" => surgeon.first_name,
-               "lastName" => surgeon.last_name,
+               "first_name" => surgeon.first_name,
+               "last_name" => surgeon.last_name,
                "license" => surgeon.license,
                "address" => surgeon.address,
                "birthdate" => surgeon.birthdate,
@@ -64,7 +64,7 @@ defmodule GarrahanWeb.UserControllerTest do
                "nationality" => surgeon.nationality,
                "phone" => surgeon.phone,
                "province" => surgeon.province,
-               "lastLogin" => nil
+               "last_login" => nil
              } == json_response(conn, 200)["data"]
     end
 
@@ -95,10 +95,10 @@ defmodule GarrahanWeb.UserControllerTest do
 
       assert %{
                "id" => surgeon.id,
-               "socialId" => surgeon.social_id,
+               "social_id" => surgeon.social_id,
                "email" => surgeon.email,
-               "firstName" => surgeon.first_name,
-               "lastName" => surgeon.last_name,
+               "first_name" => surgeon.first_name,
+               "last_name" => surgeon.last_name,
                "license" => surgeon.license,
                "address" => surgeon.address,
                "birthdate" => surgeon.birthdate,
@@ -134,10 +134,10 @@ defmodule GarrahanWeb.UserControllerTest do
 
       assert %{
                "id" => surgeon.id,
-               "socialId" => surgeon.social_id,
+               "social_id" => surgeon.social_id,
                "email" => surgeon.email,
-               "firstName" => surgeon.first_name,
-               "lastName" => surgeon.last_name,
+               "first_name" => surgeon.first_name,
+               "last_name" => surgeon.last_name,
                "license" => surgeon.license,
                "address" => surgeon.address,
                "birthdate" => surgeon.birthdate,
@@ -189,10 +189,10 @@ defmodule GarrahanWeb.UserControllerTest do
 
       assert %{
                "id" => surgeon.id,
-               "socialId" => surgeon.social_id,
+               "social_id" => surgeon.social_id,
                "email" => surgeon.email,
-               "firstName" => surgeon.first_name,
-               "lastName" => surgeon.last_name,
+               "first_name" => surgeon.first_name,
+               "last_name" => surgeon.last_name,
                "license" => surgeon.license,
                "address" => surgeon.address,
                "birthdate" => surgeon.birthdate,
@@ -273,12 +273,12 @@ defmodule GarrahanWeb.UserControllerTest do
       assert %{
                "id" => user.id,
                "disabled" => user.disabled,
-               "isAdmin" => user.is_admin,
+               "is_admin" => user.is_admin,
                "surgeonId" => surgeon.id,
-               "socialId" => surgeon.social_id,
+               "social_id" => surgeon.social_id,
                "email" => surgeon.email,
-               "firstName" => surgeon.first_name,
-               "lastName" => surgeon.last_name,
+               "first_name" => surgeon.first_name,
+               "last_name" => surgeon.last_name,
                "license" => surgeon.license,
                "address" => surgeon.address,
                "birthdate" => surgeon.birthdate,
@@ -286,7 +286,7 @@ defmodule GarrahanWeb.UserControllerTest do
                "nationality" => surgeon.nationality,
                "phone" => surgeon.phone,
                "province" => surgeon.province,
-               "lastLogin" => nil
+               "last_login" => nil
              } == json_response(conn, 200)["data"]
     end
 
@@ -338,12 +338,12 @@ defmodule GarrahanWeb.UserControllerTest do
       assert %{
                "id" => user.id,
                "disabled" => user.disabled,
-               "isAdmin" => user.is_admin,
+               "is_admin" => user.is_admin,
                "surgeonId" => surgeon.id,
-               "socialId" => surgeon.social_id,
+               "social_id" => surgeon.social_id,
                "email" => surgeon.email,
-               "firstName" => surgeon.first_name,
-               "lastName" => surgeon.last_name,
+               "first_name" => surgeon.first_name,
+               "last_name" => surgeon.last_name,
                "license" => surgeon.license,
                "address" => surgeon.address,
                "birthdate" => surgeon.birthdate,
@@ -351,7 +351,7 @@ defmodule GarrahanWeb.UserControllerTest do
                "nationality" => surgeon.nationality,
                "phone" => surgeon.phone,
                "province" => surgeon.province,
-               "lastLogin" => nil
+               "last_login" => nil
              } == json_response(conn, 200)["data"]
 
       user = Garrahan.Accounts.get_user!(user.id)

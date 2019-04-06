@@ -64,8 +64,8 @@ export function formatDate(datetime, {locale = "es-AR", date = true, time = true
   return datetime ? (new Date(datetime)).toLocaleString(locale, opts) : "-";
 }
 
-export function formatFullName({firstName, lastName}) {
-  return firstName && lastName ? `${lastName}, ${firstName}` : firstName || lastName;
+export function formatFullName({first_name, last_name}) {
+  return first_name && last_name ? `${last_name}, ${first_name}` : first_name || last_name;
 }
 
 export function formatBoolean(value, {y = "S", n = "N"} = {}) {

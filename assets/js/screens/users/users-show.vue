@@ -6,8 +6,8 @@
       <section class="elem-details">
         <div><b>Persona:</b> {{ formatFullName(user) }}</div>
         <div><b>Email:</b> {{user.email}}</div>
-        <div><b>Última Sesión:</b> {{ formatDate(user.lastLogin) }}</div>
-        <div><b>Es administrador:</b> {{ formatBoolean(user.isAdmin) }}</div>
+        <div><b>Última Sesión:</b> {{ formatDate(user.last_login) }}</div>
+        <div><b>Es administrador:</b> {{ formatBoolean(user.is_admin) }}</div>
         <div><b>Acceso activado:</b> {{ formatBoolean(!user.disabled) }}</div>
       </section>
       <div class="action-bar-buttons">

@@ -26,9 +26,9 @@ export default {
       isNew: !Boolean(this.$route.params.surgeonId),
       action: "/api/surgeons",
       fields: [
-        {key: "firstName", label: "Nombre"},
-        {key: "lastName", label: "Apellido"},
-        {key: "socialId", label: "DNI"},
+        {key: "first_name", label: "Nombre"},
+        {key: "last_name", label: "Apellido"},
+        {key: "social_id", label: "DNI"},
         {key: "license", label: "Licencia"},
         {key: "email", label: "Email"},
         {key: "phone", label: "Teléfono"},

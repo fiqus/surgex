@@ -24,7 +24,7 @@ export default {
       loading: true,
       fields: [
         {key: "email", label: "Email", disabled: true},
-        {key: "isAdmin", label: "Es administrador", type: "checkbox"},
+        {key: "is_admin", label: "Es administrador", type: "checkbox"},
         {key: "disabled", label: "Acceso desactivado", type: "checkbox"}
       ],
       formatFullName

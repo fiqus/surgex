@@ -66,10 +66,10 @@ defmodule GarrahanWeb.SurgeonControllerTest do
 
       assert %{
                "id" => id,
-               "socialId" => nil,
+               "social_id" => nil,
                "license" => "some license",
-               "firstName" => "some first_name",
-               "lastName" => "some last_name",
+               "first_name" => "some first_name",
+               "last_name" => "some last_name",
                "email" => "some@email.com",
                "phone" => nil,
                "nationality" => nil,
@@ -102,10 +102,10 @@ defmodule GarrahanWeb.SurgeonControllerTest do
 
       assert %{
                "id" => id,
-               "socialId" => nil,
+               "social_id" => nil,
                "license" => "some updated license",
-               "firstName" => "some updated first_name",
-               "lastName" => "some updated last_name",
+               "first_name" => "some updated first_name",
+               "last_name" => "some updated last_name",
                "email" => "updated@email.com",
                "phone" => nil,
                "nationality" => nil,

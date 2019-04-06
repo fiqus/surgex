@@ -26,10 +26,10 @@ export default {
     return {
       params: {hideDelete: true},
       headers: [
-        {key: "fullName", value: "Persona", parser: formatFullName}, 
+        {key: "full_name", value: "Persona", parser: formatFullName}, 
         {key: "email", value: "Email"}, 
-        {key: "lastLogin", value: "Última Sesión", parser: (p) => formatDate(p.lastLogin)}, 
-        {key: "isAdmin", value: "Admin", parser: (p) => formatBoolean(p.isAdmin)}, 
+        {key: "last_login", value: "Última Sesión", parser: (p) => formatDate(p.last_login)}, 
+        {key: "is_admin", value: "Admin", parser: (p) => formatBoolean(p.is_admin)}, 
         {key: "disabled", value: "Activo", parser: (p) => formatBoolean(!p.disabled)}
       ],
       users: [],

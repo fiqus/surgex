@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand">{{user.firstName}} {{user.lastName}}</a>
+    <a class="navbar-brand">{{user.first_name}} {{user.last_name}}</a>
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
@@ -14,7 +14,7 @@
           <a class="nav-link" v-if="token" v-on:click="redirect('surgeons-list')">Cirujanos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" v-if="user.isAdmin" v-on:click="redirect('users-list')">Usuarios</a>
+          <a class="nav-link" v-if="isAdmin" v-on:click="redirect('users-list')">Usuarios</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" v-if="token" v-on:click="redirect('logout')">Cerrar Sesión</a>
@@ -22,7 +22,7 @@
       </ul>
     </div>
     <div class="left">
-      <p>{{user.firstName}} {{user.lastName}}</p>
+      <p>{{user.first_name}} {{user.last_name}}</p>
     </div>
   </nav>
 </template>

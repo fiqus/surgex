@@ -54,7 +54,7 @@ export default {
       this.disabled = true;
       this.$store.dispatch("login", this.login)
         .then((user) => {
-          this.$awn.success(`¡Bienvenido ${user.firstName}!`);
+          this.$awn.success(`¡Bienvenido ${user.first_name}!`);
           this.$router.replace({name: "home"});
         }).catch((err) => {
           this.disabled = false;

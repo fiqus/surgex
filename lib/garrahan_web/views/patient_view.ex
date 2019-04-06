@@ -13,10 +13,10 @@ defmodule GarrahanWeb.PatientView do
   def render("patient.json", %{patient: patient}) do
     %{
       id: patient.id,
-      socialId: patient.social_id,
-      medicalHistory: patient.medical_history,
-      firstName: patient.first_name,
-      lastName: patient.last_name,
+      social_id: patient.social_id,
+      medical_history: patient.medical_history,
+      first_name: patient.first_name,
+      last_name: patient.last_name,
       email: patient.email,
       phone: patient.phone,
       birthdate: patient.birthdate,
