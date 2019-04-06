@@ -6,7 +6,7 @@
       <h3><b>{{ formatFullName(user) }}</b><br/>{{ user.email }}</h3>
       <p class="alert-warning">La contraseña debe tener al menos 6 caracteres.</p>
 
-      <form v-on:submit="submit">
+      <form v-on:submit.prevent="submit">
         <div>
           <label>Ingrese la contraseña:</label>
           <input name="password" type="password" v-model="user.password" required>
@@ -53,8 +53,7 @@ export default {
       });
   },
 	methods: {
-    submit: function (event) {
-      event.preventDefault();
+    submit: function () {
       if (this.user.password !== this.user.confirm) {
         return this.$awn.warning("Las contraseñas no coinciden.");
       }

@@ -1,51 +1,52 @@
 <template>
   <div>
-		<h3 class="subtitle">{{formName}} </h3>
-
-    <form>
-			<div v-for="field in fields" :key="field.key">
+		<form class="form-custom" :class="params.class" v-on:submit.prevent="onSubmit">
+			<div class="form-field-container" v-for="field in fields" :key="field.key">
+				<label>{{field.label}}:</label>
 				<select v-if="field.type === 'select'" :placeholder="field.placeholder" v-model="data[field.key]">
-					<option value="">{{field.placeholder}}</option>
+					<option value="">-</option>
 					<option v-for="option in field.options" :key="option.key" :value="option.key">{{option.value}}</option>
 				</select>
 				<input v-else :type="field.type || 'text'" :placeholder="field.placeholder" v-model="data[field.key]">
 			</div>
-			<button class="btn btn-primary" v-on:click="sendData">Guardar</button>
+			<div class="action-bar-buttons">
+				<button type="button" class="btn btn-secondary" @click.stop="$router.go(-1)"><i class="fa fa-arrow-left"></i> Cancelar</button>
+				<button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
+			</div>
 		</form>
 		
   </div>
 </template>
 <script>
+const params = {
+	class: ""
+};
+
 export default {
-	created() {
-    this.data = this.manualData || {}
-  },
   props: {
-		formName: {
-			type: String,
-			required: true,
-			default: ""
-		},
 		fields: {
 			type: Array,
 			required: false,
 			default: []
 		},
-		manualData: {
-			type: Object,
-			required: false,
-			default: null
-		}
-  },
-  data() {
-    return {
-			data: {}
+		data: {
+      type: Object,
+      required: true,
+      default: () => {}
+		},
+		params: {
+      type: Object,
+      required: false,
+      default: () => params
     }
   },
+  data() {
+    return {};
+  },
   methods: {
-		sendData() {
-			this.$emit("create", this.data);
-		}
+		onSubmit(elem) {
+      this.$emit("onSubmit", this.data);
+    }
   }
 }
 </script>

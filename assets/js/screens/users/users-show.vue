@@ -11,8 +11,8 @@
         <div><b>Acceso activado:</b> {{ formatBoolean(!user.disabled) }}</div>
       </section>
       <div class="action-bar-buttons">
-        <button class="btn btn-secondary" @click="$router.go(-1)"><i class="fa fa-arrow-left"></i> Volver</button>
-        <button class="btn btn-primary" @click="showEdit(user)" v-if="isAdmin"><i class="fa fa-edit"></i> Editar</button>
+        <button class="btn btn-secondary" @click.stop="$router.go(-1)"><i class="fa fa-arrow-left"></i> Volver</button>
+        <button class="btn btn-primary" @click.stop="showEdit(user)" v-if="isAdmin"><i class="fa fa-edit"></i> Editar</button>
       </div>
     </div>
   </div>

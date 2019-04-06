@@ -16,9 +16,9 @@
         <div><b>Provincia:</b> {{surgeon.province || "-"}}</div>
       </section>
       <div class="action-bar-buttons">
-        <button class="btn btn-secondary" @click="$router.go(-1)"><i class="fa fa-arrow-left"></i> Volver</button>
-        <button class="btn btn-primary" @click="showEdit(surgeon)" v-if="isAdmin"><i class="fa fa-edit"></i> Editar</button>
-        <button class="btn btn-danger" @click="onDelete(surgeon)" v-if="isAdmin"><i class="fa fa-trash"></i> Eliminar</button>
+        <button class="btn btn-secondary" @click.stop="$router.go(-1)"><i class="fa fa-arrow-left"></i> Volver</button>
+        <button class="btn btn-primary" @click.stop="showEdit(surgeon)" v-if="isAdmin"><i class="fa fa-edit"></i> Editar</button>
+        <button class="btn btn-danger" @click.stop="onDelete(surgeon)" v-if="isAdmin"><i class="fa fa-trash"></i> Eliminar</button>
       </div>
     </div>
   </div>

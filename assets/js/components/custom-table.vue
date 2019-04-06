@@ -9,7 +9,7 @@
       </thead>
       <tbody>
         <tr v-for="elem in data" :key="elem.id">
-          <td class="cursor-pointer" v-for="header in headers" @click="onClick(elem)" :key="header.key">
+          <td class="cursor-pointer" v-for="header in headers" @click.stop="onClick(elem)" :key="header.key">
             {{ parseElem(header, elem) }}
           </td>
           <td v-if="!params.hideActions">
@@ -22,6 +22,12 @@
   </div>
 </template>
 <script>
+const params = {
+	hideActions: false,
+  hideEdit: false,
+  hideDelete: false
+};
+
 export default {
   props: {
     headers: {
@@ -36,11 +42,7 @@ export default {
     },
     params: {
       type: Object,
-      default: {
-        hideActions: false,
-        hideEdit: false,
-        hideDelete: false
-      },
+      default: () => params,
       required: false
     }
   },
@@ -57,8 +59,6 @@ export default {
           return elem[header.key];
       }
     };
-  },
-  computed: {
   },
   methods: {
     onClick(elem) {

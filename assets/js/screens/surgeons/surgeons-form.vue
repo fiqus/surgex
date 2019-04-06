@@ -4,70 +4,40 @@
     <div v-if="!loading">
       <h3 v-if="isNew" class="subtitle">Crear cirujano</h3>
       <h3 v-if="!isNew" class="subtitle">Editar cirujano: {{ formatFullName(surgeon) }}</h3>
-      <form v-on:submit="submit">
-        <div class="form-surgeon">
-          <div>
-            <label>Nombre:</label>
-            <input type="text" v-model="surgeon.firstName">
-          </div>
-          <div>
-            <label>Apellido:</label>
-            <input type="text" v-model="surgeon.lastName">
-          </div>
-          <div>
-            <label>DNI:</label>
-            <input type="text" v-model="surgeon.socialId">
-          </div>
-          <div>
-            <label>Licencia:</label>
-            <input type="text" v-model="surgeon.license">
-          </div>
-          <div>
-            <label>Email:</label>
-            <input type="text" v-model="surgeon.email">
-          </div>
-          <div>
-            <label>Teléfono:</label>
-            <input type="text" v-model="surgeon.phone">
-          </div>
-          <div>
-            <label>Fecha de Nacimiento:</label>
-            <input type="date" v-model="surgeon.birthdate">
-          </div>
-          <div>
-            <label>Nacionalidad:</label>
-            <input type="text" v-model="surgeon.nationality">
-          </div>
-          <div>
-            <label>Dirección:</label>
-            <input type="text" v-model="surgeon.address">
-          </div>
-          <div>
-            <label>Ciudad:</label>
-            <input type="text" v-model="surgeon.city">
-          </div>
-          <div>
-            <label>Provincia:</label>
-            <input type="text" v-model="surgeon.province">
-          </div>
-          <div class="action-bar-buttons">
-            <button type="button" class="btn btn-secondary" @click="$router.go(-1)"><i class="fa fa-arrow-left"></i> Cancelar</button>
-            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
-          </div>
-        </div>
-      </form>
+      <customForm
+        :fields="fields"
+        :data="surgeon"
+        @onSubmit="submit">
+      </customForm>
     </div>
   </div>
 </template>
 <script>
+import customForm from "../../components/custom-form";
 import {formatFullName} from "../../utils";
 export default {
+  components: {
+		customForm
+	},
   data() {
     return {
       surgeon: {},
       loading: true,
       isNew: !Boolean(this.$route.params.surgeonId),
       action: "/api/surgeons",
+      fields: [
+        {key: "firstName", label: "Nombre"},
+        {key: "lastName", label: "Apellido"},
+        {key: "socialId", label: "DNI"}, 
+        {key: "license", label: "Licencia"}, 
+        {key: "email", label: "Email"},
+        {key: "phone", label: "Teléfono"},
+        {key: "birthdate", label: "Fecha de Nacimiento", type: "date"},
+        {key: "nationality", label: "Nacionalidad"},
+        {key: "address", label: "Dirección"},
+        {key: "city", label: "Ciudad"},
+        {key: "province", label: "Provincia"}
+      ],
       formatFullName
     }
 	},
@@ -85,8 +55,7 @@ export default {
     }
   },
 	methods: {
-    submit: function (event) {
-      event.preventDefault();
+    submit: function () {
       const onSuccess = () => {
         this.$router.go(-1);
       };

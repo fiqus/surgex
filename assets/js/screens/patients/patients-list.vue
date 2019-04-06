@@ -9,7 +9,6 @@
       </button>
       <customTable 
         v-if="patients.length"
-        :params="params"
         :headers="headers"
         :data="patients"
         @onClick="showDetail"
@@ -30,7 +29,6 @@ export default {
   },
   data() {
     return {
-      params: {},
       headers: [
         {key: "fullName", value: "Paciente", parser: formatFullName},
         {key: "medicalHistory", value: "Historia Clínica"},

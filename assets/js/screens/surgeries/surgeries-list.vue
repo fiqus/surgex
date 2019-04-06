@@ -9,7 +9,6 @@
       </button>
       <customTable 
         v-if="surgeries.length"
-        :params="params"
         :headers="headers"
         :data="surgeries"
         @onClick="showDetail"
@@ -38,7 +37,6 @@ export default {
   },
   data() {
     return {
-      params: {},
       headers: [
         {key: "date", value: "Fecha", parser: (s) => formatDate(s.date, {time: false})},
         {key: "surgeon", value: "Cirujano", parser: (s) => formatFullName(s.surgeon)},

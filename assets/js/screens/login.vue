@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form v-on:submit="submit">
+    <form v-on:submit.prevent="submit">
       <div class="form">
         <h1 class="center login-message">Inicio de Sesión</h1>
         <div class="input-group mb-3">
@@ -46,8 +46,7 @@ export default {
     missingRequiredFields: function () { return this.login.email === "" || this.login.password === ""; }
 	},
 	methods: {
-    submit: function (event) {
-      event.preventDefault();
+    submit: function () {
       if (this.missingRequiredFields) {
         return this.$awn.warning("Por favor complete su email y contraseña.");
       }

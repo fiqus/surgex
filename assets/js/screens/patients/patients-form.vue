@@ -2,69 +2,13 @@
   <div id="patients-form">
     <h3 class="subtitle" v-if="loading">Cargando...</h3>
     <div v-if="!loading">
-      <!--customForm
-      :formName="'Nuevo Paciente'"
-      :fields="this.fields"
-      @create="newPatient">
-      </customForm>
-      <button-- v-on:click="backToList" class="btn btn-primary">
-        <i class="fa fa-caret-left"></i>
-        Volver al listado
-      </button-->
       <h3 v-if="isNew" class="subtitle">Crear Paciente</h3>
       <h3 v-if="!isNew" class="subtitle">Editar paciente: {{ formatFullName(patient) }}</h3>
-      <form v-on:submit="submit">
-        <div class="form-patient">
-          <div>
-            <label>Nombre:</label>
-            <input type="text" v-model="patient.firstName">
-          </div>
-          <div>
-            <label>Apellido:</label>
-            <input type="text" v-model="patient.lastName">
-          </div>
-          <div>
-            <label>DNI:</label>
-            <input type="text" v-model="patient.socialId">
-          </div>
-          <div>
-            <label>Historia Clínica:</label>
-            <input type="text" v-model="patient.medicalHistory">
-          </div>
-          <div>
-            <label>Email:</label>
-            <input type="text" v-model="patient.email">
-          </div>
-          <div>
-            <label>Teléfono:</label>
-            <input type="text" v-model="patient.phone">
-          </div>
-          <div>
-            <label>Fecha de Nacimiento:</label>
-            <input type="date" v-model="patient.birthdate">
-          </div>
-          <div>
-            <label>Nacionalidad:</label>
-            <input type="text" v-model="patient.nationality">
-          </div>
-          <div>
-            <label>Dirección:</label>
-            <input type="text" v-model="patient.address">
-          </div>
-          <div>
-            <label>Ciudad:</label>
-            <input type="text" v-model="patient.city">
-          </div>
-          <div>
-            <label>Provincia:</label>
-            <input type="text" v-model="patient.province">
-          </div>
-          <div class="action-bar-buttons">
-            <button type="button" class="btn btn-secondary" @click="$router.go(-1)"><i class="fa fa-arrow-left"></i> Cancelar</button>
-            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
-          </div>
-        </div>
-      </form>
+      <customForm
+        :fields="fields"
+        :data="patient"
+        @onSubmit="submit">
+      </customForm>
     </div>
   </div>
 </template>
@@ -81,16 +25,20 @@ export default {
       loading: true,
       isNew: !Boolean(this.$route.params.patientId),
       action: "/api/patients",
+      fields: [
+        {key: "firstName", label: "Nombre"},
+        {key: "lastName", label: "Apellido"},
+        {key: "socialId", label: "DNI"}, 
+        {key: "medicalHistory", label: "Historia Clínica"}, 
+        {key: "email", label: "Email"},
+        {key: "phone", label: "Teléfono"},
+        {key: "birthdate", label: "Fecha de Nacimiento", type: "date"},
+        {key: "nationality", label: "Nacionalidad"},
+        {key: "address", label: "Dirección"},
+        {key: "city", label: "Ciudad"},
+        {key: "province", label: "Provincia"}
+      ],
       formatFullName
-      // fields: [
-      //   {key: "firstName", placeholder: "Nombre"},
-      //   {key: "lastName", placeholder: "Apellido"},
-      //   {key: "medical_history", placeholder: "Historia Clínica"}, 
-      //   {key: "address", placeholder: "Dirección"},
-      //   {key: "city", placeholder: "Ciudad"},
-      //   {key: "province", placeholder: "Provincia"},
-      //   {key: "birthdate", type: "date"}
-      // ]
     }
   },
   created() {
@@ -107,8 +55,7 @@ export default {
     }
   },
 	methods: {
-    submit: function (event) {
-      event.preventDefault();
+    submit: function () {
       const onSuccess = () => {
         this.$router.go(-1);
       };

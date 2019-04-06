@@ -3,7 +3,7 @@
     <h3 class="subtitle" v-if="loading">Cargando...</h3>
     <div v-if="!loading">
       <h3 class="subtitle">Editar usuario: {{ formatFullName(user) }}</h3>
-      <form action="/api/users/edit" method="post" v-on:submit="submit">
+      <form action="/api/users/edit" method="post" v-on:submit.prevent="submit">
         <div class="form-user">
           <div>
             <label>Email:</label>
@@ -44,8 +44,7 @@ export default {
       });
   },
 	methods: {
-    submit: function (event) {
-      event.preventDefault();
+    submit: function () {
       const onSuccess = () => {
         this.$router.go(-1);
       };

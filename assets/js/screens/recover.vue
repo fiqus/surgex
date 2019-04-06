@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form v-on:submit="submit" v-if="!sent">
+    <form v-on:submit.prevent="submit" v-if="!sent">
       <div class="form-login">
         <h1 class="center login-message">Recuperación de Acceso</h1>
         <label>Ingrese el email con el que está registrado en el sistema:</label>
@@ -30,8 +30,7 @@ export default {
     missingRequiredFields: function () { return this.email === ""; }
 	},
 	methods: {
-    submit: function (event) {
-      event.preventDefault();
+    submit: function () {
       if (this.missingRequiredFields) {
         return this.$awn.warning("Por favor complete su email.");
       }
