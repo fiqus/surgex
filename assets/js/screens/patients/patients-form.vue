@@ -28,8 +28,8 @@ export default {
       fields: [
         {key: "firstName", label: "Nombre"},
         {key: "lastName", label: "Apellido"},
-        {key: "socialId", label: "DNI"}, 
-        {key: "medicalHistory", label: "Historia Clínica"}, 
+        {key: "socialId", label: "DNI"},
+        {key: "medicalHistory", label: "Historia Clínica"},
         {key: "email", label: "Email"},
         {key: "phone", label: "Teléfono"},
         {key: "birthdate", label: "Fecha de Nacimiento", type: "date"},

@@ -3,36 +3,30 @@
     <h3 class="subtitle" v-if="loading">Cargando...</h3>
     <div v-if="!loading">
       <h3 class="subtitle">Editar usuario: {{ formatFullName(user) }}</h3>
-      <form action="/api/users/edit" method="post" v-on:submit.prevent="submit">
-        <div class="form-user">
-          <div>
-            <label>Email:</label>
-            <input type="text" disabled v-model="user.email">
-          </div>
-          <div>
-            <label>Es administrador:</label>
-            <input name="is_admin" type="checkbox" v-model="user.isAdmin">
-          </div>
-          <div>
-            <label>Acceso desactivado:</label>
-            <input name="disabled" type="checkbox" v-model="user.disabled">
-          </div>
-          <div class="action-bar-buttons">
-            <button type="button" class="btn btn-secondary" @click.stop="$router.go(-1)"><i class="fa fa-arrow-left"></i> Cancelar</button>
-            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Guardar</button>
-          </div>
-        </div>
-      </form>
+      <customForm
+        :fields="fields"
+        :data="user"
+        @onSubmit="submit">
+      </customForm>
     </div>
   </div>
 </template>
 <script>
+import customForm from "../../components/custom-form";
 import {formatFullName} from "../../utils";
 export default {
+  components: {
+		customForm
+	},
   data() {
     return {
       user: {},
       loading: true,
+      fields: [
+        {key: "email", label: "Email", disabled: true},
+        {key: "isAdmin", label: "Es administrador", type: "checkbox"},
+        {key: "disabled", label: "Acceso desactivado", type: "checkbox"}
+      ],
       formatFullName
     }
 	},
