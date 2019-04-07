@@ -174,6 +174,49 @@ const actions = {
       errMsg: "El cirujano no pudo ser creado."
     });
   },
+  fetchDiagnostics() {
+    return apiClient.httpGet("/diagnostics")
+      .then(actions.proccessApiResponse);
+  },
+  fetchDiagnostic(_, diagnosticId) {
+    return apiClient.httpGet(`/diagnostics/${diagnosticId}`)
+      .then(actions.proccessApiResponse);
+  },
+  deleteDiagnostic(_, {component, diagnostic, onSuccess, onError}) {
+    actionsHelper.deleteItem({component, onSuccess, onError,
+      url: `/diagnostics/${diagnostic.id}`,
+      question: `¿Eliminar el diagnóstico ${diagnostic.name}?`,
+      loadingMsg: "Eliminando diagnóstico",
+      okMsg: "El diagnóstico ha sido eliminado.",
+      errMsg: "El diagnóstico no pudo ser eliminado."
+    });
+  },
+  updateDiagnostic(_, {component, diagnostic, onSuccess, onError}) {
+    // @TODO We should consider this format at backend, doesn't make much sense as it is
+    const data = {
+      id: diagnostic.id,
+      diagnostic
+    };
+
+    actionsHelper.updateItem({component, onSuccess, onError, data, onResponse: actions.proccessApiResponse,
+      url: `/diagnostics/${diagnostic.id}`,
+      loadingMsg: "Guardando diagnóstico",
+      okMsg: "El diagnóstico ha sido guardado.",
+      errMsg: "El diagnóstico no pudo ser guardado."
+    });
+  },
+  createDiagnostic(_, {component, diagnostic, onSuccess, onError}) {
+    const data = {
+      diagnostic
+    };
+
+    actionsHelper.createItem({component, onSuccess, onError, data, onResponse: actions.proccessApiResponse,
+      url: "/diagnostics",
+      loadingMsg: "Creando diagnóstico",
+      okMsg: "El diagnóstico ha sido creado.",
+      errMsg: "El diagnóstico no pudo ser creado."
+    });
+  },
   fetchSurgeries() {
     return apiClient.httpGet("/surgeries")
       .then(actions.proccessApiResponse);

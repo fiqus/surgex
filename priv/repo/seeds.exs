@@ -69,21 +69,36 @@ alias Garrahan.Surgeries
     address: "Gigesilva 1375"
   })
 
+{:ok, diagnostic1} =
+  Surgeries.create_diagnostic(%{
+    name: "Paladar hendido",
+    description: "Una descripción para paladar hendido"
+  })
+
+{:ok, diagnostic2} =
+  Surgeries.create_diagnostic(%{
+    name: "Otros",
+    description: "Todavía no hay un diagnóstico específico."
+  })
+
 # Surgeries
 Surgeries.create_surgery(%{
   surgeon_id: surgeon1.id,
   patient_id: patient1.id,
+  diagnostic_id: diagnostic1.id,
   date: ~D[2010-04-17]
 })
 
 Surgeries.create_surgery(%{
   surgeon_id: surgeon1.id,
   patient_id: patient2.id,
+  diagnostic_id: diagnostic1.id,
   date: ~D[2012-05-21]
 })
 
 Surgeries.create_surgery(%{
   surgeon_id: surgeon2.id,
   patient_id: patient2.id,
+  diagnostic_id: diagnostic2.id,
   date: ~D[2022-11-27]
 })

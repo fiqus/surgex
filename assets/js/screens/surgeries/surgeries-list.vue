@@ -43,7 +43,7 @@ export default {
         {key: "assistants", value: "Ayudantes", parser: (s) => formatAssistants(s.assistants, 25)},
         {key: "patient", value: "Paciente", parser: (s) => formatFullName(s.patient)},
         {key: "medical_history", value: "N° HC", parser: (s) => s.patient.medical_history},
-        {key: "diagnostic", value: "Diagnóstico", parser: (s) => "--"}
+        {key: "diagnostic", value: "Diagnóstico", parser: (s) => s.diagnostic.name}
       ],
       surgeries: [],
       loading: true

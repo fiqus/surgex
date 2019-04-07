@@ -6,6 +6,7 @@
       <section class="elem-details">
         <div><b>Cirujano:</b> {{formatFullName(surgery.surgeon)}}</div>
         <div><b>Paciente:</b> {{formatFullName(surgery.patient)}}</div>
+        <div><b>Diagnóstico:</b> {{surgery.diagnostic ? `${surgery.diagnostic.name} :: ${surgery.diagnostic.description}` : "-"}}</div>
         <div><b>Fecha:</b> {{formatDate(surgery.date, {time: false})}}</div>
       </section>
       <div class="action-bar-buttons">

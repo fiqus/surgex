@@ -1,11 +1,14 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand">{{user.first_name}} {{user.last_name}}</a>
+    <a v-if="user" class="navbar-brand">{{user.first_name}} {{user.last_name}}</a>
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" v-if="token" v-on:click="redirect('surgeries-list')">Cirugías</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" v-if="token" v-on:click="redirect('diagnostics-list')">Diagnósticos</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" v-if="token" v-on:click="redirect('patients-list')">Pacientes</a>
@@ -21,7 +24,7 @@
         </li>
       </ul>
     </div>
-    <div class="left">
+    <div v-if="user" class="left">
       <p>{{user.first_name}} {{user.last_name}}</p>
     </div>
   </nav>

@@ -12,6 +12,9 @@ import SurgeonsFormScreen from "./screens/surgeons/surgeons-form.vue";
 import PatientsListScreen from "./screens/patients/patients-list.vue";
 import PatientsShowScreen from "./screens/patients/patients-show.vue";
 import PatientsFormScreen from "./screens/patients/patients-form.vue";
+import DiagnosticsListScreen from "./screens/diagnostics/diagnostics-list.vue";
+import DiagnosticsShowScreen from "./screens/diagnostics/diagnostics-show.vue";
+import DiagnosticsFormScreen from "./screens/diagnostics/diagnostics-form.vue";
 import SurgeriesListScreen from "./screens/surgeries/surgeries-list.vue";
 import SurgeriesShowScreen from "./screens/surgeries/surgeries-show.vue";
 import SurgeriesFormScreen from "./screens/surgeries/surgeries-form.vue";
@@ -33,6 +36,10 @@ export default [
   {name: "patients-new", path: "/patients/new", component: PatientsFormScreen},
   {name: "patients-edit", path: "/patients/edit/:patientId", component: PatientsFormScreen},
   {name: "patients-show", path: "/patients/show/:patientId", component: PatientsShowScreen},
+  {name: "diagnostics-list", path: "/diagnostics", component: DiagnosticsListScreen},
+  {name: "diagnostics-new", path: "/diagnostics/new", component: DiagnosticsFormScreen},
+  {name: "diagnostics-edit", path: "/diagnostics/edit/:diagnosticId", component: DiagnosticsFormScreen},
+  {name: "diagnostics-show", path: "/diagnostics/show/:diagnosticId", component: DiagnosticsShowScreen},
   {name: "surgeries-list", path: "/surgeries", component: SurgeriesListScreen},
   {name: "surgeries-new", path: "/surgeries/new", component: SurgeriesFormScreen},
   {name: "surgeries-edit", path: "/surgeries/edit/:surgeryId", component: SurgeriesFormScreen},

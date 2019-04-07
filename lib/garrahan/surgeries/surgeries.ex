@@ -18,8 +18,7 @@ defmodule Garrahan.Surgeries do
 
   """
   def list_diagnostics do
-    # @TODO Add order_by
-    Repo.all(Diagnostic)
+    Repo.all(from d in Diagnostic, order_by: [d.name])
   end
 
   @doc """

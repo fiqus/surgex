@@ -1,8 +1,9 @@
 defmodule GarrahanWeb.SurgeryView do
   use GarrahanWeb, :view
   alias GarrahanWeb.SurgeryView
-  alias GarrahanWeb.SurgeonView
+  alias GarrahanWeb.DiagnosticView
   alias GarrahanWeb.PatientView
+  alias GarrahanWeb.SurgeonView
 
   def render("index.json", %{surgeries: surgeries}) do
     %{data: render_many(surgeries, SurgeryView, "surgery.json")}
@@ -16,8 +17,9 @@ defmodule GarrahanWeb.SurgeryView do
     %{
       id: surgery.id,
       date: surgery.date,
-      surgeon: render_one(surgery.surgeon, SurgeonView, "surgeon.json"),
+      diagnostic: render_one(surgery.diagnostic, DiagnosticView, "diagnostic.json"),
       patient: render_one(surgery.patient, PatientView, "patient.json"),
+      surgeon: render_one(surgery.surgeon, SurgeonView, "surgeon.json"),
       assistants: render_many(surgery.assistants, SurgeonView, "surgeon.json")
     }
   end

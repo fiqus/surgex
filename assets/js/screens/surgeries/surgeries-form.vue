@@ -3,20 +3,12 @@
     <h3 class="subtitle">Crear Cirugía</h3>
     <form v-on:submit.prevent="submit" enctype="multipart/form-data">
       <div class="form-user">
-        <div>
+        <div class="form-field-container">
           <label>Fecha:</label>
           <input type="date" v-model="surgery.date">
           <label class="alert-danger" v-if="$v.surgery.date.$error">Requerido</label>
         </div>
-        <div>
-          <label>Cirujano:</label>
-          <select v-model="surgery.surgeon_id">
-            <option value="">Seleccione un cirujano</option>
-            <option v-for="surgeon in surgeons" :key="surgeon.key" :value="surgeon.key">{{surgeon.value}}</option>
-          </select>
-          <label class="alert-danger" v-if="$v.surgery.surgeon_id.$error">Requerido</label>
-        </div>
-        <div>
+        <div class="form-field-container">
           <label>Paciente:</label>
           <select v-model="surgery.patient_id">
             <option value="">Seleccione un paciente</option>
@@ -24,7 +16,15 @@
           </select>
           <label class="alert-danger" v-if="$v.surgery.patient_id.$error">Requerido</label>
         </div>
-        <div>
+        <div class="form-field-container">
+          <label>Cirujano:</label>
+          <select v-model="surgery.surgeon_id">
+            <option value="">Seleccione un cirujano</option>
+            <option v-for="surgeon in surgeons" :key="surgeon.key" :value="surgeon.key">{{surgeon.value}}</option>
+          </select>
+          <label class="alert-danger" v-if="$v.surgery.surgeon_id.$error">Requerido</label>
+        </div>
+        <div class="form-field-container">
           <label>Ayudantes:</label>
           <tagger-field
             :first-option="'Elija un ayudante'"
@@ -32,7 +32,14 @@
             v-model="surgery.assistants">
           </tagger-field>
         </div>
-        <div>
+        <div class="form-field-container">
+          <label>Diagnóstico:</label>
+          <select v-model="surgery.diagnostic_id">
+            <option value="">Seleccione un diagnóstico</option>
+            <option v-for="diagnostic in diagnostics" :key="diagnostic.key" :value="diagnostic.key">{{diagnostic.value}}</option>
+          </select>
+        </div>
+        <div class="form-field-container">
           <label>Fotos:</label>
           <input v-for="(photo, photoIdx) in surgery.encoded_photos" :key="photoIdx" type="file" @change="addPhoto($event, photoIdx)">
         </div>
@@ -65,9 +72,10 @@ export default {
   created() {
     return Promise.all([
       this.$store.dispatch("fetchPatients"),
-      this.$store.dispatch("fetchSurgeons")
+      this.$store.dispatch("fetchSurgeons"),
+      this.$store.dispatch("fetchDiagnostics")
     ])
-    .then(([patients, surgeons]) => {
+    .then(([patients, surgeons, diagnostics]) => {
       this.patients = patients.map((obj) => {
         return {
           key: obj.id,
@@ -78,6 +86,12 @@ export default {
         return {
           key: obj.id,
           value: formatFullName(obj)
+        }
+      });
+      this.diagnostics = diagnostics.map((obj) => {
+        return {
+          key: obj.id,
+          value: obj.name
         }
       });
     });
@@ -105,10 +119,12 @@ export default {
     return {
       patients: [],
       surgeons: [],
+      diagnostics: [],
       surgery: {
         "date": "",
         "surgeon_id": "",
         "patient_id": "",
+        "diagnostic_id": "",
         "assistants": [],
         "encoded_photos": ["", "", ""]
       }
