@@ -24,7 +24,6 @@ export default {
       surgeon: {},
       loading: true,
       isNew: !Boolean(this.$route.params.surgeonId),
-      action: "/api/surgeons",
       fields: [
         {key: "first_name", label: "Nombre"},
         {key: "last_name", label: "Apellido"},
@@ -44,9 +43,7 @@ export default {
   created() {
     if (this.isNew) {
       this.loading = false;
-      this.action = `${this.action}/new`;
     } else {
-      this.action = `${this.action}/edit/${this.$route.params.surgeonId}`;
       this.$store.dispatch("fetchSurgeon", this.$route.params.surgeonId)
         .then((surgeon) => {
           this.surgeon = surgeon;

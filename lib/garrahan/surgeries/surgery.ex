@@ -48,6 +48,7 @@ defmodule Garrahan.Surgeries.Surgery do
   end
 
   defp get_assistant(%Surgeon{} = assistant), do: assistant
+  defp get_assistant(%{"id" => id}), do: get_assistant(id)
 
   defp get_assistant(assistant_id) when is_binary(assistant_id) do
     Repo.get(Surgeon, assistant_id)

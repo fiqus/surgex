@@ -225,8 +225,36 @@ const actions = {
     return apiClient.httpGet(`/surgeries/${surgeryId}`)
       .then(actions.proccessApiResponse);
   },
+  updateSurgery(_, {component, surgery, onSuccess, onError}) {
+    // @TODO We should consider this format at backend, doesn't make much sense as it is
+    const data = {
+      id: surgery.id,
+      // @TODO Review this!
+      surgery: Object.assign(surgery, {
+        patient_id: surgery.patient.id,
+        surgeon_id: surgery.surgeon.id,
+        diagnostic_id: surgery.diagnostic.id
+      })
+    };
+
+    actionsHelper.updateItem({component, onSuccess, onError, data, onResponse: actions.proccessApiResponse,
+      url: `/surgeries/${surgery.id}`,
+      loadingMsg: "Guardando cirugía",
+      okMsg: "La cirugía ha sido guardada.",
+      errMsg: "La cirugía no pudo ser guardada."
+    });
+  },
   createSurgery(_, {component, surgery, onSuccess, onError}) {
-    actionsHelper.createItem({component, onSuccess, onError, data: {surgery}, onResponse: actions.proccessApiResponse,
+    const data = {
+      // @TODO Review this!
+      surgery: Object.assign(surgery, {
+        patient_id: surgery.patient.id,
+        surgeon_id: surgery.surgeon.id,
+        diagnostic_id: surgery.diagnostic.id
+      })
+    };
+
+    actionsHelper.createItem({component, onSuccess, onError, data, onResponse: actions.proccessApiResponse,
       url: "/surgeries",
       loadingMsg: "Creando cirugía",
       okMsg: "La cirugía ha sido creada.",

@@ -2,13 +2,13 @@
   <div>
     <select v-model="selected">
       <option v-if="firstOption" value="">{{firstOption}}</option>
-      <option v-for="option in options" :key="option.key" :value="option.key">{{option.value}}</option>
+      <option v-for="option in values" :key="option.key" :value="option.key">{{option.value}}</option>
     </select>
-    <button type="button" v-on:click.stop="onAdd" class="button"><i class="fa fa-plus"></i></button>
+    <button type="button" :disabled="!selected" v-on:click.stop="onAdd" class="button"><i class="fa fa-plus"></i></button>
 
-    <div v-if="value.length > 0" style="width: calc(100% - 63px);">
-      <div v-for="item in value" :key="item">
-        <span>{{getValue(item)}}</span>
+    <div v-if="tags.length > 0" style="width: calc(100% - 63px);">
+      <div v-for="tag in tags" :key="tag">
+        <span>{{tag}}</span>
       </div>
     </div>
   </div>
@@ -16,24 +16,38 @@
 <script>
   export default {
     props: ["options", "firstOption", "value"],
-    methods: {
-      onAdd() {
-        if (this.selected) {
-          this.value.push(this.selected);
-          this.$emit("input", this.value);
-        }
-      },
-      getValue(item) {
-        if (item) {
-          return this.options.find((op) => {
-            return op.key === item;
-          }).value;
-        }
-      }
-    },
     data() {
       return {
         selected: ""
+      }
+    },
+    computed: {
+      values: {
+        get() {
+          // Remove already selected values
+          const options = this.options.filter(({key}) => !this.value.find(({id}) => key === id));
+          if (!options.find(o => o.key === this.selected)) {
+            this.selected  = ""; // Remove current selected value as is not part of given options
+          }
+          
+          return options;
+        }
+      },
+      tags: {
+        get() {
+          return (this.value || []).map((val) => {
+            const item = this.options.find(opt => opt.key === val.id);
+            return item ? item.value : "";
+          });
+        }
+      }
+    },
+    methods: {
+      onAdd() {
+        if (this.selected) {
+          this.value.push({id: this.selected});
+          this.$emit("input", this.value);
+        }
       }
     }
   }

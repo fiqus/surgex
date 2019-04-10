@@ -4,10 +4,12 @@
     <div v-if="loading">Cargando...</div>
     <div v-if="!loading">
       <section class="elem-details">
-        <div><b>Cirujano:</b> {{formatFullName(surgery.surgeon)}}</div>
-        <div><b>Paciente:</b> {{formatFullName(surgery.patient)}}</div>
-        <div><b>Diagnóstico:</b> {{surgery.diagnostic ? `${surgery.diagnostic.name} :: ${surgery.diagnostic.description}` : "-"}}</div>
         <div><b>Fecha:</b> {{formatDate(surgery.date, {time: false})}}</div>
+        <div><b>Cirujano:</b> {{formatFullName(surgery.surgeon)}}</div>
+        <div><b>Ayudantes:</b> <span v-html="assistants"></span></div>
+        <div><b>Paciente:</b> {{formatFullName(surgery.patient)}}</div>
+        <div><b>Historia Clínica:</b> {{surgery.patient.medical_history || "-"}}</div>
+        <div><b>Diagnóstico:</b> {{surgery.diagnostic ? `${surgery.diagnostic.name} :: ${surgery.diagnostic.description}` : "-"}}</div>
       </section>
       <div class="action-bar-buttons">
         <button class="btn btn-secondary" @click.stop="$router.go(-1)"><i class="fa fa-arrow-left"></i> Volver</button>
@@ -23,6 +25,7 @@ export default {
   data() {
     return {
       surgery: null,
+      assistants: "",
       loading: true,
       formatDate,
       formatFullName
@@ -32,6 +35,7 @@ export default {
     this.$store.dispatch("fetchSurgery", this.$route.params.surgeryId)
       .then((surgery) => {
         this.surgery = surgery;
+        this.assistants = surgery.assistants.map(formatFullName).join("</br>");
         this.loading = false;
       });
   },

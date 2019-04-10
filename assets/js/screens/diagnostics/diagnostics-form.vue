@@ -23,7 +23,6 @@ export default {
       diagnostic: {},
       loading: true,
       isNew: !Boolean(this.$route.params.diagnosticId),
-      action: "/api/diagnostics",
       fields: [
         {key: "name", label: "Nombre"},
         {key: "description", label: "Descripción"}
@@ -33,9 +32,7 @@ export default {
   created() {
     if (this.isNew) {
       this.loading = false;
-      this.action = `${this.action}/new`;
     } else {
-      this.action = `${this.action}/edit/${this.$route.params.diagnosticId}`;
       this.$store.dispatch("fetchDiagnostic", this.$route.params.diagnosticId)
         .then((diagnostic) => {
           this.diagnostic = diagnostic;

@@ -72,7 +72,7 @@ alias Garrahan.Surgeries
 {:ok, diagnostic1} =
   Surgeries.create_diagnostic(%{
     name: "Paladar hendido",
-    description: "Una descripción para paladar hendido"
+    description: "Una descripción para paladar hendido."
   })
 
 {:ok, diagnostic2} =
