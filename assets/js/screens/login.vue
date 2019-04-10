@@ -4,7 +4,7 @@
       <div class="form">
         <h1 class="center login-message">Inicio de Sesión</h1>
         <div class="input-group mb-3">
-          <input class="form-control" v-model="login.email" placeholder="Email" required>
+          <input type="email" class="form-control" v-model="login.email" placeholder="Email" required>
         </div>
         <div class="input-group mb-3">
           <input type="password" class="form-control" v-model="login.password" placeholder="Contraseña">

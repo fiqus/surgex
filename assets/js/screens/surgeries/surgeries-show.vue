@@ -48,8 +48,7 @@ export default {
   },
   methods: {
     showEdit(surgery) {
-      // this.$router.push({name: "surgeries-edit", params: {surgeryId: surgery.id}});
-      this.$awn.warning("Próximamente!");
+      this.$router.push({name: "surgeries-edit", params: {surgeryId: surgery.id}});
     },
     onDelete(surgery) {
       const onSuccess = () => {

@@ -5,7 +5,7 @@
         <h1 class="center login-message">Recuperación de Acceso</h1>
         <label>Ingrese el email con el que está registrado en el sistema:</label>
         <div>
-          <input name="email" type="text" v-model="email" placeholder="Email" required>
+          <input name="email" type="email" v-model="email" placeholder="Email" required>
         </div>
         <button :disabled="disabled">Recuperar Contraseña</button>
         <button type="button" v-on:click="back" :disabled="disabled">Volver</button>

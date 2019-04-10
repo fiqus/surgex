@@ -5,7 +5,25 @@
 
 header {
   background: #fff;
+  margin: auto;
 }
+
+body {
+  font-size: 1.5rem;
+}
+
+li.nav-item {
+  border-right: 1px solid #d6d6d6;
+  margin: 0.5rem auto;
+  padding: 0 0.5rem;
+}
+li.nav-item:last-of-type {
+  border-right: none;
+}
+.nav-user li.nav-item .username {
+  font-weight: bold;
+}
+
 /* LOGIN STYLE */
 .form-login {
   background-color: #681777;
@@ -15,6 +33,9 @@ header {
   box-shadow: 0 0 25px 0 #00000033, 0 5px 5px 0 #0000003d;
   margin: 10rem auto auto auto;
   color: white
+}
+.form-login input {
+  color: white;
 }
 
 .user-bar {
@@ -34,6 +55,11 @@ header {
   box-shadow: 0 0 25px 0 #00000033, 0 5px 5px 0 #0000003d;
   margin: 10rem auto auto auto;
   color: white
+}
+
+.btn,
+input {
+  font-size: inherit;
 }
 
 .login-message {
@@ -103,6 +129,7 @@ a {
   padding-top: 1rem;
   border-bottom: 1px solid #eaeaea;
   margin: 1rem auto;
+  font-size: 2rem;
 }
 .elem-details {
   margin: 2rem auto;
