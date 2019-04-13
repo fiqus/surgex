@@ -43,8 +43,19 @@
             </select>
           </div>
           <div class="form-field-container">
-            <label>Fotos:</label>
-            <input v-for="(photo, photoIdx) in surgery.encoded_photos" :key="photoIdx" type="file" @change="addPhoto($event, photoIdx)">
+            <label>Comentarios:</label>
+            <textarea v-model="surgery.comments"></textarea>
+          </div>
+          <div class="form-field-container">
+            <label>Agregar fotos:</label>
+            <input v-for="(photo, idx) in added_photos" :key="idx" type="file" @change="addPhoto($event.target.files[0])">
+          </div>
+          <div class="form-field-container" v-if="!this.isNew">
+            <label>Fotos actuales:</label>
+              <div style="display:inline-block;" v-for="photo in surgery.photos" :key="photo.id">
+                <img :src="`http://localhost:4000/images/${photo.id}`"/>
+                <div>(quitar)</div>
+              </div>
           </div>
         </div>
         <div class="action-bar-buttons">
@@ -56,7 +67,7 @@
   </div>
 </template>
 <script>
-import TaggerField from "../../components/tagger-field.vue";
+import TaggerField from "../../components/tagger-field";
 import {required} from "vuelidate/lib/validators";
 import {formatFullName} from "../../utils";
 
@@ -83,8 +94,9 @@ export default {
         surgeon: {},
         assistants: [],
         diagnostic: {},
-        encoded_photos: ["", "", ""] // @TODO WIPPPPPPPPPPPPP!!!!!!!
+        photos: []
       },
+      added_photos: ["", "", ""], // @TODO WIPPPPPPPPPPPPP!!!!!!!
       loading: true,
       isNew: !Boolean(this.$route.params.surgeryId)
     }
@@ -97,19 +109,20 @@ export default {
     }
   },
   created() {
-    if (!this.isNew) {
-      this.$store.dispatch("fetchSurgery", this.$route.params.surgeryId)
-        .then((surgery) => {
-          this.surgery = surgery;
-        });
-    }
-    
     return Promise.all([
+      this.isNew ? Promise.resolve(null) : this.$store.dispatch("fetchSurgery", this.$route.params.surgeryId),
       this.$store.dispatch("fetchPatients"),
       this.$store.dispatch("fetchSurgeons"),
       this.$store.dispatch("fetchDiagnostics")
     ])
-    .then(([patients, surgeons, diagnostics]) => {
+    .then(([surgery, patients, surgeons, diagnostics]) => {
+      if (surgery) {
+        this.surgery = surgery;
+        this.surgery.added_photos = [];
+        // @TODO WIPPPPPPPPP!!!
+        this.surgery.diagnostic = surgery.diagnostic || {};
+        this.surgery.photos = [{id: "logo-garrahan-header.png", filename: "logo-garrahan-header.png"}];
+      }
       this.patients = patients.map((obj) => {
         return {
           key: obj.id,
@@ -146,12 +159,12 @@ export default {
     }
   },
   methods: {
-    addPhoto(event, idx) {
+    addPhoto(file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        this.surgery.encoded_photos[idx] = reader.result;
-      }
-      reader.readAsDataURL(event.target.files[0]);
+        this.surgery.added_photos.push(reader.result);
+      };
+      reader.readAsDataURL(file);
     },
     submit() {
       this.$v.$touch();

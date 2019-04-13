@@ -17,7 +17,7 @@ defmodule GarrahanWeb.SurgeryController do
   end
 
   def create(conn, %{"surgery" => surgery_params}) do
-    photos = decode_photos_to_list(surgery_params["encoded_photos"])
+    photos = decode_photos_to_list(surgery_params["added_photos"])
 
     surgery_params = Map.put(surgery_params, "photos", photos)
 

@@ -17,10 +17,19 @@ defmodule GarrahanWeb.SurgeryView do
     %{
       id: surgery.id,
       date: surgery.date,
+      comments: surgery.comments,
       diagnostic: render_one(surgery.diagnostic, DiagnosticView, "diagnostic.json"),
       patient: render_one(surgery.patient, PatientView, "patient.json"),
       surgeon: render_one(surgery.surgeon, SurgeonView, "surgeon.json"),
-      assistants: render_many(surgery.assistants, SurgeonView, "surgeon.json")
+      assistants: render_many(surgery.assistants, SurgeonView, "surgeon.json"),
+      photos: render_many(surgery.photos, SurgeryView, "photo.json", as: :photo)
+    }
+  end
+
+  def render("photo.json", %{photo: photo}) do
+    %{
+      id: photo.id,
+      name: photo.filename
     }
   end
 end

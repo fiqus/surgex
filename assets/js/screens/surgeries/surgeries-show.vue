@@ -10,6 +10,7 @@
         <div><b>Paciente:</b> {{formatFullName(surgery.patient)}}</div>
         <div><b>Historia Clínica:</b> {{surgery.patient.medical_history || "-"}}</div>
         <div><b>Diagnóstico:</b> {{surgery.diagnostic ? `${surgery.diagnostic.name} :: ${surgery.diagnostic.description}` : "-"}}</div>
+        <div><b>Comentarios:</b> {{surgery.comments || "-"}}</div>
       </section>
       <div class="action-bar-buttons">
         <button class="btn btn-secondary" @click.stop="$router.go(-1)"><i class="fa fa-arrow-left"></i> Volver</button>

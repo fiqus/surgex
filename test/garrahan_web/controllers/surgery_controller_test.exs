@@ -19,7 +19,7 @@ defmodule GarrahanWeb.SurgeryControllerTest do
       "71695983-4e45-4025-ad58-17a7450f7833",
       "71695983-4e45-4025-ad58-17a7450f7834"
     ],
-    encoded_photos: [
+    added_photos: [
       "data:image/jpeg;base64,#{encoded_photo}",
       "data:image/jpeg;base64,#{encoded_photo}"
     ]
