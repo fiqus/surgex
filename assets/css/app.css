@@ -1,6 +1,5 @@
 /* This file is for your main application css. */
-
-@import "./phoenix.css";
+/* @import "./phoenix.css"; */
 @import "~bootstrap/dist/css/bootstrap.css";
 
 header {
@@ -9,7 +8,7 @@ header {
 }
 
 body {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 li.nav-item {
@@ -25,19 +24,6 @@ li.nav-item:last-of-type {
 }
 
 /* LOGIN STYLE */
-.form-login {
-  background-color: #681777;
-  width: 60rem;
-  padding: 10rem 5rem;
-  border-radius: 3rem;
-  box-shadow: 0 0 25px 0 #00000033, 0 5px 5px 0 #0000003d;
-  margin: 10rem auto auto auto;
-  color: white
-}
-.form-login input {
-  color: white;
-}
-
 .user-bar {
   background-color: #681777;
   height: 7rem;
@@ -48,13 +34,11 @@ li.nav-item:last-of-type {
 }
 
 .form-login {
-  background-color: #681777;
   width: 60rem;
-  padding: 10rem 5rem;
-  border-radius: 3rem;
-  box-shadow: 0 0 25px 0 #00000033, 0 5px 5px 0 #0000003d;
-  margin: 10rem auto auto auto;
-  color: white
+  padding: 5rem 5rem;
+  border-radius: 0.3rem;
+  border-color: #F8F9FA;
+  margin: 5rem auto auto auto;
 }
 
 .btn,

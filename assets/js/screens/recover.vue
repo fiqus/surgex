@@ -1,20 +1,26 @@
 <template>
-  <div>
-    <form v-on:submit.prevent="submit" v-if="!sent">
-      <div class="form-login">
-        <h1 class="center login-message">Recuperación de Acceso</h1>
-        <label>Ingrese el email con el que está registrado en el sistema:</label>
-        <div>
-          <input name="email" type="email" v-model="email" placeholder="Email" required>
+  <div class="card form-login bg-light">
+    <article class="card-body">
+      <h1 class="card-title text-center mb-4 mt-1">Recuperación de Acceso</h1>
+      <hr>
+      <form v-on:submit.prevent="submit" v-if="!sent">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+            </div>
+            <input class="form-control" type="email" v-model="email" placeholder="Email" required>
+          </div>
+          <small class="form-text text-muted">Ingrese el email con el que está registrado en el sistema</small>
         </div>
-        <button :disabled="disabled">Recuperar Contraseña</button>
-        <button type="button" v-on:click="back" :disabled="disabled">Volver</button>
-      </div>
-    </form>
+        <button class="btn btn-primary shadow" :disabled="disabled">Recuperar Contraseña</button>
+        <button class="btn btn-secondary shadow" type="button" v-on:click="back" :disabled="disabled">Volver</button>
+      </form>
     <div v-if="sent">
       <h3>Se envió un email a <b>{{ email }}</b> para recuperar la contraseña.</h3>
       Revise su casilla e ingrese al link enviado, que tiene una validez de 1 hora.
     </div>
+    </article>
   </div>
 </template>
 <script>

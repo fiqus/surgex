@@ -1,35 +1,32 @@
 <template>
-  <div>
-    <form v-on:submit.prevent="submit">
-      <div class="form">
-        <h1 class="center login-message">Inicio de Sesión</h1>
-        <div class="input-group mb-3">
-          <input type="email" class="form-control" v-model="login.email" placeholder="Email" required>
+  <div class="card form-login bg-light">
+    <article class="card-body">
+      <h1 class="card-title text-center mb-4 mt-1">Bienvenido</h1>
+      <hr>
+      <form v-on:submit.prevent="submit"> 
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+            </div>
+            <input class="form-control" type="email" v-model="login.email" placeholder="Email" required>
+          </div>
         </div>
-        <div class="input-group mb-3">
-          <input type="password" class="form-control" v-model="login.password" placeholder="Contraseña">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+            </div>
+            <input type="password" class="form-control" v-model="login.password" placeholder="Contraseña" required>
+          </div>
         </div>
-        <button class="btn btn-primary" :disabled="disabled">Iniciar Sesión</button>
-        <button class="btn btn-primary" type="button" v-on:click="recover" :disabled="disabled">Olvidé mi Contraseña</button>
-      </div>
-    </form>
+        <div class="form-group">
+          <button class="btn btn-primary btn-block shadow" :disabled="disabled">Iniciar Sesión</button>
+        </div>
+        <p class="text-center"><a href="#" v-on:click="recover" :disabled="disabled">Olvidé mi Contraseña</a></p>
+      </form>
+    </article>
   </div>
-
-  <!--div class="container">
-    <form class="form-signin">
-      <h2 class="form-signin-heading">Please sign in</h2>
-      <label for="inputEmail" class="sr-only">Email address</label>
-      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-      <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" value="remember-me"> Remember me
-        </label>
-      </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    </form>
-  </div-->
 </template>
 <script>
 export default {
