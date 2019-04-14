@@ -55,29 +55,33 @@ defmodule Garrahan.Surgeries.Surgery do
     Repo.get(Surgeon, assistant_id)
   end
 
-  defp parse_photos(attrs) do
-    (attrs[:photos] || attrs["photos"] || [])
-    |> Enum.map(&get_or_insert_photos/1)
+  defp parse_photos(%{"added_photos" => photos}) do
+    photos
+    |> Enum.map(&save_added_photo/1)
     |> Enum.reject(&(&1 == nil))
   end
 
-  defp get_or_insert_photos(filename) when is_binary(filename) do
-    Repo.get_by(Photo, filename: filename) || maybe_insert_photo(filename)
-  end
+  defp parse_photos(_), do: []
 
-  defp get_or_insert_photos(_), do: nil
+  defp save_added_photo(%{"name" => name, "type" => _type, "md5" => md5, "data" => data}) do
+    try do
+      photo =
+        %Photo{}
+        |> change(filename: name)
+        |> change(md5: md5)
 
-  defp maybe_insert_photo(filename) do
-    %Photo{}
-    |> change(filename: filename)
-    |> Repo.insert()
-    |> case do
-      {:ok, photo} ->
-        photo
-
-      {:error, err} ->
-        Logger.error(err)
-        Repo.get_by!(Photo, filename: filename)
+      path = Application.get_env(:garrahan, :surgeries_photos_path) <> name
+      :ok = File.write(path, data, [:binary])
+      photo
+    rescue
+      _ -> nil
     end
   end
+
+  defp save_added_photo(_), do: nil
+
+  # @TODO WIPPPPPPPPPPPPP!!!!
+  # defp get_or_insert_photo(%{"name" => name, "type" => type, "md5" => md5, "data" => data}) do
+  #   Repo.get_by(Photo, filename: filename) || maybe_insert_photo(filename)
+  # end
 end

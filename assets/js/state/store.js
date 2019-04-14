@@ -4,9 +4,7 @@ const actionsHelper = require("../utils/actions-helper");
 
 const initialState = {
   authUser: null,
-  token: null,
-  patient: null,
-  surgeries: []
+  token: null
 };
 
 const actions = {
@@ -287,7 +285,8 @@ const getters = {
   isLogged: (state) => state.authUser && state.token,
   isAdmin: (state) => state.authUser && state.authUser.is_admin,
   getUser: (state) => state.authUser,
-  getToken: (state) => state.token
+  getToken: (state) => state.token,
+  getSurgeriesPhotosPath: () => "/uploads/surgeries/photos/" // @TODO Parse it from server-side!
 };
 
 module.exports = {

@@ -11,6 +11,10 @@
         <div><b>Historia Clínica:</b> {{surgery.patient.medical_history || "-"}}</div>
         <div><b>Diagnóstico:</b> {{surgery.diagnostic ? `${surgery.diagnostic.name} :: ${surgery.diagnostic.description}` : "-"}}</div>
         <div><b>Comentarios:</b> {{surgery.comments || "-"}}</div>
+        <div><b>Fotos:</b> {{(surgery.photos || []).length || "-"}}</div>
+        <div style="display:inline-block">
+          <a v-for="photo in surgery.photos" :key="photo.id" :href="photoUrl(photo)" target="_blank"><img style="max-width:200px" :src="photoUrl(photo)"/></a>
+        </div>
       </section>
       <div class="action-bar-buttons">
         <button class="btn btn-secondary" @click.stop="$router.go(-1)"><i class="fa fa-arrow-left"></i> Volver</button>
@@ -48,6 +52,9 @@ export default {
     }
   },
   methods: {
+    photoUrl(photo) {
+      return `${this.$store.getters.getSurgeriesPhotosPath}${photo.name}`;
+    },
     showEdit(surgery) {
       this.$router.push({name: "surgeries-edit", params: {surgeryId: surgery.id}});
     },

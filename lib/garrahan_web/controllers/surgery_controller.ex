@@ -18,8 +18,7 @@ defmodule GarrahanWeb.SurgeryController do
 
   def create(conn, %{"surgery" => surgery_params}) do
     photos = decode_photos_to_list(surgery_params["added_photos"])
-
-    surgery_params = Map.put(surgery_params, "photos", photos)
+    surgery_params = Map.put(surgery_params, "added_photos", photos)
 
     with {:ok, %Surgery{} = surgery} <- Surgeries.create_surgery(surgery_params),
          surgery <- Surgeries.preload_surgery_associations(surgery) do
@@ -30,20 +29,6 @@ defmodule GarrahanWeb.SurgeryController do
     end
   end
 
-  defp decode_photos_to_list(encoded_photos) when is_list(encoded_photos) do
-    encoded_photos
-    |> Enum.reject(&(&1 == ""))
-    |> Enum.with_index()
-    |> Enum.map(fn {photo, index} ->
-      "data:image/jpeg;base64," <> raw = photo
-      {:ok, data} = Base.decode64(raw)
-      :ok = File.write("/tmp/file.gif", data, [:binary])
-      "file#{index}.gif"
-    end)
-  end
-
-  defp decode_photos_to_list(_), do: []
-
   def show(conn, %{"id" => id}) do
     surgery = Surgeries.get_surgery!(id)
     render(conn, "show.json", surgery: surgery)
@@ -51,6 +36,8 @@ defmodule GarrahanWeb.SurgeryController do
 
   def update(conn, %{"id" => id, "surgery" => surgery_params}) do
     surgery = Surgeries.get_surgery!(id)
+    added_photos = decode_photos_to_list(surgery_params["added_photos"])
+    surgery_params = Map.put(surgery_params, "added_photos", added_photos)
 
     with {:ok, %Surgery{} = surgery} <- Surgeries.update_surgery(surgery, surgery_params) do
       render(conn, "show.json", surgery: surgery)
@@ -64,4 +51,39 @@ defmodule GarrahanWeb.SurgeryController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  defp decode_photos_to_list(encoded_photos) when is_list(encoded_photos) do
+    encoded_photos
+    |> Enum.reduce([], fn photo, acc ->
+      with {:ok, parsed} <- parse_photo_data(photo) do
+        acc ++ [parsed]
+      else
+        _ ->
+          acc
+      end
+    end)
+  end
+
+  defp decode_photos_to_list(_), do: []
+
+  defp parse_photo_data(%{"name" => name, "type" => type, "data" => data} = photo) do
+    prefix = "data:#{type};base64,"
+    {:ok, regex} = Regex.compile("^#{prefix}")
+
+    if !(String.match?(type, ~r/^image\//) && String.match?(data, regex)) do
+      raise {:not_an_image}
+    end
+
+    raw = String.replace_prefix(data, prefix, "")
+    {:ok, decoded} = Base.decode64(raw)
+    md5 = :crypto.hash(:md5, decoded) |> Base.encode16()
+
+    {:ok,
+     photo
+     |> Map.put("name", "#{md5}-#{name}")
+     |> Map.put("md5", md5)
+     |> Map.put("data", decoded)}
+  end
+
+  defp parse_photo_data(_), do: {:missing_data}
 end

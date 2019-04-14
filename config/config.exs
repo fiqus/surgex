@@ -48,6 +48,15 @@ config :garrahan, Garrahan.Mailer,
   # can be `always`. If your smtp relay requires authentication set it to `always`.
   auth: :if_available
 
+# Configures uploads urls and paths
+surgeries_photos_url = "/uploads/surgeries/photos/"
+surgeries_photos_path = File.cwd!() <> surgeries_photos_url
+File.mkdir_p!(surgeries_photos_path)
+
+config :garrahan,
+  surgeries_photos_url: surgeries_photos_url,
+  surgeries_photos_path: surgeries_photos_path
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

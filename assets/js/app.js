@@ -17,7 +17,7 @@ import {initialState, getters, mutations, actions} from "./state/store";
 
 import App from "./App"
 
-const options= {
+const options = {
   labels: {
     tip: "Consejo",
     info: "Información",

@@ -45,3 +45,6 @@ npm-debug.log
 # Ignore VSCode files
 .elixir_ls/
 .vscode/
+
+# Ignore uploads folder, it will be created on app start if it not exists
+/uploads/
