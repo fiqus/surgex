@@ -1,13 +1,13 @@
 /* This file is for your main application css. */
 /* @import "./phoenix.css"; */
 @import "~bootstrap/dist/css/bootstrap.css";
-
 header {
   background: #fff;
   margin: auto;
 }
 
 body {
+  font-family: 'Ubuntu', sans-serif;
   font-size: 1.2rem;
 }
 
@@ -73,11 +73,9 @@ input {
 }
 
 .logo-home {
-  height: 20px;;
-}
-.logo-home img {
-  margin-top: 1.7rem;
-  width: 2%;
+  margin-left: 20rem;
+  margin-bottom: 1.5rem;
+  width: 20%;
 }
 
 a {
