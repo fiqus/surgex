@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table class="custom-table">
+    <table class="table table-striped">
       <thead>
         <th v-for="header in headers" :key="header.key">
           {{ header.value }}

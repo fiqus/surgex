@@ -1,12 +1,13 @@
 <template>
-  <div id="diagnostics-list">
-    <h3 class="subtitle">Listado de Diagnósticos</h3>
+  <div class="m-3" id="diagnostics-list">
+    <h3>Listado de Diagnósticos</h3>
+    <hr>
+    <button class="btn btn-primary float-right mb-3" v-on:click="showNew">
+      <i class="fa fa-plus"></i>
+      Agregar Diagnóstico
+    </button>
     <div v-if="loading">Cargando...</div>
     <div v-if="!loading">
-      <button class="btn btn-primary float-right" v-on:click="showNew">
-        <i class="fa fa-plus"></i>
-        Agregar Diagnóstico
-      </button>
       <customTable 
         v-if="diagnostics.length"
         :headers="headers"

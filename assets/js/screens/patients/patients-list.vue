@@ -1,12 +1,13 @@
 <template>
-  <div id="patients-list">
-    <h3 class="subtitle">Listado de Pacientes</h3>
+  <div class="m-3" id="patients-list">
+    <h3>Listado de Pacientes</h3>
+    <hr>
+    <button class="btn btn-primary float-right mb-3" v-on:click="showNew">
+      <i class="fa fa-plus"></i>
+      Agregar Paciente
+    </button>
     <div v-if="loading">Cargando...</div>
     <div v-if="!loading">
-      <button class="btn btn-primary float-right" v-on:click="showNew">
-        <i class="fa fa-plus"></i>
-        Agregar Paciente
-      </button>
       <customTable 
         v-if="patients.length"
         :headers="headers"

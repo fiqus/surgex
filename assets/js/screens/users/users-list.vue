@@ -1,6 +1,6 @@
 <template>
-  <div id="users-list">
-    <h3 class="subtitle">Listado de Usuarios</h3>
+  <div class="m-3" id="users-list">
+    <h3>Listado de Usuarios</h3>
     <div v-if="loading">Cargando...</div>
     <div v-if="!loading">
       <customTable 
