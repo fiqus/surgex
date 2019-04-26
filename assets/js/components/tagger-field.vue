@@ -1,15 +1,20 @@
 <template>
-  <div>
-    <select v-model="selected">
-      <option v-if="firstOption" value="">{{firstOption}}</option>
-      <option v-for="option in values" :key="option.key" :value="option.key">{{option.value}}</option>
-    </select>
-    <button type="button" :disabled="!selected" v-on:click.stop="onAdd" class="button"><i class="fa fa-plus"></i></button>
+  <div class="form-row">
+    <div class="col-md-5">
+      <select class="form-control" v-model="selected">
+        <option v-if="firstOption" value="">{{firstOption}}</option>
+        <option v-for="option in values" :key="option.key" :value="option.key">{{option.value}}</option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <button type="button" :disabled="!selected" v-on:click.stop="onAdd" class="button"><i class="fa fa-plus"></i></button>
+    </div>
 
-    <div v-if="tags.length > 0" style="width: calc(100% - 63px);">
-      <div v-for="tag in tags" :key="tag">
-        <span>{{tag}}</span>
-      </div>
+    <div class="col-md-5" v-if="tags.length > 0" style="width: calc(100% - 63px);">
+      <label>Seleccionado:</label>
+      <li v-for="tag in tags" :key="tag">
+        {{tag}}
+      </li>
     </div>
   </div>
 </template>

@@ -4,59 +4,59 @@
     <div v-if="!loading">
       <h3 v-if="isNew" class="subtitle">Crear cirugía</h3>
       <h3 v-if="!isNew" class="subtitle">Editar cirugía</h3>
-      <form v-on:submit.prevent="submit" enctype="multipart/form-data">
-        <div class="form-user">
-          <div class="form-field-container">
+      <form class="form-custom" v-on:submit.prevent="submit" enctype="multipart/form-data">
+        <div class="form-row">
+          <div class="form-group col-md-6">
             <label>Fecha:</label>
-            <input type="date" v-model="surgery.date">
+            <input class="form-control" type="date" v-model="surgery.date">
             <label class="alert-danger" v-if="$v.surgery.date && $v.surgery.date.$error">Requerido</label>
           </div>
-          <div class="form-field-container">
+          <div class="form-group col-md-6">
             <label>Paciente:</label>
-            <select v-model="surgery.patient.id">
+            <select class="form-control" v-model="surgery.patient.id">
               <option value="">- seleccionar -</option>
               <option v-for="patient in patients" :key="patient.key" :value="patient.key">{{patient.value}}</option>
             </select>
             <label class="alert-danger" v-if="$v.surgery.patient && $v.surgery.patient.id.$error">Requerido</label>
           </div>
-          <div class="form-field-container">
+          <div class="form-group col-md-6">
             <label>Cirujano:</label>
-            <select v-model="surgery.surgeon.id">
+            <select class="form-control" v-model="surgery.surgeon.id">
               <option value="">- seleccionar -</option>
               <option v-for="surgeon in surgeons" :key="surgeon.key" :value="surgeon.key">{{surgeon.value}}</option>
             </select>
             <label class="alert-danger" v-if="$v.surgery.surgeon && $v.surgery.surgeon.id.$error">Requerido</label>
           </div>
-          <div class="form-field-container">
-            <label>Ayudantes:</label>
-            <tagger-field
-              :first-option="'--'"
-              :options="assistants"
-              v-model="surgery.assistants">
-            </tagger-field>
-          </div>
-          <div class="form-field-container">
+          <div class="form-group col-md-6">
             <label>Diagnóstico:</label>
-            <select v-model="surgery.diagnostic.id">
+            <select class="form-control" v-model="surgery.diagnostic.id">
               <option value="">- sin diagnóstico -</option>
               <option v-for="diagnostic in diagnostics" :key="diagnostic.key" :value="diagnostic.key">{{diagnostic.value}}</option>
             </select>
           </div>
-          <div class="form-field-container">
-            <label>Comentarios:</label>
-            <textarea v-model="surgery.comments"></textarea>
-          </div>
-          <div class="form-field-container" v-if="surgery.photos.length < 3">
-            <label>Agregar fotos:</label>
-            <input v-for="idx in Array.from({length: 3 - surgery.photos.length})" :key="idx" type="file" @change="addPhoto($event.target.files[0])">
-          </div>
-          <div class="form-field-container" v-if="!this.isNew">
-            <label>Fotos actuales:</label>
-              <div style="display:inline-block;" v-for="photo in surgery.photos" :key="photo.id">
-                <a :href="photoUrl(photo)" target="_blank"><img style="max-width:200px" :src="photoUrl(photo)"/></a>
-                <div>(quitar)</div>
-              </div>
-          </div>
+        </div>
+        <div class="form-group">
+          <label>Ayudantes:</label>
+          <tagger-field 
+            :first-option="'--'"
+            :options="assistants"
+            v-model="surgery.assistants">
+          </tagger-field>
+        </div>
+         <div class="form-group">
+          <label>Comentarios:</label>
+          <textarea class="form-control" v-model="surgery.comments"></textarea>
+        </div>
+        <div class="form-group col-md-6" v-if="surgery.photos.length < 3">
+          <label>Agregar fotos:</label>
+          <input class="form-control" v-for="idx in Array.from({length: 3 - surgery.photos.length})" :key="idx" type="file" @change="addPhoto($event.target.files[0])">
+        </div>
+        <div class="form-group" v-if="!this.isNew">
+          <label>Fotos actuales:</label>
+            <div style="display:inline-block;" v-for="photo in surgery.photos" :key="photo.id">
+              <a :href="photoUrl(photo)" target="_blank"><img style="max-width:200px" :src="photoUrl(photo)"/></a>
+              <div>(quitar)</div>
+            </div>
         </div>
         <div class="action-bar-buttons">
           <button type="button" class="btn btn-secondary" @click.stop="$router.go(-1)"><i class="fa fa-arrow-left"></i> Cancelar</button>
