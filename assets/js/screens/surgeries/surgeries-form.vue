@@ -47,15 +47,15 @@
           <label>Comentarios:</label>
           <textarea class="form-control" v-model="surgery.comments"></textarea>
         </div>
-        <div class="form-group col-md-6" v-if="surgery.photos.length < 3">
+        <div class="form-group col-md-6" v-if="surgery.photos.length < 5">
           <label>Agregar fotos:</label>
-          <input class="form-control" v-for="idx in Array.from({length: 3 - surgery.photos.length})" :key="idx" type="file" @change="addPhoto($event.target.files[0])">
+          <input class="form-control" v-for="idx in Array.from({length: 5 - surgery.photos.length})" :key="idx" type="file" @change="addPhoto($event.target.files[0])">
         </div>
         <div class="form-group" v-if="!this.isNew">
           <label>Fotos actuales:</label>
             <div style="display:inline-block;" v-for="photo in surgery.photos" :key="photo.id">
               <a :href="photoUrl(photo)" target="_blank"><img style="max-width:200px" :src="photoUrl(photo)"/></a>
-              <div>(quitar)</div>
+              <button class="btn btn-danger" v-on:click="removePhoto(photo)">x</button>
             </div>
         </div>
         <div class="action-bar-buttons">
@@ -167,6 +167,10 @@ export default {
         this.added_photos.push({name: file.name, type: file.type, data: reader.result});
       };
       reader.readAsDataURL(file);
+    },
+    removePhoto(photo) {
+      this.removed_photos.push(photo.id);
+      this.surgery.photos = this.surgery.photos.filter((p) => p.id !== photo.id);
     },
     submit() {
       this.$v.$touch();

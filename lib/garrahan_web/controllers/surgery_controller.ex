@@ -55,8 +55,8 @@ defmodule GarrahanWeb.SurgeryController do
   defp decode_photos_to_list(encoded_photos) when is_list(encoded_photos) do
     encoded_photos
     |> Enum.reduce([], fn photo, acc ->
-      with {:ok, parsed} <- parse_photo_data(photo) do
-        acc ++ [parsed]
+      with parsed <- parse_photo_data!(photo) do
+        [parsed | acc]
       else
         _ ->
           acc
@@ -66,24 +66,23 @@ defmodule GarrahanWeb.SurgeryController do
 
   defp decode_photos_to_list(_), do: []
 
-  defp parse_photo_data(%{"name" => name, "type" => type, "data" => data} = photo) do
+  defp parse_photo_data!(%{"name" => name, "type" => type, "data" => data} = photo) do
     prefix = "data:#{type};base64,"
     {:ok, regex} = Regex.compile("^#{prefix}")
 
     if !(String.match?(type, ~r/^image\//) && String.match?(data, regex)) do
-      raise {:not_an_image}
+      raise "not_an_image"
     end
 
     raw = String.replace_prefix(data, prefix, "")
     {:ok, decoded} = Base.decode64(raw)
     md5 = :crypto.hash(:md5, decoded) |> Base.encode16()
 
-    {:ok,
-     photo
-     |> Map.put("name", "#{md5}-#{name}")
-     |> Map.put("md5", md5)
-     |> Map.put("data", decoded)}
+    photo
+    |> Map.put("name", "#{md5}-#{name}")
+    |> Map.put("md5", md5)
+    |> Map.put("data", decoded)
   end
 
-  defp parse_photo_data(_), do: {:missing_data}
+  defp parse_photo_data!(_), do: raise("missing_data")
 end

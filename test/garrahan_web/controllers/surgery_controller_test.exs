@@ -20,13 +20,11 @@ defmodule GarrahanWeb.SurgeryControllerTest do
       "71695983-4e45-4025-ad58-17a7450f7834"
     ],
     added_photos: [
-      "data:image/jpeg;base64,#{encoded_photo}",
-      "data:image/jpeg;base64,#{encoded_photo}"
+      %{name: "test.jpg", type: "image/jpeg", data: "data:image/jpeg;base64,#{encoded_photo}"}
     ]
   }
   @update_attrs %{
-    date: ~D[2011-05-18],
-    photos: ["r334534.jpg"]
+    date: ~D[2011-05-18]
   }
   @invalid_attrs %{date: nil}
 

@@ -39,7 +39,7 @@ defmodule Garrahan.Surgeries.Surgery do
     |> foreign_key_constraint(:diagnostic_id)
     |> foreign_key_constraint(:patient_id)
     |> put_assoc(:assistants, parse_assistants(attrs))
-    |> put_assoc(:photos, parse_photos(attrs))
+    |> put_assoc(:photos, parse_photos(attrs, Repo.preload(surgery, :photos).photos))
   end
 
   defp parse_assistants(attrs) do
@@ -55,13 +55,30 @@ defmodule Garrahan.Surgeries.Surgery do
     Repo.get(Surgeon, assistant_id)
   end
 
-  defp parse_photos(%{"added_photos" => photos}) do
-    photos
-    |> Enum.map(&save_added_photo/1)
-    |> Enum.reject(&(&1 == nil))
+  defp parse_photos(%{"added_photos" => added, "removed_photos" => removed}, current_photos) do
+    added_photos =
+      added
+      |> Enum.map(&save_added_photo/1)
+      |> Enum.reject(&(&1 == nil))
+
+    added_photos ++
+      (current_photos
+       |> Enum.reject(fn cp ->
+         removed
+         |> Enum.find(&(&1 == cp.id))
+         |> maybe_remove_and_continue(cp)
+       end))
   end
 
-  defp parse_photos(_), do: []
+  defp parse_photos(_, current_photos), do: current_photos
+
+  defp maybe_remove_and_continue(nil, _photo), do: false
+
+  defp maybe_remove_and_continue(_id, %{filename: filename}) do
+    path = Application.get_env(:garrahan, :surgeries_photos_path) <> filename
+    :ok = File.rm(path)
+    true
+  end
 
   defp save_added_photo(%{"name" => name, "type" => _type, "md5" => md5, "data" => data}) do
     try do
@@ -79,9 +96,4 @@ defmodule Garrahan.Surgeries.Surgery do
   end
 
   defp save_added_photo(_), do: nil
-
-  # @TODO WIPPPPPPPPPPPPP!!!!
-  # defp get_or_insert_photo(%{"name" => name, "type" => type, "md5" => md5, "data" => data}) do
-  #   Repo.get_by(Photo, filename: filename) || maybe_insert_photo(filename)
-  # end
 end

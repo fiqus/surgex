@@ -5,8 +5,7 @@ defmodule Garrahan.Fixtures do
   def create_surgery(%{assistants: _, patient_id: _, surgeon_id: _, diagnostic_id: _} = attrs) do
     attrs
     |> Enum.into(%{
-      date: Date.utc_today(),
-      photos: ["12wfd3rdf.jpg", "5675656.jpg"]
+      date: Date.utc_today()
     })
     |> Surgeries.create_surgery()
   end
