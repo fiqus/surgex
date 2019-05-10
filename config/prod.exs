@@ -10,8 +10,11 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :surgex, SurgexWeb.Endpoint,
+  load_from_system_env: true,
+  server: true,
+  secret_key_base: "${SECRET_KEY_BASE}",
   http: [:inet6, port: System.get_env("PORT") || 4000],
-  url: [host: "example.com", port: 80],
+  url: [host: "${APP_NAME}.gigalixirapp.com", port: 443],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
@@ -27,3 +30,10 @@ config :surgex, Surgex.Auth.Guardian,
 config :surgex,
   user_verification_salt: {:system, "USER_VERIFICATION_SALT"},
   user_recover_salt: {:system, "USER_RECOVER_SALT"}
+
+config :surgex, Surgex.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  url: "${DATABASE_URL}",
+  database: "",
+  ssl: true,
+  pool_size: 2
