@@ -25,11 +25,11 @@ config :surgex, Surgex.Auth.Guardian,
   issuer: "surgex",
   verify_issuer: true,
   ttl: {24, :hours},
-  secret_key: {:system, "GUARDIAN_SECRET_KEY"}
+  secret_key: "${GUARDIAN_SECRET_KEY}"
 
 config :surgex,
-  user_verification_salt: {:system, "USER_VERIFICATION_SALT"},
-  user_recover_salt: {:system, "USER_RECOVER_SALT"}
+  user_verification_salt: "${USER_VERIFICATION_SALT}",
+  user_recover_salt: "${USER_RECOVER_SALT}"
 
 config :surgex, Surgex.Repo,
   adapter: Ecto.Adapters.Postgres,
