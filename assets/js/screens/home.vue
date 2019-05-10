@@ -1,7 +1,7 @@
 <template>
    <div class="card form-login bg-light">
     <article class="card-body">
-      <img class="logo-home" src="/images/garrahan.png" alt="Hospital Garrahan"/>
+      <img class="logo-home" src="/images/logo.png"/>
       <h1 class="text-center">Servicio de Cirugía Plástica</h1>
       <hr v-if="user">
       <h3 class="text-center" v-if="user">{{ formatFullName(user) }}<br/><small>{{ user.email }}</small></h3>

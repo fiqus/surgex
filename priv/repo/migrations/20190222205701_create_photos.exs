@@ -1,4 +1,4 @@
-defmodule Garrahan.Repo.Migrations.CreatePhotos do
+defmodule Surgex.Repo.Migrations.CreatePhotos do
   use Ecto.Migration
 
   def change do

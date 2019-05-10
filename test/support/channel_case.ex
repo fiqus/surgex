@@ -1,4 +1,4 @@
-defmodule GarrahanWeb.ChannelCase do
+defmodule SurgexWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -21,15 +21,15 @@ defmodule GarrahanWeb.ChannelCase do
       use Phoenix.ChannelTest
 
       # The default endpoint for testing
-      @endpoint GarrahanWeb.Endpoint
+      @endpoint SurgexWeb.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Garrahan.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Surgex.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Garrahan.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Surgex.Repo, {:shared, self()})
     end
 
     :ok

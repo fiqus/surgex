@@ -1,4 +1,4 @@
-defmodule Garrahan.Repo.Migrations.CreateUsers do
+defmodule Surgex.Repo.Migrations.CreateUsers do
   use Ecto.Migration
 
   def change do

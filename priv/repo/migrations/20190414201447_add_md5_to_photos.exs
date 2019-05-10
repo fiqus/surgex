@@ -1,4 +1,4 @@
-defmodule Garrahan.Repo.Migrations.AddMd5ToPhotos do
+defmodule Surgex.Repo.Migrations.AddMd5ToPhotos do
   use Ecto.Migration
 
   def change do

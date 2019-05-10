@@ -1,4 +1,4 @@
-defmodule GarrahanWeb.ConnCase do
+defmodule SurgexWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -19,18 +19,18 @@ defmodule GarrahanWeb.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
-      alias GarrahanWeb.Router.Helpers, as: Routes
+      alias SurgexWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
-      @endpoint GarrahanWeb.Endpoint
+      @endpoint SurgexWeb.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Garrahan.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Surgex.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Garrahan.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Surgex.Repo, {:shared, self()})
     end
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}

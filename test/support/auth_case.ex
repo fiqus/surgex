@@ -1,10 +1,10 @@
-defmodule GarrahanWeb.AuthCase do
+defmodule SurgexWeb.AuthCase do
   use ExUnit.CaseTemplate
 
   using do
     quote do
       def auth_user(conn, user) do
-        {:ok, token} = Garrahan.Auth.token(user)
+        {:ok, token} = Surgex.Auth.token(user)
 
         conn
         |> put_req_header("accept", "application/json")
@@ -15,19 +15,19 @@ defmodule GarrahanWeb.AuthCase do
 
   setup do
     {:ok, admin} =
-      Garrahan.Accounts.create_user(%{
+      Surgex.Accounts.create_user(%{
         password: "password",
         is_admin: true
       })
 
     {:ok, user} =
-      Garrahan.Accounts.create_user(%{
+      Surgex.Accounts.create_user(%{
         password: "password"
       })
 
-    Garrahan.Surgeries.create_surgeon(
+    Surgex.Surgeries.create_surgeon(
       %{
-        email: "admin@garrahan.com",
+        email: "admin@surgex.com",
         first_name: "Fiqus",
         last_name: "Admin"
       },
@@ -35,9 +35,9 @@ defmodule GarrahanWeb.AuthCase do
     )
 
     {:ok, surgeon} =
-      Garrahan.Surgeries.create_surgeon(
+      Surgex.Surgeries.create_surgeon(
         %{
-          email: "user@garrahan.com",
+          email: "user@surgex.com",
           first_name: "Fiqus",
           last_name: "User"
         },

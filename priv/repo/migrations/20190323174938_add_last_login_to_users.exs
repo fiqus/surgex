@@ -1,4 +1,4 @@
-defmodule Garrahan.Repo.Migrations.AddLastLoginToUsers do
+defmodule Surgex.Repo.Migrations.AddLastLoginToUsers do
   use Ecto.Migration
 
   def change do

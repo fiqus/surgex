@@ -7,15 +7,15 @@
 # General application configuration
 use Mix.Config
 
-config :garrahan,
-  ecto_repos: [Garrahan.Repo]
+config :surgex,
+  ecto_repos: [Surgex.Repo]
 
 # Configures the endpoint
-config :garrahan, GarrahanWeb.Endpoint,
+config :surgex, SurgexWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "2M/NGvn2rebhLSI80LQp0YVdyB5SUakOCOZGEbrR5fkc6Ju6Uj8hl9LnDPcaTqxX",
-  render_errors: [view: GarrahanWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Garrahan.PubSub, adapter: Phoenix.PubSub.PG2]
+  render_errors: [view: SurgexWeb.ErrorView, accepts: ~w(html json)],
+  pubsub: [name: Surgex.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -25,13 +25,13 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :garrahan, :generators,
+config :surgex, :generators,
   migration: true,
   binary_id: true,
   sample_binary_id: "11111111-1111-1111-1111-111111111111"
 
 # Configures bamboo mailer
-config :garrahan, Garrahan.Mailer,
+config :surgex, Surgex.Mailer,
   adapter: Bamboo.SMTPAdapter,
   server: "smtp.gmail.com",
   hostname: "smtp.gmail.com",
@@ -53,7 +53,7 @@ surgeries_photos_url = "/uploads/surgeries/photos/"
 surgeries_photos_path = File.cwd!() <> surgeries_photos_url
 File.mkdir_p!(surgeries_photos_path)
 
-config :garrahan,
+config :surgex,
   surgeries_photos_url: surgeries_photos_url,
   surgeries_photos_path: surgeries_photos_path
 

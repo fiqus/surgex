@@ -6,7 +6,7 @@ use Mix.Config
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
-config :garrahan, GarrahanWeb.Endpoint,
+config :surgex, SurgexWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
@@ -46,13 +46,13 @@ config :garrahan, GarrahanWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :garrahan, GarrahanWeb.Endpoint,
+config :surgex, SurgexWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{priv/gettext/.*(po)$},
-      ~r{lib/garrahan_web/views/.*(ex)$},
-      ~r{lib/garrahan_web/templates/.*(eex)$}
+      ~r{lib/surgex_web/views/.*(ex)$},
+      ~r{lib/surgex_web/templates/.*(eex)$}
     ]
   ]
 
@@ -67,26 +67,26 @@ config :phoenix, :stacktrace_depth, 20
 config :phoenix, :plug_init_mode, :runtime
 
 # Configure your database
-config :garrahan, Garrahan.Repo,
+config :surgex, Surgex.Repo,
   username: "postgres",
   password: "postgres",
-  database: "garrahan",
+  database: "surgex",
   hostname: "localhost",
   pool_size: 10
 
 # Configure Guardian
-config :garrahan, Garrahan.Auth.Guardian,
-  issuer: "garrahan",
+config :surgex, Surgex.Auth.Guardian,
+  issuer: "surgex",
   verify_issuer: true,
   ttl: {12, :hours},
   secret_key: "iox6/puy13hvGIa76aY1XQR8nDx3DUzjYnKz14geFGk5w0ZktbQwVsfw9E++ERaL"
 
-config :garrahan,
+config :surgex,
   user_verification_salt: "V08JhpdqE61mbsC8M/Z9uZguGl+Uku72BrbYvjZSOlzaNNjcQROqetH4RTQn1YCo",
   user_recover_salt: "cio8UrnqYvIjTQQ8Mwiyx+Quuk+DXbqnoZZjdAbbrTWGOgPJtaGLleslpf2/X10h4"
 
 # Configures bamboo mailer
-config :garrahan, Garrahan.Mailer,
+config :surgex, Surgex.Mailer,
   adapter: Bamboo.LocalAdapter,
   # optional
   open_email_in_browser_url: "http://localhost:4000/sent_emails"

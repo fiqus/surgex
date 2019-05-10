@@ -1,6 +1,6 @@
-defmodule Garrahan.Fixtures do
-  alias Garrahan.Accounts
-  alias Garrahan.Surgeries
+defmodule Surgex.Fixtures do
+  alias Surgex.Accounts
+  alias Surgex.Surgeries
 
   def create_surgery(%{assistants: _, patient_id: _, surgeon_id: _, diagnostic_id: _} = attrs) do
     attrs

@@ -1,4 +1,4 @@
-defmodule Garrahan.Repo.Migrations.AddFieldsToPatientsAndSurgeons do
+defmodule Surgex.Repo.Migrations.AddFieldsToPatientsAndSurgeons do
   use Ecto.Migration
 
   def change do

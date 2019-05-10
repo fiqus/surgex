@@ -1,4 +1,4 @@
-defmodule Garrahan.DataCase do
+defmodule Surgex.DataCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -16,20 +16,20 @@ defmodule Garrahan.DataCase do
 
   using do
     quote do
-      alias Garrahan.Repo
+      alias Surgex.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import Garrahan.DataCase
+      import Surgex.DataCase
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Garrahan.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Surgex.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Garrahan.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Surgex.Repo, {:shared, self()})
     end
 
     :ok
