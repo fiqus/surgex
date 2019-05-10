@@ -51,12 +51,28 @@
           <label>Agregar fotos:</label>
           <input class="form-control" v-for="idx in Array.from({length: 5 - surgery.photos.length})" :key="idx" type="file" @change="addPhoto($event.target.files[0])">
         </div>
+
         <div class="form-group" v-if="!this.isNew">
           <label>Fotos actuales:</label>
-            <div style="display:inline-block;" v-for="photo in surgery.photos" :key="photo.id">
-              <a :href="photoUrl(photo)" target="_blank"><img style="max-width:200px" :src="photoUrl(photo)"/></a>
-              <button class="btn btn-danger" v-on:click="removePhoto(photo)">x</button>
+
+          <div v-if="photoSelected" class="open-photo">
+            <span class="close" v-on:click="closePhoto">&times;</span>
+            <img class="open-photo-content" :src="photoSelected">
+          </div>
+
+          <div class="row text-center text-lg-left">
+            <div class="col-lg-3 col-md-4 col-6" v-for="photo in surgery.photos" :key="photo.id">
+              <div class="card" style="width: 300px; height: 300px;">
+                <img class="img-thumbnail" style="height: 230px; width: 300px;" :src="photoUrl(photo)" v-on:click="openPhoto(photoUrl(photo))"/>
+                <div class="card-body">
+                  <i class="fa fa-trash" style="color: red;" v-on:click="removePhoto(photo)"></i>
+                  <span class="d-inline-block text-truncate align-middle" style="max-width: 200px;">
+                    Nombre: {{photo.name}}
+                  </span>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
         <div class="action-bar-buttons">
           <button type="button" class="btn btn-secondary" @click.stop="$router.go(-1)"><i class="fa fa-arrow-left"></i> Cancelar</button>
@@ -99,7 +115,8 @@ export default {
       added_photos: [],
       removed_photos: [],
       loading: true,
-      isNew: !Boolean(this.$route.params.surgeryId)
+      isNew: !Boolean(this.$route.params.surgeryId),
+      photoSelected: null
     }
   },
   validations: {
@@ -184,6 +201,12 @@ export default {
         this.surgery.removed_photos = this.removed_photos;
         this.$store.dispatch(this.isNew ? "createSurgery" : "updateSurgery", {component: this, surgery: this.surgery, onSuccess});
       }
+    },
+    openPhoto(photo) {
+      this.photoSelected = photo;
+    },
+    closePhoto() {
+      this.photoSelected = null;
     }
   }
 }
