@@ -32,7 +32,11 @@ defmodule GarrahanWeb.Endpoint do
   plug Plug.Logger
 
   plug Plug.Parsers,
-    parsers: [:urlencoded, :multipart, :json],
+    parsers: [
+      :urlencoded,
+      {:json, length: 100_000_000},
+      {:multipart, length: 10_000_000}
+    ],
     pass: ["*/*"],
     json_decoder: Phoenix.json_library()
 
