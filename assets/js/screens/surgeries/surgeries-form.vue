@@ -47,27 +47,24 @@
           <label>Comentarios:</label>
           <textarea class="form-control" v-model="surgery.comments"></textarea>
         </div>
-        <div class="form-group col-md-6" v-if="surgery.photos.length < 5">
+        <div class="form-group" v-if="surgery.photos.length < 5">
           <label>Agregar fotos:</label>
           <input class="form-control" v-for="idx in Array.from({length: 5 - surgery.photos.length})" :key="idx" type="file" @change="addPhoto($event.target.files[0])">
         </div>
-
         <div class="form-group" v-if="!this.isNew">
-          <label>Fotos actuales:</label>
-
-          <div v-if="photoSelected" class="open-photo">
-            <span class="close" v-on:click="closePhoto">&times;</span>
+          <label>Fotos actuales: {{(surgery.photos || []).length}}</label>
+          <div v-if="photoSelected" class="open-photo" v-on:click="closePhoto">
+            <span class="close" title="Cerrar" v-on:click="closePhoto">&times;</span>
             <img class="open-photo-content" :src="photoSelected">
           </div>
-
           <div class="row text-center text-lg-left">
             <div class="col-lg-3 col-md-4 col-6" v-for="photo in surgery.photos" :key="photo.id">
               <div class="card" style="width: 300px; height: 300px;">
-                <img class="img-thumbnail" style="height: 230px; width: 300px;" :src="photoUrl(photo)" v-on:click="openPhoto(photoUrl(photo))"/>
+                <img class="img-thumbnail photo-thumbnail" title="Ver en tamaño original" :src="photoUrl(photo)" v-on:click="openPhoto(photoUrl(photo))"/>
                 <div class="card-body">
-                  <i class="fa fa-trash" style="color: red;" v-on:click="removePhoto(photo)"></i>
-                  <span class="d-inline-block text-truncate align-middle" style="max-width: 200px;">
-                    Nombre: {{photo.name}}
+                  <i class="fa fa-trash remove-photo" title="Quitar foto" v-on:click="removePhoto(photo)"></i>
+                  <span class="d-inline-block text-truncate photo-name align-middle" :title="photo.name">
+                    {{photo.name}}
                   </span>
                 </div>
               </div>
@@ -125,6 +122,13 @@ export default {
       // "patient.id": {required}, // @TODO Doesn't work!
       "date": {required}
     }
+  },
+  mounted() {
+    window.addEventListener("keyup", (e) => {
+      if (e.key === "Escape") {
+        this.closePhoto();
+      }
+    });
   },
   created() {
     return Promise.all([
@@ -189,6 +193,12 @@ export default {
       this.removed_photos.push(photo.id);
       this.surgery.photos = this.surgery.photos.filter((p) => p.id !== photo.id);
     },
+    openPhoto(photo) {
+      this.photoSelected = photo;
+    },
+    closePhoto() {
+      this.photoSelected = null;
+    },
     submit() {
       this.$v.$touch();
 
@@ -201,12 +211,6 @@ export default {
         this.surgery.removed_photos = this.removed_photos;
         this.$store.dispatch(this.isNew ? "createSurgery" : "updateSurgery", {component: this, surgery: this.surgery, onSuccess});
       }
-    },
-    openPhoto(photo) {
-      this.photoSelected = photo;
-    },
-    closePhoto() {
-      this.photoSelected = null;
     }
   }
 }

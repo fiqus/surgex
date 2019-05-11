@@ -1,6 +1,7 @@
 /* This file is for your main application css. */
 /* @import "./phoenix.css"; */
 @import "~bootstrap/dist/css/bootstrap.css";
+
 header {
   background: #fff;
   margin: auto;
@@ -21,6 +22,25 @@ li.nav-item:last-of-type {
 }
 .nav-user li.nav-item .username {
   font-weight: bold;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.photo-name {
+  max-width: 200px;
+  direction: rtl;
+}
+.photo-thumbnail {
+  height: 230px;
+  width: 300px;
+  cursor: pointer;
+}
+
+.remove-photo {
+  cursor: pointer;
+  color: red;
 }
 
 .open-photo {

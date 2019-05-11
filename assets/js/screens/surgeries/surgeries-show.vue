@@ -12,8 +12,21 @@
         <div><b>Diagnóstico:</b> {{surgery.diagnostic ? `${surgery.diagnostic.name} :: ${surgery.diagnostic.description}` : "-"}}</div>
         <div><b>Comentarios:</b> {{surgery.comments || "-"}}</div>
         <div><b>Fotos:</b> {{(surgery.photos || []).length || "-"}}</div>
-        <div style="display:inline-block">
-          <a v-for="photo in surgery.photos" :key="photo.id" :href="photoUrl(photo)" target="_blank"><img style="max-width:200px" :src="photoUrl(photo)"/></a>
+        <div v-if="photoSelected" class="open-photo" v-on:click="closePhoto">
+          <span class="close" title="Cerrar" v-on:click="closePhoto">&times;</span>
+          <img class="open-photo-content" :src="photoSelected">
+        </div>
+        <div class="row text-center text-lg-left">
+          <div class="col-lg-3 col-md-4 col-6" v-for="photo in surgery.photos" :key="photo.id">
+            <div class="card" style="width: 300px; height: 300px;">
+              <img class="img-thumbnail photo-thumbnail" title="Ver en tamaño original" :src="photoUrl(photo)" v-on:click="openPhoto(photoUrl(photo))"/>
+              <div class="card-body">
+                <span class="d-inline-block text-truncate photo-name align-middle" style="max-width:260px" :title="photo.name">
+                  {{photo.name}}
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
       <div class="action-bar-buttons">
@@ -31,16 +44,24 @@ export default {
     return {
       surgery: null,
       assistants: "",
+      photoSelected: null,
       loading: true,
       formatDate,
       formatFullName
     }
   },
+  mounted() {
+    window.addEventListener("keyup", (e) => {
+      if (e.key === "Escape") {
+        this.closePhoto();
+      }
+    });
+  },
   created() {
     this.$store.dispatch("fetchSurgery", this.$route.params.surgeryId)
       .then((surgery) => {
         this.surgery = surgery;
-        this.assistants = surgery.assistants.map(formatFullName).join("</br>");
+        this.assistants = surgery.assistants.map(formatFullName).join(" / ") || "-";
         this.loading = false;
       });
   },
@@ -54,6 +75,12 @@ export default {
   methods: {
     photoUrl(photo) {
       return `${this.$store.getters.getSurgeriesPhotosPath}${photo.name}`;
+    },
+    openPhoto(photo) {
+      this.photoSelected = photo;
+    },
+    closePhoto() {
+      this.photoSelected = null;
     },
     showEdit(surgery) {
       this.$router.push({name: "surgeries-edit", params: {surgeryId: surgery.id}});
