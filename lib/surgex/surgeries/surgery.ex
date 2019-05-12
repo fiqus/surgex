@@ -80,14 +80,16 @@ defmodule Surgex.Surgeries.Surgery do
     true
   end
 
-  defp save_added_photo(%{"name" => name, "type" => _type, "md5" => md5, "data" => data}) do
+  defp save_added_photo(%{"name" => name, "type" => _type, "data" => data}) do
     try do
+      md5 = :crypto.hash(:md5, data) |> Base.encode16()
+
       photo =
         %Photo{}
         |> change(filename: name)
         |> change(md5: md5)
 
-      path = Application.get_env(:surgex, :surgeries_photos_path) <> name
+      path = Application.get_env(:surgex, :surgeries_photos_path) <> md5 <> "-" <> name
       :ok = File.write(path, data, [:binary])
       photo
     rescue

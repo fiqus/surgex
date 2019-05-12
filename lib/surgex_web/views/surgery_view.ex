@@ -29,7 +29,8 @@ defmodule SurgexWeb.SurgeryView do
   def render("photo.json", %{photo: photo}) do
     %{
       id: photo.id,
-      name: photo.filename
+      name: photo.filename,
+      md5: photo.md5
     }
   end
 end

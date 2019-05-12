@@ -28,19 +28,26 @@ li.nav-item:last-of-type {
   vertical-align: middle;
 }
 
-.photo-name {
-  max-width: 200px;
-  direction: rtl;
+.photo-card {
+  width: 300px;
+  height: 300px;
 }
-.photo-thumbnail {
+.photo-card .photo-name {
+  max-width: 260px;
+}
+.photo-card .photo-name-with-remove {
+  max-width: 200px;
+}
+.photo-card .photo-thumbnail {
   height: 230px;
   width: 300px;
   cursor: pointer;
 }
 
-.remove-photo {
+.photo-card .remove-photo {
   cursor: pointer;
   color: red;
+  margin-right: 10px;
 }
 
 .open-photo {
@@ -55,7 +62,6 @@ li.nav-item:last-of-type {
   background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.9);
 }
-
 .open-photo-content {
   margin: auto;
   display: block;
@@ -72,7 +78,6 @@ li.nav-item:last-of-type {
   font-weight: bold;
   transition: 0.3s;
 }
-
 .close:hover,
 .close:focus {
   color: #bbb;

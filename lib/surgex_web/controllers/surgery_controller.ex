@@ -55,7 +55,7 @@ defmodule SurgexWeb.SurgeryController do
   defp decode_photos_to_list(encoded_photos) when is_list(encoded_photos) do
     encoded_photos
     |> Enum.reduce([], fn photo, acc ->
-      with parsed <- parse_photo_data!(photo) do
+      with %{} = parsed <- parse_photo_data!(photo) do
         [parsed | acc]
       else
         _ ->
@@ -66,7 +66,7 @@ defmodule SurgexWeb.SurgeryController do
 
   defp decode_photos_to_list(_), do: []
 
-  defp parse_photo_data!(%{"name" => name, "type" => type, "data" => data} = photo) do
+  defp parse_photo_data!(%{"name" => _name, "type" => type, "data" => data} = photo) do
     prefix = "data:#{type};base64,"
     {:ok, regex} = Regex.compile("^#{prefix}")
 
@@ -76,11 +76,8 @@ defmodule SurgexWeb.SurgeryController do
 
     raw = String.replace_prefix(data, prefix, "")
     {:ok, decoded} = Base.decode64(raw)
-    md5 = :crypto.hash(:md5, decoded) |> Base.encode16()
 
     photo
-    |> Map.put("name", "#{md5}-#{name}")
-    |> Map.put("md5", md5)
     |> Map.put("data", decoded)
   end
 

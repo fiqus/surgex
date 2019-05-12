@@ -59,11 +59,11 @@
           </div>
           <div class="row text-center text-lg-left">
             <div class="col-lg-3 col-md-4 col-6" v-for="photo in surgery.photos" :key="photo.id">
-              <div class="card" style="width: 300px; height: 300px;">
+              <div class="card photo-card">
                 <img class="img-thumbnail photo-thumbnail" title="Ver en tamaño original" :src="photoUrl(photo)" v-on:click="openPhoto(photoUrl(photo))"/>
                 <div class="card-body">
                   <i class="fa fa-trash remove-photo" title="Quitar foto" v-on:click="removePhoto(photo)"></i>
-                  <span class="d-inline-block text-truncate photo-name align-middle" :title="photo.name">
+                  <span class="d-inline-block text-truncate photo-name-with-remove align-middle" :title="photo.name">
                     {{photo.name}}
                   </span>
                 </div>
@@ -180,7 +180,7 @@ export default {
   },
   methods: {
     photoUrl(photo) {
-      return `${this.$store.getters.getSurgeriesPhotosPath}${photo.name}`;
+      return this.$store.getters.getSurgeriesPhotoUrl(photo);
     },
     addPhoto(file) {
       const reader = new FileReader();
