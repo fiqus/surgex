@@ -51,13 +51,7 @@ config :surgex, Surgex.Mailer,
 # Configures uploads urls and paths
 surgeries_photos_url = "/uploads/surgeries/photos/"
 surgeries_photos_path = File.cwd!() <> surgeries_photos_url
-File.mkdir_p!(surgeries_photos_path) |> IO.inspect(label: "File.mkdir_p!")
-## Testing gigalixir fileupload write to folder issue
-IO.inspect(surgeries_photos_path, label: "PATH")
-File.chmod!(surgeries_photos_path, 0o775) |> IO.inspect(label: "File.chmod!")
-File.write!(surgeries_photos_path <> "test.txt", "testing text") |> IO.inspect(label: "File.write!")
-File.read!(surgeries_photos_path <> "test.txt") |> IO.inspect(label: "File.read!")
-File.rm!(surgeries_photos_path <> "test.txt") |> IO.inspect(label: "File.rm!")
+File.mkdir_p!(surgeries_photos_path)
 
 config :surgex,
   surgeries_photos_url: surgeries_photos_url,
