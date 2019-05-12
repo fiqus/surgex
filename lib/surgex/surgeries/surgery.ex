@@ -74,8 +74,8 @@ defmodule Surgex.Surgeries.Surgery do
 
   defp maybe_remove_and_continue(nil, _photo), do: false
 
-  defp maybe_remove_and_continue(_id, %{filename: filename}) do
-    path = Application.get_env(:surgex, :surgeries_photos_path) <> filename
+  defp maybe_remove_and_continue(_id, %{filename: filename, md5: md5}) do
+    path = Application.get_env(:surgex, :surgeries_photos_path) <> md5 <> "-" <> filename
     :ok = File.rm(path)
     true
   end
