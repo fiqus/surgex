@@ -1,6 +1,8 @@
 defmodule SurgexWeb.SurgeryController do
   use SurgexWeb, :controller
 
+  require Logger
+
   alias Surgex.Surgeries
   alias Surgex.Surgeries.Surgery
 
@@ -46,19 +48,18 @@ defmodule SurgexWeb.SurgeryController do
 
   def delete(conn, %{"id" => id}) do
     surgery = Surgeries.get_surgery!(id)
-
-    with {:ok, %Surgery{}} <- Surgeries.delete_surgery(surgery) do
-      send_resp(conn, :no_content, "")
-    end
+    Surgeries.delete_surgery!(surgery)
+    send_resp(conn, :no_content, "")
   end
 
   defp decode_photos_to_list(encoded_photos) when is_list(encoded_photos) do
     encoded_photos
     |> Enum.reduce([], fn photo, acc ->
-      with %{} = parsed <- parse_photo_data!(photo) do
-        [parsed | acc]
-      else
-        _ ->
+      try do
+        [parse_photo_data!(photo) | acc]
+      rescue
+        error ->
+          Logger.error("Error at SurgeryController.decode_photos_to_list/1: #{inspect(error)}")
           acc
       end
     end)

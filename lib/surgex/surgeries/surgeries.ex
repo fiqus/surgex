@@ -4,8 +4,10 @@ defmodule Surgex.Surgeries do
   """
 
   import Ecto.Query, warn: false
-  alias Surgex.Repo
 
+  require Logger
+
+  alias Surgex.Repo
   alias Surgex.Surgeries.Diagnostic
 
   @doc """
@@ -472,15 +474,24 @@ defmodule Surgex.Surgeries do
 
   ## Examples
 
-      iex> delete_surgery(surgery)
+      iex> delete_surgery!(surgery)
       {:ok, %Surgery{}}
 
-      iex> delete_surgery(surgery)
+      iex> delete_surgery!(surgery)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_surgery(%Surgery{} = surgery) do
-    Repo.delete(surgery)
+  def delete_surgery!(%Surgery{} = surgery) do
+    try do
+      Repo.preload(surgery, :photos).photos
+      |> Enum.each(&Surgery.delete_photo_file!/1)
+
+      Repo.delete(surgery)
+    rescue
+      error ->
+        Logger.error("Error at Surgeries.delete_surgery!/1: #{inspect(error)}")
+        reraise error, __STACKTRACE__
+    end
   end
 
   @doc """

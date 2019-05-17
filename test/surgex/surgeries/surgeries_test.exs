@@ -317,9 +317,9 @@ defmodule Surgex.SurgeriesTest do
       assert surgery == Surgeries.get_surgery!(surgery.id)
     end
 
-    test "delete_surgery/1 deletes the surgery" do
+    test "delete_surgery!/1 deletes the surgery" do
       surgery = surgery_fixture()
-      assert {:ok, %Surgery{}} = Surgeries.delete_surgery(surgery)
+      assert {:ok, %Surgery{}} = Surgeries.delete_surgery!(surgery)
       assert_raise Ecto.NoResultsError, fn -> Surgeries.get_surgery!(surgery.id) end
     end
 

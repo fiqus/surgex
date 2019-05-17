@@ -6,7 +6,7 @@ defmodule Surgex.Surgeries.Surgery do
   require Logger
 
   alias Surgex.Repo
-  alias Surgex.Surgeries.{Patient, Surgeon, Diagnostic, Photo}
+  alias Surgex.Surgeries.{Diagnostic, Patient, Photo, Surgeon}
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -42,6 +42,12 @@ defmodule Surgex.Surgeries.Surgery do
     |> put_assoc(:photos, parse_photos(attrs, Repo.preload(surgery, :photos).photos))
   end
 
+  def delete_photo_file!(%Photo{filename: filename, md5: md5}) do
+    path = Application.get_env(:surgex, :surgeries_photos_path) <> md5 <> "-" <> filename
+    :ok = File.rm!(path)
+    path
+  end
+
   defp parse_assistants(attrs) do
     (attrs[:assistants] || attrs["assistants"] || [])
     |> Enum.map(&get_assistant/1)
@@ -74,10 +80,15 @@ defmodule Surgex.Surgeries.Surgery do
 
   defp maybe_remove_and_continue(nil, _photo), do: false
 
-  defp maybe_remove_and_continue(_id, %{filename: filename, md5: md5}) do
-    path = Application.get_env(:surgex, :surgeries_photos_path) <> md5 <> "-" <> filename
-    :ok = File.rm(path)
-    true
+  defp maybe_remove_and_continue(_id, photo) do
+    try do
+      delete_photo_file!(photo)
+    rescue
+      error ->
+        Logger.error("Error at Surgeries.Surgery.maybe_remove_and_continue/1: #{inspect(error)}")
+    after
+      true
+    end
   end
 
   defp save_added_photo(%{"name" => name, "type" => _type, "data" => data}) do
@@ -93,7 +104,9 @@ defmodule Surgex.Surgeries.Surgery do
       :ok = File.write(path, data, [:binary])
       photo
     rescue
-      _ -> nil
+      error ->
+        Logger.error("Error at Surgeries.Surgery.save_added_photo/1: #{inspect(error)}")
+        nil
     end
   end
 
