@@ -4,10 +4,10 @@
 🇬🇧 This is an open sourced web application done as a donation with 💓 from [Fiqus](https://fiqus.coop) to the surgery services of Argentina.
 
 **Diagnostics screen**
-![Diagnostics screen](./priv/static/images/capture_diagnosticos.png)
+![Diagnostics screen](./assets/static/images/capture_diagnosticos.png)
 
 **Surgery screen**
-![Surgery screen](./priv/static/images/capture_cirugia.png)
+![Surgery screen](./assets/static/images/capture_cirugia.png)
 
 # Development
 ## Pre-requisites:
