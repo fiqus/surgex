@@ -1,7 +1,7 @@
 <template>
   <div>
-    <table class="table table-striped">
-      <thead>
+    <table class="table table-striped table-sm">
+      <thead class="thead-dark">
         <th v-for="header in headers" :key="header.key">
           {{ header.value }}
         </th>
