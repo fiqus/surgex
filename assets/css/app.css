@@ -13,10 +13,16 @@ body {
 }
 
 li.nav-item {
-  border-right: 1px solid #d6d6d6;
   margin: 0.5rem auto;
   padding: 0 0.5rem;
 }
+
+@media (min-width:991px) {
+  li.nav-item {
+    border-right: 1px solid #d6d6d6;
+  }
+}
+
 li.nav-item:last-of-type {
   border-right: none;
 }
