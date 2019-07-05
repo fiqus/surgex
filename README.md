@@ -1,8 +1,13 @@
 # Surgex
-🇦🇷 Aplicación Web de código abierto realizada como donación de 💓 desde [Fiqus](https://fiqus.coop) al servicio de Cirugía Plástica del [Hospital de Pediatría Garrahan](http://www.garrahan.gov.ar/).
+🇦🇷 Aplicación Web de código abierto realizada como donación de 💓 desde [Fiqus](https://fiqus.coop) para los servicios de Cirugía del sector hospitalario de Argentina.
 
-🇬🇧 This is an open sourced web application done as a donation with 💓 from [Fiqus](https://fiqus.coop) to the plastic surgery service of the [Hospital de Pediatría Garrahan](http://www.garrahan.gov.ar/).
+🇬🇧 This is an open sourced web application done as a donation with 💓 from [Fiqus](https://fiqus.coop) to the surgery services of Argentina.
 
+**Diagnostics screen**
+![Diagnostics screen](./priv/static/images/capture_diagnosticos.png)
+
+**Surgery screen**
+![Surgery screen](./priv/static/images/capture_cirugia.png)
 
 # Development
 ## Pre-requisites:
