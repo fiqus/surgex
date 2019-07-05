@@ -15,7 +15,7 @@ import Vuelidate from "vuelidate";
 
 import {initialState, getters, mutations, actions} from "./state/store";
 
-import App from "./App"
+import App from "./App.vue"
 
 const options = {
   labels: {
